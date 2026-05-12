@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P151CW2B60"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P151CW2B60');</script>
+<title>Page Not Found — Mahmoud El-Deberky</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'%3E%3Cpath d='M100 16 L184 100 L100 184 L16 100 Z' stroke='%23C4A35A' stroke-width='1.5' fill='none'/%3E%3Cpath d='M56 132 V68 L100 110 L144 68 V132' stroke='%23C4A35A' stroke-width='4.2' stroke-linejoin='miter' stroke-linecap='square' fill='none'/%3E%3Ccircle cx='100' cy='100' r='2.5' fill='%23C4A35A'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<style>
+  .not-found-wrap {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .not-found-wrap::before {
+    content: '404';
+    position: absolute;
+    font-family: var(--ff-h);
+    font-size: clamp(18rem, 35vw, 28rem);
+    color: rgba(196,163,90,.04);
+    line-height: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    letter-spacing: -.02em;
+    white-space: nowrap;
+  }
+  .nf-inner { position: relative; z-index: 1; max-width: 520px; }
+  .nf-code {
+    font-family: var(--ff-h);
+    font-size: clamp(5rem, 14vw, 9rem);
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: .2rem;
+    letter-spacing: -.02em;
+  }
+  .nf-divider {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.4rem auto;
+    opacity: .6;
+  }
+  .nf-title {
+    font-family: var(--ff-h);
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: var(--cream);
+    margin-bottom: .8rem;
+  }
+  .nf-desc {
+    font-size: .95rem;
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 2.2rem;
+  }
+  .nf-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/" aria-label="Mahmoud El-Deberky"></a>
+  <button class="hamburger" id="hamburger-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-right">
+    <ul class="nav-links" id="main-nav-links"></ul>
+    <div id="user-widget" style="display:flex;align-items:center;"></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="ar" onclick="setLang('ar')">AR</button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu"><div id="mobile-nav-links" style="display:contents;"></div></div>
+
+<div class="not-found-wrap">
+  <div class="nf-inner">
+    <div class="nf-code anim-1">404</div>
+    <div class="nf-divider"></div>
+    <h1 class="nf-title anim-2" data-en="Page Not Found" data-ar="الصفحة غير موجودة">Page Not Found</h1>
+    <p class="nf-desc anim-3"
+       data-en="The page you're looking for doesn't exist or may have been moved. Let's get you back on track."
+       data-ar="الصفحة التي تبحث عنها غير موجودة أو ربما تم نقلها. دعنا نعيدك إلى المسار الصحيح.">
+      The page you're looking for doesn't exist or may have been moved. Let's get you back on track.
+    </p>
+    <div class="nf-actions anim-4">
+      <a href="/" class="btn btn-gold" data-en="← Back to Home" data-ar="← العودة للرئيسية">← Back to Home</a>
+      <a href="contact" class="btn btn-outline" data-en="Contact Me" data-ar="تواصل معي">Contact Me</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Mahmoud El-Deberky</p>
+  <p data-en="Crafted by Mahmoud El-Deberky" data-ar="صُنع بواسطة محمود الديبركي">Crafted by Mahmoud El-Deberky</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared.js"></script>
+</body>
+</html>

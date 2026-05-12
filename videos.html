@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-P151CW2B60"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P151CW2B60');</script>
+<title>Videos — Mahmoud El-Deberky</title>
+<meta name="description" content="HR insights, tutorials, and professional development videos by Mahmoud El-Deberky — covering HR systems, labor law, and best practices.">
+<meta name="keywords" content="HR videos, HR tutorials, human resources, labor law, فيديوهات HR, موارد بشرية, Mahmoud El-Deberky">
+<meta name="author" content="Mahmoud El-Deberky">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mahmoudeldeberky.com/videos">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mahmoud El-Deberky">
+<meta property="og:title" content="Videos — Mahmoud El-Deberky">
+<meta property="og:description" content="HR insights, tutorials, and professional development videos by Mahmoud El-Deberky — covering HR systems, labor law, and best practices.">
+<meta property="og:url" content="https://mahmoudeldeberky.com/videos">
+<meta property="og:image" content="https://mahmoudeldeberky.com/og-image.jpg">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ar_LY">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Videos — Mahmoud El-Deberky">
+<meta name="twitter:description" content="HR insights, tutorials, and professional development videos by Mahmoud El-Deberky — covering HR systems, labor law, and best practices.">
+<meta name="twitter:image" content="https://mahmoudeldeberky.com/og-image.jpg">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'%3E%3Cpath d='M100 16 L184 100 L100 184 L16 100 Z' stroke='%23C4A35A' stroke-width='1.5' fill='none'/%3E%3Cpath d='M56 132 V68 L100 110 L144 68 V132' stroke='%23C4A35A' stroke-width='4.2' stroke-linejoin='miter' stroke-linecap='square' fill='none'/%3E%3Ccircle cx='100' cy='100' r='2.5' fill='%23C4A35A'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<style>
+/* PLAYER */
+.player-section{background:var(--bg);border-bottom:1px solid var(--border);padding:0;margin-top:0;padding-top:72px;}
+.player-wrap{max-width:1100px;margin:0 auto;padding:1.5rem 5vw 2rem;}
+.player-main{display:grid;grid-template-columns:1fr 360px;gap:2rem;align-items:start;}
+.video-frame{position:relative;padding-bottom:56.25%;background:#000;overflow:hidden;}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
+.player-info{padding-top:.5rem;}
+.player-cat{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.player-title{font-family:var(--ff-h);font-size:1.6rem;color:var(--cream);margin-bottom:.75rem;line-height:1.2;}
+.player-desc{font-size:.88rem;color:rgba(232,226,212,.6);line-height:1.8;margin-bottom:1rem;}
+.player-meta{font-size:.75rem;color:var(--muted);display:flex;gap:1rem;flex-wrap:wrap;}
+
+/* PLAYLIST */
+.playlist{background:var(--bg2);border:1px solid var(--border);max-height:420px;overflow-y:auto;}
+.playlist::-webkit-scrollbar{width:3px;}
+.playlist::-webkit-scrollbar-thumb{background:var(--gold);}
+.playlist-head{padding:.75rem 1rem;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg2);z-index:1;}
+.pl-item{display:flex;gap:.75rem;padding:.8rem 1rem;cursor:pointer;transition:background .15s;border-bottom:1px solid rgba(196,163,90,.08);}
+.pl-item:hover,.pl-item.active{background:rgba(196,163,90,.08);}
+.pl-item.active{border-right:2px solid var(--gold);}
+html[dir="rtl"] .pl-item.active{border-right:none;border-left:2px solid var(--gold);}
+.pl-thumb{width:72px;height:48px;background:var(--bg3);flex-shrink:0;overflow:hidden;position:relative;}
+.pl-thumb img{width:100%;height:100%;object-fit:cover;}
+.pl-thumb-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;opacity:.4;}
+.pl-info{flex:1;min-width:0;}
+.pl-title{font-size:.82rem;color:var(--cream);line-height:1.3;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+.pl-meta{font-size:.68rem;color:var(--muted);margin-top:.25rem;}
+
+/* VIDEOS GRID */
+.videos-section{max-width:1100px;margin:0 auto;padding:3rem 5vw;}
+.cat-section{margin-bottom:3.5rem;}
+.cat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);}
+.cat-title{font-family:var(--ff-h);font-size:1.5rem;color:var(--cream);}
+.cat-count{font-size:.75rem;color:var(--muted);}
+.vid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem;}
+.vid-card{background:var(--bg2);border:1px solid var(--border);cursor:pointer;transition:border-color .2s,transform .15s;overflow:hidden;}
+.vid-card:hover{border-color:rgba(196,163,90,.5);transform:translateY(-2px);}
+.vid-thumb{position:relative;padding-bottom:56.25%;background:var(--bg3);overflow:hidden;}
+.vid-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.vid-play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.4);opacity:0;transition:opacity .2s;}
+.vid-card:hover .vid-play-btn{opacity:1;}
+.vid-play-icon{width:48px;height:48px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+.vid-body{padding:1rem;}
+.vid-cat{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;}
+.vid-title{font-size:.9rem;color:var(--cream);line-height:1.4;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;}
+
+/* COMMENTS */
+.comments-section{max-width:1100px;margin:0 auto;padding:0 5vw 4rem;}
+.comments-wrap{background:var(--bg2);border:1px solid var(--border);padding:2rem;}
+.comments-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+.comments-title{font-family:var(--ff-h);font-size:1.3rem;color:var(--cream);}
+.comment-form{background:var(--bg3);border:1px solid var(--border);padding:1.2rem;margin-bottom:2rem;}
+.comment-form.locked{text-align:center;padding:2rem;}
+.comment-form.locked p{color:var(--muted);font-size:.9rem;margin-bottom:1rem;}
+.comment-input{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--cream);padding:.75rem 1rem;font-size:.9rem;font-family:inherit;outline:none;resize:vertical;min-height:80px;transition:border-color .2s;}
+.comment-input:focus{border-color:var(--gold);}
+.comment-actions{display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;flex-wrap:wrap;gap:.5rem;}
+.user-badge{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--cream);}
+.user-avatar{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);overflow:hidden;background:var(--bg3);}
+.user-avatar img{width:100%;height:100%;object-fit:cover;}
+.comment-item{display:flex;gap:1rem;padding:1.2rem 0;border-bottom:1px solid var(--border);}
+.comment-item:last-child{border-bottom:none;}
+.comment-avatar{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);overflow:hidden;background:var(--bg3);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.comment-avatar img{width:100%;height:100%;object-fit:cover;}
+.comment-body{flex:1;}
+.comment-name{font-size:.82rem;color:var(--gold);font-weight:500;margin-bottom:.25rem;}
+.comment-text{font-size:.88rem;color:rgba(232,226,212,.8);line-height:1.7;}
+.comment-time{font-size:.68rem;color:var(--muted);margin-top:.35rem;}
+.comment-delete{font-size:.68rem;color:var(--red,#cc4444);cursor:pointer;margin-top:.25rem;display:none;}
+
+/* LOGIN MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.modal-overlay.hidden{display:none;}
+.modal{background:var(--bg2);border:1px solid var(--border);padding:2.5rem;max-width:400px;width:100%;text-align:center;}
+.modal h2{font-family:var(--ff-h);font-size:1.6rem;color:var(--cream);margin-bottom:.5rem;}
+.modal p{font-size:.9rem;color:var(--muted);margin-bottom:1.5rem;}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;padding:.85rem;background:#fff;color:#333;font-size:.9rem;font-weight:500;border:none;cursor:pointer;transition:opacity .2s;font-family:inherit;}
+.btn-google:hover{opacity:.9;}
+.btn-google svg{width:20px;height:20px;}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;}
+
+/* EMPTY */
+.no-videos{text-align:center;padding:5rem 2rem;color:var(--muted);}
+.no-videos .icon{font-size:3rem;margin-bottom:1rem;opacity:.3;}
+
+@media(max-width:900px){
+  .player-main{grid-template-columns:1fr;}
+  .playlist{max-height:280px;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="/" aria-label="Mahmoud El-Deberky"></a>
+  <button class="hamburger" id="hamburger-btn" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-right">
+    <ul class="nav-links" id="main-nav-links"></ul>
+    
+    <div id="user-widget" style="display:flex;align-items:center;"></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="ar" onclick="setLang('ar')">AR</button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu"><div id="mobile-nav-links" style="display:contents;"></div></div>
+
+<!-- PLAYER -->
+<div class="player-section" id="player-section" style="display:none;">
+  <div class="player-wrap">
+    <div class="player-main">
+      <div>
+        <div class="video-frame" id="video-frame">
+          <iframe id="yt-iframe" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        </div>
+        <div class="player-info">
+          <p class="player-cat" id="player-cat"></p>
+          <h2 class="player-title" id="player-title"></h2>
+          <p class="player-desc" id="player-desc"></p>
+          <div class="player-meta" id="player-meta"></div>
+          <!-- REACTIONS -->
+          <div class="reactions-bar" id="reactions-bar">
+            <button class="reaction-btn" onclick="react('👍')" id="r-👍"><span class="emoji">👍</span><span class="count" id="rc-👍">0</span></button>
+            <button class="reaction-btn" onclick="react('❤️')" id="r-❤️"><span class="emoji">❤️</span><span class="count" id="rc-❤️">0</span></button>
+            <button class="reaction-btn" onclick="react('😂')" id="r-😂"><span class="emoji">😂</span><span class="count" id="rc-😂">0</span></button>
+            <button class="reaction-btn" onclick="react('😢')" id="r-😢"><span class="emoji">😢</span><span class="count" id="rc-😢">0</span></button>
+            <button class="reaction-btn" onclick="react('💪')" id="r-💪"><span class="emoji">💪</span><span class="count" id="rc-💪">0</span></button>
+            <button class="reaction-btn" onclick="react('🔥')" id="r-🔥"><span class="emoji">🔥</span><span class="count" id="rc-🔥">0</span></button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="playlist" id="playlist">
+          <div class="playlist-head" data-en="Up Next" data-ar="التالي">Up Next</div>
+          <div id="playlist-items"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMENTS -->
+<div class="comments-section" id="comments-section" style="display:none;">
+  <div class="comments-wrap">
+    <div class="comments-head">
+      <h3 class="comments-title" data-en="Comments" data-ar="التعليقات">Comments</h3>
+      <span id="comments-count" style="font-size:.8rem;color:var(--muted);"></span>
+    </div>
+
+    <!-- Comment Form -->
+    <div class="comment-form" id="comment-form">
+      <div class="comment-form locked" id="comment-locked">
+        <p data-en="Sign in with Google to leave a comment" data-ar="سجّل دخولك بـ Google لترك تعليق">Sign in with Google to leave a comment</p>
+        <button class="btn-google" onclick="signInGoogle()" style="max-width:280px;margin:0 auto 0.75rem;">
+          <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          <span data-en="Sign in with Google" data-ar="تسجيل الدخول بـ Google">Sign in with Google</span>
+        </button>
+        <button onclick="signInLinkedIn()" style="display:flex;align-items:center;justify-content:center;gap:.75rem;max-width:280px;width:100%;margin:0 auto;padding:.75rem;background:#0077B5;color:#fff;font-size:.9rem;font-weight:500;border:none;cursor:pointer;font-family:inherit;">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          <span data-en="Sign in with LinkedIn" data-ar="تسجيل الدخول بـ LinkedIn">Sign in with LinkedIn</span>
+        </button>
+      </div>
+      <div id="comment-input-area" style="display:none;">
+        <div style="display:flex;gap:.75rem;align-items:flex-start;">
+          <div class="user-avatar" id="form-avatar" style="width:36px;height:36px;flex-shrink:0;"></div>
+          <div style="flex:1;">
+            <textarea class="comment-input" id="comment-text" placeholder="Write a comment..." rows="3"></textarea>
+            <div class="comment-actions">
+              <div class="user-badge" id="form-user-name"></div>
+              <button class="btn btn-gold btn-sm" onclick="submitComment()" data-en="Post Comment" data-ar="نشر التعليق">Post Comment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments List -->
+    <div id="comments-list"></div>
+  </div>
+</div>
+
+<!-- VIDEOS GRID -->
+<div class="page-wrap">
+  <div class="page-hero anim-1">
+    <p class="stag" data-en="Watch & Learn" data-ar="شاهد وتعلّم">Watch & Learn</p>
+    <h1 data-en="HR<br><span>Videos</span>" data-ar="فيديوهات<br><span>HR</span>">HR<br><span>Videos</span></h1>
+    <div class="divider"></div>
+    <p data-en="Educational HR content covering recruitment, labor law, performance management, and more."
+       data-ar="محتوى HR تعليمي يغطي التوظيف وقانون العمل وإدارة الأداء والمزيد.">
+       Educational HR content covering recruitment, labor law, and more.</p>
+  </div>
+
+  <div class="videos-section">
+    <div id="videos-container">
+      <div class="empty" style="padding:5rem;"><span class="spinner"></span><br><br>Loading videos...</div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="modal-overlay hidden" id="login-modal">
+  <div class="modal" style="position:relative;">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div style="font-size:2.5rem;margin-bottom:1rem;">🔐</div>
+    <h2 data-en="Sign In Required" data-ar="مطلوب تسجيل الدخول">Sign In Required</h2>
+    <p data-en="Sign in with your Google account to download documents and access exclusive content."
+       data-ar="سجّل دخولك بحساب Google لتحميل المستندات والوصول للمحتوى الحصري.">
+       Sign in with Google to download documents.</p>
+    <button class="btn-google" onclick="signInGoogle()">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      <span data-en="Continue with Google" data-ar="متابعة بـ Google">Continue with Google</span>
+    </button>
+    <button onclick="signInLinkedIn()" style="display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;padding:.85rem;background:#0077B5;color:#fff;font-size:.9rem;font-weight:500;border:none;cursor:pointer;font-family:inherit;margin-top:.75rem;">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      <span data-en="Continue with LinkedIn" data-ar="متابعة بـ LinkedIn">Continue with LinkedIn</span>
+    </button>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Mahmoud El-Deberky</p>
+  <p data-en="Crafted by Mahmoud El-Deberky" data-ar="صُنع بواسطة محمود الديبركي">Crafted by Mahmoud El-Deberky</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="shared.js"></script>
+<script>
+const SUPER_ADMIN = 'mahmoudeldeberky@gmail.com';
+let currentUser = null;
+let currentVideoId = null;
+let allVideos = [];
+let categories = [];
+
+// ── AUTH ─────────────────────────────────────────────────────
+async function checkUser() {
+  if(!_db) return;
+  const { data: { session } } = await _db.auth.getSession();
+  currentUser = session?.user || null;
+  updateUserUI();
+}
+
+function updateUserUI() {
+  const nav = document.getElementById('user-widget');
+  if(currentUser) {
+    const avatar = currentUser.user_metadata?.avatar_url || '';
+    const name   = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
+    nav.innerHTML = `
+      <div style="display:flex;align-items:center;gap:.5rem;">
+        ${avatar ? `<img src="${avatar}" style="width:28px;height:28px;border-radius:50%;border:1px solid var(--border);">` : ''}
+        <span style="font-size:.78rem;color:var(--cream);">${name}</span>
+        ${currentUser.email === SUPER_ADMIN ? `<a href="admin" style="font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(196,163,90,.4);padding:3px 10px;margin-left:.25rem;" data-en="Admin" data-ar="الإدارة">Admin</a>` : ''}
+        <button onclick="signOut()" style="font-size:.7rem;color:var(--muted);background:none;border:none;cursor:pointer;" data-en="Sign Out" data-ar="خروج">Sign Out</button>
+      </div>`;
+    // Show comment form
+    document.getElementById('comment-locked').style.display = 'none';
+    document.getElementById('comment-input-area').style.display = 'block';
+    const formAvatar = document.getElementById('form-avatar');
+    if(avatar) formAvatar.innerHTML = `<img src="${avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    else formAvatar.textContent = currentUser.email[0].toUpperCase();
+    document.getElementById('form-user-name').innerHTML = `<span style="color:var(--gold);">${currentUser.user_metadata?.full_name || currentUser.email}</span>`;
+  } else {
+    nav.innerHTML = `<button onclick="signInGoogle()" class="btn btn-outline btn-sm" data-en="Sign In" data-ar="دخول">Sign In</button>`;
+    document.getElementById('comment-locked').style.display = 'block';
+    document.getElementById('comment-input-area').style.display = 'none';
+  }
+}
+
+async function signInLinkedIn() {
+  if(!_db) return;
+  closeModal();
+  await _db.auth.signInWithOAuth({
+    provider: 'linkedin_oidc',
+    options: { redirectTo: window.location.href }
+  });
+}
+
+async function signInGoogle() {
+  if(!_db) return;
+  closeModal();
+  await _db.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.href }
+  });
+}
+
+async function signOut() {
+  await _db.auth.signOut();
+  currentUser = null;
+  updateUserUI();
+}
+
+function closeModal() { document.getElementById('login-modal').classList.add('hidden'); }
+
+// ── YOUTUBE HELPERS ───────────────────────────────────────────
+function getYTId(url) {
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : '';
+}
+function getThumb(ytId) { return ytId ? `https://img.youtube.com/vi/${ytId}/mqdefault.jpg` : ''; }
+function getEmbedUrl(ytId) { return `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0`; }
+
+// ── PLAY VIDEO ────────────────────────────────────────────────
+function playVideo(video) {
+  currentVideoId = video.id;
+  const ytId = video.youtube_id || getYTId(video.youtube_url);
+  document.getElementById('yt-iframe').src = getEmbedUrl(ytId);
+  document.getElementById('player-title').textContent = currentLang==='ar'&&video.title_ar ? video.title_ar : video.title_en;
+  document.getElementById('player-desc').textContent  = currentLang==='ar'&&video.description_ar ? video.description_ar : (video.description_en||'');
+  const cat = categories.find(c=>c.id===video.category_id);
+  document.getElementById('player-cat').textContent = cat ? (currentLang==='ar'&&cat.name_ar ? cat.name_ar : cat.name_en) : '';
+  document.getElementById('player-section').style.display = 'block';
+  document.getElementById('comments-section').style.display = 'block';
+
+  // Update playlist active
+  document.querySelectorAll('.pl-item').forEach(el => el.classList.toggle('active', el.dataset.id===video.id));
+
+  // Scroll to player
+  const navH = document.querySelector('nav')?.offsetHeight || 72;
+  window.scrollTo({top: 0, behavior: 'smooth'});
+
+  loadComments(video.id);
+  loadReactions(video.id);
+
+  // Update playlist
+  renderPlaylist(allVideos, video.id);
+}
+
+// ── LOAD VIDEOS ───────────────────────────────────────────────
+async function loadVideos() {
+  if(!_db) { document.getElementById('videos-container').innerHTML='<div class="empty" style="padding:3rem;">Please refresh the page.</div>'; return; }
+  const [vRes, cRes] = await Promise.all([
+    _db.from('videos').select('*').eq('is_active',true).order('sort_order').order('created_at'),
+    _db.from('video_categories').select('*').eq('is_active',true).order('sort_order')
+  ]);
+  allVideos  = vRes.data || [];
+  categories = cRes.data || [];
+
+  const el = document.getElementById('videos-container');
+  if(!allVideos.length) {
+    el.innerHTML = `<div class="no-videos"><div class="icon">📺</div><p data-en="No videos yet. Check back soon!" data-ar="لا توجد فيديوهات بعد. تابعنا قريباً!">No videos yet. Check back soon!</p></div>`;
+    return;
+  }
+
+  // Group by category
+  let html = '';
+  categories.forEach(cat => {
+    const vids = allVideos.filter(v=>v.category_id===cat.id);
+    if(!vids.length) return;
+    const catName = currentLang==='ar'&&cat.name_ar ? cat.name_ar : cat.name_en;
+    html += `<div class="cat-section reveal">
+      <div class="cat-header">
+        <h2 class="cat-title">${catName}</h2>
+        <span class="cat-count">${vids.length} video${vids.length!==1?'s':''}</span>
+      </div>
+      <div class="vid-grid">${vids.map(v=>videoCard(v,cat)).join('')}</div>
+    </div>`;
+  });
+
+  // Uncategorized
+  const uncat = allVideos.filter(v=>!v.category_id);
+  if(uncat.length) {
+    html += `<div class="cat-section reveal">
+      <div class="cat-header"><h2 class="cat-title" data-en="General" data-ar="عام">General</h2></div>
+      <div class="vid-grid">${uncat.map(v=>videoCard(v,null)).join('')}</div>
+    </div>`;
+  }
+
+  el.innerHTML = html;
+  initReveal();
+
+  // Auto-play first video
+  if(allVideos.length) playVideo(allVideos[0]);
+}
+
+function videoCard(v, cat) {
+  const ytId = v.youtube_id || getYTId(v.youtube_url);
+  const thumb = v.thumbnail || getThumb(ytId);
+  const title = currentLang==='ar'&&v.title_ar ? v.title_ar : v.title_en;
+  const catName = cat ? (currentLang==='ar'&&cat.name_ar?cat.name_ar:cat.name_en) : '';
+  return `<div class="vid-card" onclick="playVideo(${JSON.stringify(v).replace(/"/g,'&quot;')})">
+    <div class="vid-thumb">
+      ${thumb ? `<img src="${thumb}" alt="${title}" loading="lazy">` : '<div class="vid-thumb-placeholder">▶</div>'}
+      <div class="vid-play-btn"><div class="vid-play-icon">▶</div></div>
+    </div>
+    <div class="vid-body">
+      ${catName?`<p class="vid-cat">${catName}</p>`:''}
+      <h3 class="vid-title">${title}</h3>
+    </div>
+  </div>`;
+}
+
+function renderPlaylist(videos, activeId) {
+  const el = document.getElementById('playlist-items');
+  el.innerHTML = videos.map(v => {
+    const ytId = v.youtube_id || getYTId(v.youtube_url);
+    const thumb = v.thumbnail || getThumb(ytId);
+    const title = currentLang==='ar'&&v.title_ar?v.title_ar:v.title_en;
+    return `<div class="pl-item ${v.id===activeId?'active':''}" data-id="${v.id}" onclick='playVideo(${JSON.stringify(v).replace(/'/g,"&#39;")})'>
+      <div class="pl-thumb">${thumb?`<img src="${thumb}" loading="lazy">`:'<div class="pl-thumb-placeholder">▶</div>'}</div>
+      <div class="pl-info"><div class="pl-title">${title}</div></div>
+    </div>`;
+  }).join('');
+}
+
+// ── COMMENTS ─────────────────────────────────────────────────
+async function loadComments(videoId) {
+  if(!_db) return;
+  const { data } = await _db.from('comments').select('*').eq('video_id', videoId).eq('is_approved', true).order('created_at');
+  const count = data?.length || 0;
+  document.getElementById('comments-count').textContent = `${count} comment${count!==1?'s':''}`;
+  const el = document.getElementById('comments-list');
+  if(!data?.length) { el.innerHTML = `<p style="color:var(--muted);font-size:.88rem;text-align:center;padding:2rem;" data-en="No comments yet. Be the first!" data-ar="لا توجد تعليقات بعد. كن الأول!">No comments yet. Be the first!</p>`; return; }
+  el.innerHTML = data.map(c => {
+    const time = new Date(c.created_at).toLocaleDateString('en-GB',{year:'numeric',month:'short',day:'numeric'});
+    const canDelete = currentUser && (currentUser.id===c.user_id || currentUser.email===SUPER_ADMIN);
+    return `<div class="comment-item" id="cmt-${c.id}">
+      <div class="comment-avatar">${c.user_avatar?`<img src="${c.user_avatar}">`:(c.user_name||c.user_email||'?')[0].toUpperCase()}</div>
+      <div class="comment-body">
+        <div class="comment-name">${c.user_name||c.user_email.split('@')[0]}</div>
+        <div class="comment-text">${escHtml(c.content)}</div>
+        <div style="display:flex;gap:1rem;align-items:center;">
+          <div class="comment-time">${time}</div>
+          ${canDelete?`<span style="font-size:.68rem;color:#cc4444;cursor:pointer;" onclick="deleteComment('${c.id}')">Delete</span>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function submitComment() {
+  if(!currentUser) { showLoginModal(); return; }
+  const text = document.getElementById('comment-text').value.trim();
+  if(!text || !currentVideoId) return;
+  const { error } = await _db.from('comments').insert({
+    video_id:    currentVideoId,
+    user_id:     currentUser.id,
+    user_email:  currentUser.email,
+    user_name:   currentUser.user_metadata?.full_name || currentUser.email.split('@')[0],
+    user_avatar: currentUser.user_metadata?.avatar_url || '',
+    content:     text,
+    is_approved: true
+  });
+  if(error) { alert('Error: '+error.message); return; }
+  document.getElementById('comment-text').value = '';
+  loadComments(currentVideoId);
+}
+
+async function deleteComment(id) {
+  if(!confirm('Delete this comment?')) return;
+  await _db.from('comments').delete().eq('id',id);
+  loadComments(currentVideoId);
+}
+
+function escHtml(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ── REACTIONS ────────────────────────────────────────────────
+const REACTIONS = ['👍','❤️','😂','😢','💪','🔥'];
+let userReaction = null;
+
+async function loadReactions(videoId) {
+  if(!_db) return;
+  const {data} = await _db.from('reactions').select('reaction,user_id').eq('target_id',videoId);
+  const counts = {};
+  REACTIONS.forEach(r=>counts[r]=0);
+  (data||[]).forEach(r=>{ counts[r.reaction]=(counts[r.reaction]||0)+1; });
+  userReaction = currentUser ? (data||[]).find(r=>r.user_id===currentUser.id)?.reaction||null : null;
+  REACTIONS.forEach(r=>{
+    const countEl = document.getElementById(`rc-${r}`);
+    const btn = document.getElementById(`r-${r}`);
+    if(countEl) countEl.textContent = counts[r]||0;
+    if(btn) btn.classList.toggle('active', userReaction===r);
+  });
+}
+
+async function react(emoji) {
+  if(!currentUser) { showLoginModal(); return; }
+  if(!currentVideoId||!_db) return;
+  if(userReaction===emoji) {
+    // Remove reaction
+    await _db.from('reactions').delete().eq('target_id',currentVideoId).eq('user_id',currentUser.id);
+    userReaction=null;
+    // Update likes count
+    await _db.from('user_profiles').update({likes_count:Math.max(0,(_userProfile?.likes_count||1)-1)}).eq('id',currentUser.id);
+  } else {
+    // Upsert reaction
+    await _db.from('reactions').upsert({
+      target_id:currentVideoId, target_type:'video',
+      user_id:currentUser.id, user_email:currentUser.email, reaction:emoji
+    },{onConflict:'target_id,user_id'});
+    userReaction=emoji;
+    if(!_userProfile) _userProfile={likes_count:0};
+    await _db.from('user_profiles').update({likes_count:(_userProfile.likes_count||0)+1}).eq('id',currentUser.id);
+  }
+  loadReactions(currentVideoId);
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+  // Init Supabase directly — don't wait for shared.js
+  if(!_db && window.supabase) {
+    _db = window.supabase.createClient(
+      'https://gkspykbqyaodwbveuheh.supabase.co',
+      'sb_publishable_R_iucpsBmPKWUxT9Bf3ySg_pe6dOOn1'
+    );
+  }
+
+  // Get auth session
+  try {
+    const {data:{session}} = await _db.auth.getSession();
+    currentUser = session?.user || null;
+    _db.auth.onAuthStateChange((_, s) => {
+      currentUser = s?.user || null;
+      updateCommentForm();
+    });
+  } catch(e) {}
+
+  // Load videos immediately
+  loadVideos();
+});
+
+function updateCommentForm() {
+  const locked = document.getElementById('comment-locked');
+  const area   = document.getElementById('comment-input-area');
+  if(!locked||!area) return;
+  if(currentUser) {
+    locked.style.display='none'; area.style.display='block';
+    const avatar = currentUser.user_metadata?.avatar_url||'';
+    const name   = currentUser.user_metadata?.full_name||currentUser.email.split('@')[0];
+    const formAvatar = document.getElementById('form-avatar');
+    if(formAvatar) {
+      formAvatar.innerHTML = avatar
+        ? `<img src="${avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+        : name[0].toUpperCase();
+    }
+    const nameEl = document.getElementById('form-user-name');
+    if(nameEl) nameEl.innerHTML=`<span style="color:var(--gold);">${name}</span>`;
+  } else {
+    locked.style.display='block'; area.style.display='none';
+  }
+}
+</script>
+</body>
+</html>

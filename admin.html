@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Mahmoud El-Deberky</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root{--bg:#080809;--bg2:#0f0f11;--bg3:#141416;--gold:#C4A35A;--gold2:#e8c97a;--cream:#E8E2D4;--muted:#7a7468;--border:rgba(196,163,90,0.2);--red:#cc4444;--green:#4a9e6a;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--cream);font-family:'DM Sans','Helvetica Neue',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;}
+
+  /* LOGIN */
+  #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem;}
+  .login-box{background:var(--bg2);border:1px solid var(--border);padding:2.5rem;width:100%;max-width:400px;}
+  .login-logo{display:flex;justify-content:center;margin-bottom:2rem;}
+  .login-title{font-size:1.1rem;text-align:center;color:var(--muted);margin-bottom:2rem;letter-spacing:.05em;}
+
+  /* APP */
+  #app{display:none;}
+  .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+  .topbar-logo{display:flex;align-items:center;gap:.75rem;}
+  .topbar-logo span{font-size:.85rem;color:var(--muted);}
+  .topbar-actions{display:flex;align-items:center;gap:1rem;}
+  .tabs{display:flex;gap:2px;background:var(--bg3);padding:4px;border-radius:4px;}
+  .tab-btn{padding:6px 18px;background:transparent;color:var(--muted);border:none;cursor:pointer;font-size:.82rem;letter-spacing:.05em;border-radius:3px;transition:all .2s;font-family:inherit;}
+  .tab-btn.active{background:var(--gold);color:#080809;font-weight:500;}
+  .main{padding:2rem;max-width:1200px;margin:0 auto;}
+  .tab-panel{display:none;}
+  .tab-panel.active{display:block;}
+
+  /* FORMS */
+  .field{margin-bottom:1.2rem;}
+  label{display:block;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+  input[type=text],input[type=email],input[type=password],textarea,select{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.65rem .9rem;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s;}
+  input:focus,textarea:focus,select:focus{border-color:var(--gold);}
+  textarea{resize:vertical;min-height:80px;}
+  .btn{padding:.6rem 1.4rem;border:none;cursor:pointer;font-size:.82rem;letter-spacing:.06em;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem;}
+  .btn-gold{background:var(--gold);color:#080809;font-weight:500;}
+  .btn-gold:hover{background:var(--gold2);}
+  .btn-outline{background:transparent;color:var(--cream);border:1px solid var(--border);}
+  .btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+  .btn-red{background:rgba(204,68,68,.15);color:var(--red);border:1px solid rgba(204,68,68,.3);}
+  .btn-red:hover{background:rgba(204,68,68,.25);}
+  .btn-sm{padding:.4rem .9rem;font-size:.75rem;}
+
+  /* CARDS */
+  .card{background:var(--bg2);border:1px solid var(--border);padding:1.5rem;margin-bottom:1rem;}
+  .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem;}
+  .card-title{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);}
+  .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;}
+  .section-title{font-size:1.1rem;color:var(--cream);}
+  .section-sub{font-size:.8rem;color:var(--muted);margin-top:.2rem;}
+
+  /* CONTENT EDITOR */
+  .content-row{background:var(--bg2);border:1px solid var(--border);padding:1.2rem;margin-bottom:.75rem;transition:border-color .2s;}
+  .content-row:hover{border-color:rgba(196,163,90,.4);}
+  .content-row.saving{border-color:var(--gold);}
+  .content-row.saved{border-color:var(--green);}
+  .cr-head{display:flex;align-items:center;gap:1rem;margin-bottom:.9rem;}
+  .cr-key{font-size:.72rem;letter-spacing:.1em;color:var(--gold);background:rgba(196,163,90,.1);padding:3px 10px;border:1px solid rgba(196,163,90,.2);}
+  .cr-section{font-size:.7rem;color:var(--muted);}
+  .cr-fields{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .cr-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem;}
+  .cr-actions{display:flex;justify-content:flex-end;margin-top:.75rem;}
+  .filter-bar{display:flex;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+  .filter-btn{padding:5px 14px;background:transparent;border:1px solid var(--border);color:var(--muted);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:inherit;}
+  .filter-btn.active,.filter-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+  /* FILE UPLOAD */
+  .upload-zone{border:2px dashed var(--border);padding:3rem;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
+  .upload-zone:hover,.upload-zone.dragover{border-color:var(--gold);background:rgba(196,163,90,.04);}
+  .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .upload-icon{font-size:2rem;margin-bottom:.75rem;opacity:.4;}
+  .upload-text{font-size:.9rem;color:var(--muted);}
+  .upload-text span{color:var(--gold);}
+  .file-list{margin-top:1.5rem;}
+  .file-item{display:flex;align-items:center;gap:1rem;padding:1rem;background:var(--bg2);border:1px solid var(--border);margin-bottom:.5rem;}
+  .file-icon{width:36px;height:36px;background:rgba(196,163,90,.1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+  .file-info{flex:1;min-width:0;}
+  .file-name{font-size:.88rem;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .file-meta{font-size:.72rem;color:var(--muted);margin-top:2px;}
+  .file-actions{display:flex;gap:.5rem;flex-shrink:0;}
+  .badge{font-size:.62rem;letter-spacing:.06em;padding:2px 8px;display:inline-block;}
+  .badge-private{border:1px solid rgba(204,68,68,.4);color:var(--red);}
+  .badge-public{border:1px solid rgba(74,158,106,.4);color:var(--green);}
+  .badge-new{border:1px solid var(--border);color:var(--gold);}
+  .progress-bar{height:3px;background:var(--bg3);margin-top:.5rem;overflow:hidden;}
+  .progress-fill{height:100%;background:var(--gold);width:0%;transition:width .3s;}
+
+  /* DOCUMENTS TABLE */
+  .doc-grid{display:grid;gap:.75rem;}
+  .doc-card{background:var(--bg2);border:1px solid var(--border);padding:1.2rem;display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;}
+  .doc-title{font-size:.95rem;color:var(--cream);margin-bottom:.25rem;}
+  .doc-meta{font-size:.75rem;color:var(--muted);}
+  .doc-actions{display:flex;gap:.5rem;align-items:center;}
+
+  /* TOAST */
+  #toast{position:fixed;bottom:2rem;right:2rem;z-index:999;display:flex;flex-direction:column;gap:.5rem;}
+  .toast-item{padding:.75rem 1.2rem;font-size:.82rem;border-left:3px solid;animation:slideIn .2s ease;}
+  .toast-success{background:rgba(74,158,106,.15);border-color:var(--green);color:var(--green);}
+  .toast-error{background:rgba(204,68,68,.15);border-color:var(--red);color:var(--red);}
+  .toast-info{background:rgba(196,163,90,.1);border-color:var(--gold);color:var(--gold);}
+  @keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;margin-bottom:2rem;}
+  .stat-card{background:var(--bg2);border:1px solid var(--border);padding:1.25rem;}
+  .stat-num{font-size:1.8rem;color:var(--gold);line-height:1;margin-bottom:.25rem;}
+  .stat-lbl{font-size:.72rem;color:var(--muted);letter-spacing:.06em;}
+
+  .divider{height:1px;background:var(--border);margin:1.5rem 0;}
+  .empty{text-align:center;padding:3rem;color:var(--muted);font-size:.9rem;}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(196,163,90,.3);border-top-color:var(--gold);border-radius:50%;animation:spin .6s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .flex{display:flex;} .items-center{align-items:center;} .gap-2{gap:.5rem;} .ml-auto{margin-left:auto;}
+  @media(max-width:700px){.cr-fields{grid-template-columns:1fr;}.tabs{flex-wrap:wrap;}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="52" height="52" fill="none">
+        <path d="M100 16 L184 100 L100 184 L16 100 Z" stroke="#C4A35A" stroke-width="1.5" fill="none"/>
+        <path d="M100 28 L172 100 L100 172 L28 100 Z" stroke="#C4A35A" stroke-opacity="0.3" stroke-width="1" fill="none"/>
+        <path d="M56 132 V68 L100 110 L144 68 V132" stroke="#C4A35A" stroke-width="4.2" stroke-linejoin="miter" stroke-linecap="square" fill="none"/>
+        <circle cx="100" cy="100" r="2.5" fill="#C4A35A"/>
+      </svg>
+    </div>
+    <p class="login-title">Admin Panel · Mahmoud El-Deberky</p>
+    <div id="login-error" style="display:none;color:#cc4444;font-size:.82rem;margin-bottom:1rem;padding:.6rem .9rem;background:rgba(204,68,68,.1);border:1px solid rgba(204,68,68,.3);"></div>
+    <div class="field"><label>Email</label><input type="email" id="email" placeholder="your@email.com" autocomplete="email"></div>
+    <div class="field"><label>Password</label><input type="password" id="password" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="btn btn-gold" style="width:100%;justify-content:center;" onclick="login()">
+      <span id="login-text">Sign In</span>
+    </button>
+    <p style="margin-top:1.5rem;font-size:.75rem;color:var(--muted);text-align:center;">
+      🔒 Access restricted to authorized users only
+    </p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="28" height="28" fill="none">
+        <path d="M100 16 L184 100 L100 184 L16 100 Z" stroke="#C4A35A" stroke-width="1.5" fill="none"/>
+        <path d="M56 132 V68 L100 110 L144 68 V132" stroke="#C4A35A" stroke-width="4.2" stroke-linejoin="miter" stroke-linecap="square" fill="none"/>
+        <circle cx="100" cy="100" r="2.5" fill="#C4A35A"/>
+      </svg>
+      <span>Admin Panel</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('dashboard')">Dashboard</button>
+        <button class="tab-btn" onclick="switchTab('content')">Site Content</button>
+        <button class="tab-btn" onclick="switchTab('settings')">Settings</button>
+        <button class="tab-btn" onclick="switchTab('videos')">Videos</button>
+        <button class="tab-btn" onclick="switchTab('documents')">Documents</button>
+        <button class="tab-btn" onclick="switchTab('files')">Private Files</button>
+        <button class="tab-btn" onclick="switchTab('analytics')">Analytics</button>
+      </div>
+      <a href="/" target="_blank" class="btn btn-outline btn-sm">View Site ↗</a>
+      <button class="btn btn-outline btn-sm" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- DASHBOARD TAB -->
+    <div class="tab-panel active" id="tab-dashboard">
+      <div style="margin-bottom:2rem;">
+        <h1 style="font-size:1.4rem;color:var(--cream);margin-bottom:.25rem;">Welcome back, Mahmoud 👋</h1>
+        <p style="font-size:.85rem;color:var(--muted);">Manage your portfolio content and files from here.</p>
+      </div>
+      <div class="stat-grid" id="stats-grid">
+        <div class="stat-card"><div class="stat-num" id="st-content">—</div><div class="stat-lbl">Content Keys</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-docs">—</div><div class="stat-lbl">Documents</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-videos">—</div><div class="stat-lbl">Videos</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-files">—</div><div class="stat-lbl">Private Files</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-views-today">—</div><div class="stat-lbl">Views Today</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-views-total">—</div><div class="stat-lbl">Total Views</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-downloads">—</div><div class="stat-lbl">Total Downloads</div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><span class="card-title">Quick Actions</span></div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <button class="btn btn-gold" onclick="switchTab('content')">✏️ Edit Site Content</button>
+          <button class="btn btn-outline" onclick="switchTab('documents')">📄 Upload Document</button>
+          <button class="btn btn-outline" onclick="switchTab('files')">🔒 Manage Private Files</button>
+          <a href="/" target="_blank" class="btn btn-outline">🌐 View Portfolio</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT TAB -->
+    <div class="tab-panel" id="tab-content">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Site Content Editor</div>
+          <div class="section-sub">Edit any text on your portfolio in English and Arabic. Changes save instantly.</div>
+        </div>
+      </div>
+      <div class="filter-bar" id="section-filters">
+        <button class="filter-btn active" onclick="filterContent('all',this)">All</button>
+        <button class="filter-btn" onclick="filterContent('hero',this)">Hero</button>
+        <button class="filter-btn" onclick="filterContent('about',this)">About</button>
+        <button class="filter-btn" onclick="filterContent('contact',this)">Contact</button>
+      </div>
+      <div id="content-list"><div class="empty"><span class="spinner"></span><br><br>Loading content...</div></div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="tab-panel" id="tab-settings">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Site Settings</div>
+          <div class="section-sub">Control your profile photo, social links, and certificate links.</div>
+        </div>
+      </div>
+
+      <!-- NAVIGATION PAGES -->
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">🗂 Navigation Pages</span>
+          <div style="display:flex;gap:.5rem;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="toggleAddPageForm()">+ Add Page</button>
+            <button type="button" class="btn btn-gold btn-sm" onclick="saveAllNavPages()">💾 Save Changes</button>
+          </div>
+        </div>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;">Control which pages appear in the nav bar, their labels (EN/AR), and their order. Use "+ Add Sub-page" under any row to create dropdown items.</p>
+        <!-- Add New Page Form -->
+        <div id="add-page-form" style="display:none;background:var(--bg3);border:1px solid var(--border);padding:1rem;margin-bottom:1rem;">
+          <div style="font-size:.7rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;">New Top-Level Page</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:.75rem;align-items:end;">
+            <div><div style="font-size:.6rem;color:var(--muted);margin-bottom:.2rem;">URL PATH (e.g. about)</div>
+              <input type="text" id="np-href" placeholder="about" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.4rem .6rem;font-size:.85rem;font-family:inherit;"></div>
+            <div><div style="font-size:.6rem;color:var(--muted);margin-bottom:.2rem;">ENGLISH</div>
+              <input type="text" id="np-en" placeholder="About" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.4rem .6rem;font-size:.85rem;font-family:inherit;"></div>
+            <div><div style="font-size:.6rem;color:var(--muted);margin-bottom:.2rem;">عربي</div>
+              <input type="text" id="np-ar" placeholder="عني" dir="rtl" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.4rem .6rem;font-size:.85rem;font-family:inherit;"></div>
+            <button type="button" onclick="addNavPage()" style="background:var(--gold);color:#080809;border:none;padding:.4rem 1rem;font-size:.8rem;cursor:pointer;font-weight:600;font-family:inherit;height:38px;">Add</button>
+          </div>
+        </div>
+        <div id="nav-pages-list"><div class="empty"><span class="spinner"></span><br><br>Loading...</div></div>
+      </div>
+
+      <!-- PROFILE PHOTO -->
+      <div class="card">
+        <div class="card-head"><span class="card-title">📸 Profile Photo</span></div>
+        <div style="display:grid;grid-template-columns:140px 1fr;gap:2rem;align-items:start;">
+          <div>
+            <div id="photo-preview" style="width:120px;height:120px;border:1px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg3);">
+              <span style="font-size:2.5rem;opacity:.3;">👤</span>
+            </div>
+            <p style="font-size:.7rem;color:var(--muted);margin-top:.5rem;text-align:center;">Current photo</p>
+          </div>
+          <div>
+            <div class="field">
+              <label>Upload New Photo</label>
+              <div class="upload-zone">
+                <input type="file" id="photo-input" accept="image/jpeg,image/png,image/webp">
+                <div class="upload-icon">📸</div>
+                <div class="upload-text">Drop photo here or <span>browse</span></div>
+                <div id="photo-file-name" style="margin-top:.5rem;font-size:.8rem;color:var(--gold);"></div>
+              </div>
+              <div class="progress-bar" id="photo-progress-bar" style="display:none;margin-top:.5rem;"><div class="progress-fill" id="photo-progress-fill"></div></div>
+            </div>
+            <button type="button" class="btn btn-gold" onclick="uploadProfilePhoto()">Upload Photo</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SOCIAL LINKS -->
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-head">
+          <span class="card-title">🔗 Social & Contact Links</span>
+          <button type="button" class="btn btn-gold btn-sm" onclick="saveSocialLinks()">Save All</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="field"><label>LinkedIn URL</label><input type="text" id="set-linkedin" placeholder="https://linkedin.com/in/..."></div>
+          <div class="field"><label>CV Download URL</label><input type="text" id="set-cv" placeholder="https://..."></div>
+          <div class="field"><label>WhatsApp Number</label><input type="text" id="set-whatsapp" placeholder="+20..."></div>
+          <div class="field"><label>Email</label><input type="text" id="set-email" placeholder="your@email.com"></div>
+        </div>
+      </div>
+
+      <!-- SOCIAL MEDIA LINKS -->
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-head">
+          <span class="card-title">📱 Social Media & External Links</span>
+          <button type="button" class="btn btn-gold btn-sm" onclick="showAddNavLink()">+ Add Link</button>
+        </div>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;">These links appear as buttons in the Contact section alongside LinkedIn, WhatsApp, and CV.</p>
+
+        <div id="add-nav-link-form" style="display:none;background:var(--bg3);padding:1.2rem;margin-bottom:1rem;border:1px solid var(--border);">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="field"><label>Button Label (English)</label><input type="text" id="nav-label-en" placeholder="e.g. Wuzzuf Profile"></div>
+            <div class="field"><label>الاسم (عربي)</label><input type="text" id="nav-label-ar" placeholder="مثال: ملف وظفني" dir="rtl"></div>
+          </div>
+          <div class="field"><label>URL</label><input type="text" id="nav-link-url" placeholder="https://..."></div>
+          <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="hideAddNavLink()">Cancel</button>
+            <button type="button" class="btn btn-gold btn-sm" onclick="addNavLink()">Add Button</button>
+          </div>
+        </div>
+        <div id="nav-links-list"><div class="empty"><span class="spinner"></span><br><br>Loading...</div></div>
+      </div>
+
+      <!-- CERTIFICATE LINKS -->
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-head">
+          <span class="card-title">📜 Certificate Links</span>
+          <button class="btn btn-gold btn-sm" onclick="showAddLink()">+ Add Link</button>
+        </div>
+        <p style="font-size:.8rem;color:var(--muted);margin-bottom:1rem;">Add a URL for each certificate so visitors can view the actual document.</p>
+
+        <!-- Add Link Form -->
+        <div id="add-link-form" style="display:none;background:var(--bg3);padding:1.2rem;margin-bottom:1rem;border:1px solid var(--border);">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="field"><label>Certificate Name (EN)</label><input type="text" id="link-label-en" placeholder="e.g. Master's Degree Certificate"></div>
+            <div class="field"><label>اسم الشهادة (AR)</label><input type="text" id="link-label-ar" placeholder="مثال: شهادة الماجستير" dir="rtl"></div>
+          </div>
+          <div class="field"><label>Certificate URL</label><input type="text" id="link-url" placeholder="https://..."></div>
+          <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;">
+            <button class="btn btn-outline btn-sm" onclick="hideAddLink()">Cancel</button>
+            <button class="btn btn-gold btn-sm" onclick="addCertLink()">Add Link</button>
+          </div>
+        </div>
+
+        <div id="links-list"><div class="empty"><span class="spinner"></span><br><br>Loading...</div></div>
+      </div>
+    </div>
+
+    <!-- VIDEOS TAB -->
+    <div class="tab-panel" id="tab-videos">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Videos Manager</div>
+          <div class="section-sub">Add YouTube videos and manage categories. Videos appear on the Videos page.</div>
+        </div>
+        <button type="button" class="btn btn-gold" onclick="showAddVideoForm()">+ Add Video</button>
+      </div>
+
+      <!-- Add Video Form -->
+      <div class="card" id="add-video-form" style="display:none;">
+        <div class="card-head"><span class="card-title">New Video</span><button type="button" class="btn btn-outline btn-sm" onclick="hideAddVideoForm()">Cancel</button></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="field"><label>Title (English)</label><input type="text" id="vid-title-en" placeholder="e.g. How to Build a KPI System"></div>
+          <div class="field"><label>العنوان (عربي)</label><input type="text" id="vid-title-ar" placeholder="مثال: كيف تبني نظام KPI" dir="rtl"></div>
+        </div>
+        <div class="field">
+          <label>YouTube URL or ID</label>
+          <input type="text" id="vid-url" placeholder="https://www.youtube.com/watch?v=... or just the video ID" oninput="previewThumb()">
+          <div id="thumb-preview" style="margin-top:.75rem;display:none;">
+            <img id="thumb-img" src="" style="width:200px;height:112px;object-fit:cover;border:1px solid var(--border);">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="field">
+            <label>Category</label>
+            <select id="vid-category">
+              <option value="">-- Select Category --</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Sort Order</label>
+            <input type="number" id="vid-sort" value="0" min="0">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="field"><label>Description (English)</label><textarea id="vid-desc-en" rows="3" placeholder="Brief description..."></textarea></div>
+          <div class="field"><label>الوصف (عربي)</label><textarea id="vid-desc-ar" rows="3" placeholder="وصف مختصر..." dir="rtl"></textarea></div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:.75rem;margin-top:.5rem;">
+          <button type="button" class="btn btn-outline" onclick="hideAddVideoForm()">Cancel</button>
+          <button type="button" class="btn btn-gold" onclick="addVideo()">Add Video</button>
+        </div>
+      </div>
+
+      <!-- Categories Manager -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-head">
+          <span class="card-title">📁 Video Categories</span>
+          <button type="button" class="btn btn-outline btn-sm" onclick="showAddCatForm()">+ Add Category</button>
+        </div>
+        <div id="add-cat-form" style="display:none;background:var(--bg3);padding:1rem;margin-bottom:1rem;border:1px solid var(--border);">
+          <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:.75rem;align-items:end;">
+            <div class="field" style="margin:0;"><label>Name (EN)</label><input type="text" id="cat-name-en" placeholder="e.g. Recruitment"></div>
+            <div class="field" style="margin:0;"><label>الاسم (AR)</label><input type="text" id="cat-name-ar" placeholder="مثال: التوظيف" dir="rtl"></div>
+            <button type="button" class="btn btn-gold btn-sm" onclick="addCategory()" style="height:38px;">Add</button>
+          </div>
+        </div>
+        <div id="cats-list"><div class="empty"><span class="spinner"></span></div></div>
+      </div>
+
+      <!-- Videos List -->
+      <div id="videos-admin-list"><div class="empty"><span class="spinner"></span><br><br>Loading videos...</div></div>
+    </div>
+
+    <!-- ANALYTICS TAB -->
+    <div class="tab-panel" id="tab-analytics">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Analytics & Statistics</div>
+          <div class="section-sub">Visitor counts, page views, document downloads, and resource usage.</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="loadAnalytics();loadUsageStats();">↻ Refresh</button>
+      </div>
+
+      <!-- USAGE & LIMITS -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+
+        <!-- Supabase Usage -->
+        <div class="card" style="margin:0;">
+          <div class="card-head"><span class="card-title">⚡ Supabase Usage</span><span style="font-size:.7rem;color:var(--muted);">Free Tier Limits</span></div>
+          <div id="usage-supabase"><div class="empty" style="padding:1.5rem;"><span class="spinner"></span></div></div>
+        </div>
+
+        <!-- Domain & Hosting -->
+        <div class="card" style="margin:0;">
+          <div class="card-head"><span class="card-title">🌐 Domain & Hosting</span></div>
+          <div id="usage-domain"></div>
+        </div>
+
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-num" id="an-today">—</div><div class="stat-lbl">Views Today</div></div>
+        <div class="stat-card"><div class="stat-num" id="an-week">—</div><div class="stat-lbl">Views This Week</div></div>
+        <div class="stat-card"><div class="stat-num" id="an-month">—</div><div class="stat-lbl">Views This Month</div></div>
+        <div class="stat-card"><div class="stat-num" id="an-total">—</div><div class="stat-lbl">All-Time Views</div></div>
+        <div class="stat-card"><div class="stat-num" id="an-downloads">—</div><div class="stat-lbl">Total Downloads</div></div>
+      </div>
+      <!-- Views by page -->
+      <div class="card" style="margin-top:1.5rem;">
+        <div class="card-head"><span class="card-title">📄 Views by Page</span></div>
+        <div id="an-pages-list"><div class="empty"><span class="spinner"></span></div></div>
+      </div>
+      <!-- Top downloaded docs -->
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-head"><span class="card-title">⬇️ Most Downloaded Documents</span></div>
+        <div id="an-top-docs"><div class="empty"><span class="spinner"></span></div></div>
+      </div>
+      <!-- Recent views timeline -->
+      <div class="card" style="margin-top:1rem;">
+        <div class="card-head"><span class="card-title">📈 Daily Views (Last 14 Days)</span></div>
+        <div id="an-chart" style="padding:1rem 0;"></div>
+      </div>
+    </div>
+
+    <!-- DOCUMENTS TAB -->
+    <div class="tab-panel" id="tab-documents">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Documents & Decisions</div>
+          <div class="section-sub">Upload public documents visible on your portfolio, or mark them as private.</div>
+        </div>
+        <button class="btn btn-gold" onclick="showUploadForm('doc')">+ Upload Document</button>
+      </div>
+
+      <!-- DOC CATEGORIES MANAGER -->
+      <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-head">
+          <span class="card-title">📁 Document Categories</span>
+          <button type="button" class="btn btn-outline btn-sm" onclick="toggleDocCatForm()">+ Add Category</button>
+        </div>
+        <div id="add-doc-cat-form" style="display:none;background:var(--bg3);padding:1rem;margin-bottom:1rem;border:1px solid var(--border);">
+          <p style="font-size:.75rem;color:var(--muted);margin-bottom:.75rem;">Leave "Parent" empty to create a main category. Select a parent to create a subcategory under it.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:.75rem;align-items:end;">
+            <div class="field" style="margin:0;"><label>Name (EN)</label><input type="text" id="dcat-en" placeholder="e.g. HR Policies"></div>
+            <div class="field" style="margin:0;"><label>الاسم (AR)</label><input type="text" id="dcat-ar" placeholder="مثال: سياسات HR" dir="rtl"></div>
+            <div class="field" style="margin:0;"><label>Parent Category</label>
+              <select id="dcat-parent"><option value="">— Main Category —</option></select>
+            </div>
+            <button type="button" class="btn btn-gold btn-sm" onclick="addDocCategory()" style="height:38px;">Add</button>
+          </div>
+        </div>
+        <div id="doc-cats-list"><div class="empty"><span class="spinner"></span></div></div>
+      </div>
+
+      <!-- Upload Form -->
+      <div class="card" id="doc-upload-form" style="display:none;">
+        <div class="card-head"><span class="card-title">New Document</span><button class="btn btn-outline btn-sm" onclick="hideUploadForm('doc')">Cancel</button></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="field"><label>Title (English)</label><input type="text" id="doc-title-en" placeholder="e.g. Employment Decision 2024"></div>
+          <div class="field"><label>Title (Arabic)</label><input type="text" id="doc-title-ar" placeholder="مثال: قرار توظيف 2024" dir="rtl"></div>
+        </div>
+        <div class="field"><label>Description</label><textarea id="doc-desc" placeholder="Brief description of this document..."></textarea></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="field">
+            <label>Category</label>
+            <select id="doc-category">
+              <option value="">— Select Category —</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Visibility</label>
+            <select id="doc-private">
+              <option value="false">🌐 Public — visible on portfolio</option>
+              <option value="true">🔒 Private — only you can see it</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>File</label>
+          <div class="upload-zone" id="doc-drop-zone">
+            <input type="file" id="doc-file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.xlsx,.xls">
+            <div class="upload-icon">📎</div>
+            <div class="upload-text">Drop file here or <span>browse</span></div>
+            <div id="doc-file-name" style="margin-top:.5rem;font-size:.8rem;color:var(--gold);"></div>
+          </div>
+          <div class="progress-bar" id="doc-progress-bar" style="display:none;margin-top:.5rem;"><div class="progress-fill" id="doc-progress-fill"></div></div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:.75rem;">
+          <button class="btn btn-outline" onclick="hideUploadForm('doc')">Cancel</button>
+          <button class="btn btn-gold" onclick="uploadDocument()">Upload Document</button>
+        </div>
+      </div>
+
+      <div id="docs-list"><div class="empty"><span class="spinner"></span><br><br>Loading documents...</div></div>
+    </div>
+
+    <!-- PRIVATE FILES TAB -->
+    <div class="tab-panel" id="tab-files">
+      <div class="section-head">
+        <div>
+          <div class="section-title">Private Files</div>
+          <div class="section-sub">Your personal files — only accessible when you're logged in. Not visible publicly.</div>
+        </div>
+        <button class="btn btn-gold" onclick="showUploadForm('file')">+ Upload File</button>
+      </div>
+
+      <!-- Upload Form -->
+      <div class="card" id="file-upload-form" style="display:none;">
+        <div class="card-head"><span class="card-title">New Private File</span><button class="btn btn-outline btn-sm" onclick="hideUploadForm('file')">Cancel</button></div>
+        <div class="field"><label>File Title</label><input type="text" id="file-title" placeholder="e.g. Personal ID Documents"></div>
+        <div class="field"><label>Notes</label><textarea id="file-notes" placeholder="Any notes about this file..."></textarea></div>
+        <div class="field">
+          <label>File</label>
+          <div class="upload-zone" id="file-drop-zone">
+            <input type="file" id="file-input">
+            <div class="upload-icon">🔒</div>
+            <div class="upload-text">Drop file here or <span>browse</span></div>
+            <div id="file-name-display" style="margin-top:.5rem;font-size:.8rem;color:var(--gold);"></div>
+          </div>
+          <div class="progress-bar" id="file-progress-bar" style="display:none;margin-top:.5rem;"><div class="progress-fill" id="file-progress-fill"></div></div>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:.75rem;">
+          <button class="btn btn-outline" onclick="hideUploadForm('file')">Cancel</button>
+          <button class="btn btn-gold" onclick="uploadPrivateFile()">Upload Securely</button>
+        </div>
+      </div>
+
+      <div id="files-list"><div class="empty"><span class="spinner"></span><br><br>Loading files...</div></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ── CONFIG — REPLACE WITH YOUR SUPABASE CREDENTIALS ────────
+const SUPABASE_URL  = 'https://gkspykbqyaodwbveuheh.supabase.co';
+const SUPABASE_KEY  = 'sb_publishable_R_iucpsBmPKWUxT9Bf3ySg_pe6dOOn1';
+// ────────────────────────────────────────────────────────────
+
+const { createClient } = supabase;
+const db = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentUser = null;
+let contentData  = [];
+let contentFilter = 'all';
+
+// ── AUTH ────────────────────────────────────────────────────
+async function login() {
+  const email = document.getElementById('email').value.trim();
+  const pass  = document.getElementById('password').value;
+  const btn   = document.getElementById('login-text');
+  const err   = document.getElementById('login-error');
+  if (!email || !pass) { showErr('Please enter email and password.'); return; }
+  btn.innerHTML = '<span class="spinner"></span>';
+  err.style.display = 'none';
+  const { data, error } = await db.auth.signInWithPassword({ email, password: pass });
+  if (error) { showErr(error.message); btn.textContent = 'Sign In'; return; }
+  currentUser = data.user;
+  initApp();
+}
+
+async function logout() {
+  await db.auth.signOut();
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  currentUser = null;
+}
+
+function showErr(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('login-text').textContent = 'Sign In';
+}
+
+// Check existing session
+db.auth.getSession().then(({ data: { session } }) => {
+  if (session) { currentUser = session.user; initApp(); }
+});
+
+// ── INIT ────────────────────────────────────────────────────
+async function initApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  await Promise.all([loadStats(), loadContent(), loadDocuments(), loadDocCategories(), loadPrivateFiles(), loadSettings(), loadLinks(), loadNavLinks(), loadAdminVideos(), loadAnalytics(), loadNavPagesAdmin(), loadUsageStats()]);
+}
+
+// ── STATS ───────────────────────────────────────────────────
+async function loadStats() {
+  const [c, d, f, v] = await Promise.all([
+    db.from('site_content').select('id', {count:'exact'}),
+    db.from('documents').select('id', {count:'exact'}),
+    db.from('profile_files').select('id', {count:'exact'}),
+    db.from('videos').select('id', {count:'exact'})
+  ]);
+  document.getElementById('st-content').textContent = c.count ?? '—';
+  document.getElementById('st-docs').textContent    = d.count ?? '—';
+  document.getElementById('st-files').textContent   = f.count ?? '—';
+  document.getElementById('st-videos').textContent  = v.count ?? '—';
+}
+
+// ── CONTENT EDITOR ──────────────────────────────────────────
+async function loadContent() {
+  const { data, error } = await db.from('site_content').select('*').order('section').order('key');
+  if (error) { toast('Failed to load content', 'error'); return; }
+  contentData = data || [];
+  renderContent();
+}
+
+function filterContent(section, btn) {
+  contentFilter = section;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderContent();
+}
+
+function renderContent() {
+  const filtered = contentFilter === 'all' ? contentData : contentData.filter(c => c.section === contentFilter);
+  const el = document.getElementById('content-list');
+  if (!filtered.length) { el.innerHTML = '<div class="empty">No content in this section.</div>'; return; }
+  el.innerHTML = filtered.map(item => `
+    <div class="content-row" id="cr-${item.id}">
+      <div class="cr-head">
+        <span class="cr-key">${item.key}</span>
+        <span class="cr-section">${item.section}</span>
+        <span style="margin-left:auto;font-size:.7rem;color:var(--muted);">Last updated: ${new Date(item.updated_at).toLocaleDateString()}</span>
+      </div>
+      <div class="cr-fields">
+        <div>
+          <div class="cr-label">English</div>
+          <textarea id="en-${item.id}" rows="3">${escHtml(item.value_en||'')}</textarea>
+        </div>
+        <div>
+          <div class="cr-label">العربية</div>
+          <textarea id="ar-${item.id}" rows="3" dir="rtl">${escHtml(item.value_ar||'')}</textarea>
+        </div>
+      </div>
+      <div class="cr-actions">
+        <button class="btn btn-gold btn-sm" onclick="saveContent(${item.id})">Save Changes</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function saveContent(id) {
+  const enVal = document.getElementById(`en-${id}`).value;
+  const arVal = document.getElementById(`ar-${id}`).value;
+  const row = document.getElementById(`cr-${id}`);
+  row.classList.add('saving');
+  const { error } = await db.from('site_content').update({ value_en: enVal, value_ar: arVal }).eq('id', id);
+  row.classList.remove('saving');
+  if (error) { toast('Save failed: ' + error.message, 'error'); return; }
+  row.classList.add('saved');
+  setTimeout(() => row.classList.remove('saved'), 2000);
+  const idx = contentData.findIndex(c => c.id === id);
+  if (idx !== -1) { contentData[idx].value_en = enVal; contentData[idx].value_ar = arVal; }
+  toast('Content saved ✓', 'success');
+}
+
+// ── VIDEOS ───────────────────────────────────────────────────
+let adminCats = [];
+
+function getYTId(url) {
+  if(!url) return '';
+  if(url.length === 11 && !url.includes('/')) return url;
+  const m = url.match(/(?:youtu\.be\/|v=|\/embed\/)([a-zA-Z0-9_-]{11})/);
+  return m ? m[1] : '';
+}
+
+function previewThumb() {
+  const url = document.getElementById('vid-url').value;
+  const ytId = getYTId(url);
+  const preview = document.getElementById('thumb-preview');
+  const img = document.getElementById('thumb-img');
+  if(ytId) {
+    img.src = `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+}
+
+async function loadAdminVideos() {
+  const [vRes, cRes] = await Promise.all([
+    db.from('videos').select('*, video_categories(name_en)').order('sort_order').order('created_at', {ascending:false}),
+    db.from('video_categories').select('*').order('sort_order')
+  ]);
+  adminCats = cRes.data || [];
+
+  // Populate category select
+  const sel = document.getElementById('vid-category');
+  if(sel) sel.innerHTML = '<option value="">-- Select Category --</option>' +
+    adminCats.map(c=>`<option value="${c.id}">${c.name_en}${c.name_ar?' / '+c.name_ar:''}</option>`).join('');
+
+  // Render categories list
+  renderAdminCats(adminCats);
+
+  // Render videos
+  const videos = vRes.data || [];
+  const el = document.getElementById('videos-admin-list');
+  if(!videos.length) { el.innerHTML = '<div class="empty">No videos yet. Add your first video above.</div>'; return; }
+  el.innerHTML = `<div style="display:grid;gap:.75rem;">` + videos.map(v => {
+    const ytId = v.youtube_id || getYTId(v.youtube_url);
+    const thumb = `https://img.youtube.com/vi/${ytId}/mqdefault.jpg`;
+    const cat = v.video_categories?.name_en || '—';
+    return `<div class="file-item" style="align-items:flex-start;">
+      <img src="${thumb}" style="width:100px;height:56px;object-fit:cover;border:1px solid var(--border);flex-shrink:0;">
+      <div class="file-info">
+        <div class="file-name">${escHtml(v.title_en)}${v.title_ar?` · ${escHtml(v.title_ar)}`:''}</div>
+        <div class="file-meta">📁 ${cat} &nbsp;·&nbsp; Sort: ${v.sort_order} &nbsp;·&nbsp; ${new Date(v.created_at).toLocaleDateString()}</div>
+        <div class="file-meta" style="word-break:break-all;margin-top:2px;"><a href="${v.youtube_url}" target="_blank" style="color:var(--gold);font-size:.7rem;">${v.youtube_url}</a></div>
+      </div>
+      <div class="file-actions">
+        <button type="button" class="btn btn-outline btn-sm" onclick="toggleVideo('${v.id}',${v.is_active})">${v.is_active?'Hide':'Show'}</button>
+        <button type="button" class="btn btn-red btn-sm" onclick="deleteVideo('${v.id}')">Delete</button>
+      </div>
+    </div>`;
+  }).join('') + '</div>';
+}
+
+function renderAdminCats(cats) {
+  const el = document.getElementById('cats-list');
+  if(!cats.length) { el.innerHTML = '<div class="empty" style="padding:1rem;">No categories yet.</div>'; return; }
+  el.innerHTML = `<div style="display:flex;gap:.5rem;flex-wrap:wrap;padding:.5rem 0;">` +
+    cats.map(c=>`<div style="display:flex;align-items:center;gap:.4rem;background:var(--bg3);border:1px solid var(--border);padding:4px 12px;font-size:.78rem;">
+      <span>${c.name_en}${c.name_ar?' / '+c.name_ar:''}</span>
+      <button type="button" onclick="deleteCat('${c.id}')" style="background:none;border:none;color:var(--red,#cc4444);cursor:pointer;font-size:.9rem;line-height:1;">✕</button>
+    </div>`).join('') + '</div>';
+}
+
+async function addCategory() {
+  const nameEn = document.getElementById('cat-name-en').value.trim();
+  const nameAr = document.getElementById('cat-name-ar').value.trim();
+  if(!nameEn) { toast('Please enter category name', 'error'); return; }
+  const { error } = await db.from('video_categories').insert({ name_en: nameEn, name_ar: nameAr, sort_order: adminCats.length });
+  if(error) { toast('Error: '+error.message,'error'); return; }
+  toast('Category added ✓','success');
+  document.getElementById('cat-name-en').value='';
+  document.getElementById('cat-name-ar').value='';
+  document.getElementById('add-cat-form').style.display='none';
+  loadAdminVideos();
+}
+
+async function deleteCat(id) {
+  if(!confirm('Delete this category? Videos in it will become uncategorized.')) return;
+  await db.from('video_categories').delete().eq('id',id);
+  toast('Category deleted','success');
+  loadAdminVideos();
+}
+
+async function addVideo() {
+  const titleEn  = document.getElementById('vid-title-en').value.trim();
+  const titleAr  = document.getElementById('vid-title-ar').value.trim();
+  const url      = document.getElementById('vid-url').value.trim();
+  const catId    = document.getElementById('vid-category').value;
+  const sortVal  = parseInt(document.getElementById('vid-sort').value)||0;
+  const descEn   = document.getElementById('vid-desc-en').value.trim();
+  const descAr   = document.getElementById('vid-desc-ar').value.trim();
+  if(!titleEn||!url) { toast('Title and URL are required','error'); return; }
+  const ytId = getYTId(url);
+  if(!ytId) { toast('Invalid YouTube URL or ID','error'); return; }
+  const { error } = await db.from('videos').insert({
+    title_en: titleEn, title_ar: titleAr,
+    youtube_url: url, youtube_id: ytId,
+    category_id: catId||null,
+    description_en: descEn, description_ar: descAr,
+    sort_order: sortVal, is_active: true
+  });
+  if(error) { toast('Error: '+error.message,'error'); return; }
+  toast('Video added ✓','success');
+  hideAddVideoForm();
+  ['vid-title-en','vid-title-ar','vid-url','vid-desc-en','vid-desc-ar'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('thumb-preview').style.display='none';
+  loadAdminVideos();
+}
+
+async function toggleVideo(id, current) {
+  await db.from('videos').update({is_active:!current}).eq('id',id);
+  toast(current?'Video hidden':'Video visible','success');
+  loadAdminVideos();
+}
+
+async function deleteVideo(id) {
+  if(!confirm('Delete this video and all its comments?')) return;
+  await db.from('videos').delete().eq('id',id);
+  toast('Video deleted','success');
+  loadAdminVideos();
+}
+
+function showAddVideoForm()  { document.getElementById('add-video-form').style.display='block'; }
+function hideAddVideoForm()  { document.getElementById('add-video-form').style.display='none'; }
+function showAddCatForm()    { document.getElementById('add-cat-form').style.display='block'; }
+
+// ── DOC CATEGORIES ──────────────────────────────────────────
+let docCats = [];
+
+async function loadDocCategories() {
+  const { data } = await db.from('doc_categories').select('*').order('parent_id', {nullsFirst:true}).order('sort_order');
+  docCats = data || [];
+  renderDocCats(docCats);
+  populateDocCatSelects(docCats);
+}
+
+function toggleDocCatForm() {
+  const f = document.getElementById('add-doc-cat-form');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+function renderDocCats(cats) {
+  const el = document.getElementById('doc-cats-list');
+  if (!cats.length) { el.innerHTML = '<div class="empty" style="padding:1rem;">No categories yet. Add your first category above.</div>'; return; }
+  const mains = cats.filter(c => !c.parent_id);
+  const subs  = cats.filter(c =>  c.parent_id);
+  const editForm = (id, name_en, name_ar) => `
+    <div id="editcat-${id}" style="display:none;padding:.6rem .75rem;background:var(--bg3);border:1px solid rgba(196,163,90,.25);border-top:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr auto auto;gap:.5rem;align-items:end;">
+        <div><div style="font-size:.6rem;color:var(--muted);margin-bottom:.2rem;">ENGLISH</div>
+          <input type="text" id="ecen-${id}" value="${escHtml(name_en)}" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.3rem .5rem;font-size:.82rem;font-family:inherit;"></div>
+        <div><div style="font-size:.6rem;color:var(--muted);margin-bottom:.2rem;">عربي</div>
+          <input type="text" id="ecar-${id}" value="${escHtml(name_ar)}" dir="rtl" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.3rem .5rem;font-size:.82rem;font-family:inherit;"></div>
+        <button type="button" onclick="saveDocCat('${id}')" style="background:var(--gold);color:#080809;border:none;padding:.3rem .75rem;font-size:.72rem;cursor:pointer;font-weight:600;font-family:inherit;height:32px;">Save</button>
+        <button type="button" onclick="toggleEditCat('${id}')" style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:.3rem .75rem;font-size:.72rem;cursor:pointer;font-family:inherit;height:32px;">Cancel</button>
+      </div>
+    </div>`;
+  el.innerHTML = mains.map(m => {
+    const children = subs.filter(s => s.parent_id === m.id);
+    return `<div style="margin-bottom:.75rem;">
+      <div style="display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;background:rgba(196,163,90,.08);border:1px solid rgba(196,163,90,.25);">
+        <span style="font-size:.82rem;color:var(--cream);font-weight:500;">📁 ${escHtml(m.name_en)} / ${escHtml(m.name_ar)}</span>
+        <div style="margin-left:auto;display:flex;gap:.4rem;">
+          <button type="button" onclick="toggleEditCat('${m.id}')" style="background:none;border:1px solid rgba(196,163,90,.3);color:var(--gold);cursor:pointer;font-size:.72rem;padding:2px 8px;font-family:inherit;">✏ Edit</button>
+          <button type="button" onclick="deleteDocCat('${m.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:.8rem;">✕ Delete</button>
+        </div>
+      </div>
+      ${editForm(m.id, m.name_en, m.name_ar)}
+      ${children.length ? '<div style="padding:.4rem .75rem .4rem 1.5rem;display:flex;flex-direction:column;gap:.4rem;">' +
+        children.map(s => `<div>
+          <div style="display:flex;align-items:center;gap:.4rem;background:var(--bg3);border:1px solid var(--border);padding:4px 10px;font-size:.75rem;">
+            <span>↳ ${escHtml(s.name_en)} / ${escHtml(s.name_ar)}</span>
+            <div style="margin-left:auto;display:flex;gap:.3rem;">
+              <button type="button" onclick="toggleEditCat('${s.id}')" style="background:none;border:1px solid rgba(196,163,90,.3);color:var(--gold);cursor:pointer;font-size:.68rem;padding:1px 6px;font-family:inherit;">✏</button>
+              <button type="button" onclick="deleteDocCat('${s.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:.85rem;line-height:1;">✕</button>
+            </div>
+          </div>
+          ${editForm(s.id, s.name_en, s.name_ar)}
+        </div>`).join('') + '</div>' : ''}
+    </div>`;
+  }).join('');
+}
+
+function toggleEditCat(id) {
+  const f = document.getElementById(`editcat-${id}`);
+  if(f) f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+async function saveDocCat(id) {
+  const nameEn = document.getElementById(`ecen-${id}`)?.value.trim();
+  const nameAr = document.getElementById(`ecar-${id}`)?.value.trim();
+  if(!nameEn) { toast('Category name required','error'); return; }
+  const { error } = await db.from('doc_categories').update({ name_en: nameEn, name_ar: nameAr }).eq('id', id);
+  if(error) { toast('Error: '+error.message,'error'); return; }
+  toast('Category updated ✓','success');
+  loadDocCategories();
+}
+
+function populateDocCatSelects(cats) {
+  const mains = cats.filter(c => !c.parent_id);
+  const subs  = cats.filter(c =>  c.parent_id);
+  // Upload form select (grouped)
+  const sel = document.getElementById('doc-category');
+  if (sel) {
+    sel.innerHTML = '<option value="">— Select Category —</option>' +
+      mains.map(m => {
+        const children = subs.filter(s => s.parent_id === m.id);
+        const optgroup = children.length
+          ? `<optgroup label="${escHtml(m.name_en)} / ${escHtml(m.name_ar)}">` +
+            children.map(s => `<option value="${s.id}">&nbsp;&nbsp;↳ ${escHtml(s.name_en)} / ${escHtml(s.name_ar)}</option>`).join('') +
+            '</optgroup>'
+          : '';
+        return `<option value="${m.id}">${escHtml(m.name_en)} / ${escHtml(m.name_ar)}</option>` + optgroup;
+      }).join('');
+  }
+  // Parent select in add-form
+  const par = document.getElementById('dcat-parent');
+  if (par) {
+    par.innerHTML = '<option value="">— Main Category —</option>' +
+      mains.map(m => `<option value="${m.id}">${escHtml(m.name_en)} / ${escHtml(m.name_ar)}</option>`).join('');
+  }
+}
+
+async function addDocCategory() {
+  const nameEn   = document.getElementById('dcat-en').value.trim();
+  const nameAr   = document.getElementById('dcat-ar').value.trim();
+  const parentId = document.getElementById('dcat-parent').value || null;
+  if (!nameEn) { toast('Enter category name (EN)', 'error'); return; }
+  const { error } = await db.from('doc_categories').insert({ name_en: nameEn, name_ar: nameAr, parent_id: parentId, sort_order: docCats.length });
+  if (error) { toast('Error: ' + error.message, 'error'); return; }
+  toast('Category added ✓', 'success');
+  document.getElementById('dcat-en').value = '';
+  document.getElementById('dcat-ar').value = '';
+  document.getElementById('dcat-parent').value = '';
+  document.getElementById('add-doc-cat-form').style.display = 'none';
+  loadDocCategories();
+}
+
+async function deleteDocCat(id) {
+  if (!confirm('Delete this category? Documents in it will become uncategorized.')) return;
+  const { error } = await db.from('doc_categories').delete().eq('id', id);
+  if (error) { toast('Error: ' + error.message, 'error'); return; }
+  toast('Category deleted', 'success');
+  loadDocCategories();
+}
+
+// ── ANALYTICS ───────────────────────────────────────────────
+async function loadAnalytics() {
+  const now   = new Date();
+  const today = now.toISOString().split('T')[0];
+  const weekAgo  = new Date(now - 7  * 86400000).toISOString();
+  const monthAgo = new Date(now - 30 * 86400000).toISOString();
+
+  const [allViews, docs] = await Promise.all([
+    db.from('page_views').select('page, viewed_at'),
+    db.from('documents').select('title_en, download_count').order('download_count', {ascending:false}).limit(10)
+  ]);
+
+  const views = allViews.data || [];
+  const todayViews  = views.filter(v => v.viewed_at?.startsWith(today)).length;
+  const weekViews   = views.filter(v => new Date(v.viewed_at) >= new Date(weekAgo)).length;
+  const monthViews  = views.filter(v => new Date(v.viewed_at) >= new Date(monthAgo)).length;
+  const totalViews  = views.length;
+  const totalDl     = (docs.data || []).reduce((a, d) => a + (d.download_count || 0), 0);
+
+  // Update stat cards (dashboard + analytics tab)
+  ['an-today','st-views-today'].forEach(id => { const e=document.getElementById(id); if(e) e.textContent=todayViews; });
+  document.getElementById('an-week').textContent  = weekViews;
+  document.getElementById('an-month').textContent = monthViews;
+  ['an-total','st-views-total'].forEach(id => { const e=document.getElementById(id); if(e) e.textContent=totalViews; });
+  ['an-downloads','st-downloads'].forEach(id => { const e=document.getElementById(id); if(e) e.textContent=totalDl; });
+
+  // Views by page
+  const pageCount = {};
+  views.forEach(v => { pageCount[v.page] = (pageCount[v.page]||0) + 1; });
+  const sorted = Object.entries(pageCount).sort((a,b)=>b[1]-a[1]);
+  const pagesEl = document.getElementById('an-pages-list');
+  if (pagesEl) {
+    pagesEl.innerHTML = sorted.length ? sorted.map(([page,cnt]) =>
+      `<div style="display:flex;align-items:center;gap:1rem;padding:.6rem .5rem;border-bottom:1px solid var(--border);">
+        <span style="font-size:.85rem;color:var(--cream);min-width:120px;">/${page==='/'?'home':page}</span>
+        <div style="flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;background:var(--gold);width:${Math.round(cnt/sorted[0][1]*100)}%;"></div>
+        </div>
+        <span style="font-size:.82rem;color:var(--gold);min-width:40px;text-align:right;">${cnt}</span>
+      </div>`).join('') : '<div class="empty">No view data yet.</div>';
+  }
+
+  // Top downloaded docs
+  const docsEl = document.getElementById('an-top-docs');
+  const docData = docs.data || [];
+  if (docsEl) {
+    docsEl.innerHTML = docData.filter(d=>(d.download_count||0)>0).length
+      ? docData.filter(d=>(d.download_count||0)>0).map(d =>
+        `<div style="display:flex;align-items:center;gap:1rem;padding:.6rem .5rem;border-bottom:1px solid var(--border);">
+          <span style="font-size:.85rem;color:var(--cream);flex:1;">${escHtml(d.title_en)}</span>
+          <span style="font-size:.85rem;color:var(--gold);font-weight:500;">${d.download_count} ⬇</span>
+        </div>`).join('')
+      : '<div class="empty">No downloads tracked yet.</div>';
+  }
+
+  // Daily chart (last 14 days)
+  const chartEl = document.getElementById('an-chart');
+  if (chartEl) {
+    const days = [];
+    for (let i = 13; i >= 0; i--) {
+      const d = new Date(now - i * 86400000);
+      const key = d.toISOString().split('T')[0];
+      days.push({ label: d.toLocaleDateString('en',{month:'short',day:'numeric'}), key, count: views.filter(v=>v.viewed_at?.startsWith(key)).length });
+    }
+    const max = Math.max(...days.map(d=>d.count), 1);
+    chartEl.innerHTML = `<div style="display:flex;align-items:flex-end;gap:4px;height:80px;padding:0 .5rem;">` +
+      days.map(d => `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div style="width:100%;background:${d.count>0?'var(--gold)':'var(--bg3)'};height:${Math.round(d.count/max*64)+4}px;min-height:4px;opacity:${d.count>0?1:.4};border-radius:2px 2px 0 0;transition:height .3s;" title="${d.count} views"></div>
+        <span style="font-size:.6rem;color:var(--muted);white-space:nowrap;">${d.label}</span>
+      </div>`).join('') + '</div>';
+  }
+}
+
+// ── DOCUMENTS ───────────────────────────────────────────────
+async function loadDocuments() {
+  const { data, error } = await db.from('documents').select('*').order('created_at', { ascending: false });
+  if (error) { toast('Failed to load documents', 'error'); return; }
+  renderDocs(data || []);
+}
+
+function renderDocs(docs) {
+  const el = document.getElementById('docs-list');
+  if (!docs.length) { el.innerHTML = '<div class="empty">No documents yet. Upload your first document above.</div>'; return; }
+  const catOpts = () => '<option value="">— No Category —</option>' +
+    docCats.map(c => `<option value="${c.id}">${c.parent_id ? '&nbsp;&nbsp;↳ ' : ''}${escHtml(c.name_en)} / ${escHtml(c.name_ar)}</option>`).join('');
+  el.innerHTML = '<div class="doc-grid">' + docs.map(doc => `
+    <div class="doc-card" style="display:block;">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start;">
+        <div>
+          <div class="doc-title">${escHtml(doc.title_en)} ${doc.title_ar ? `<span style="color:var(--muted);font-size:.85rem;">· ${escHtml(doc.title_ar)}</span>` : ''}</div>
+          <div class="doc-meta">
+            <span class="badge ${doc.is_private ? 'badge-private' : 'badge-public'}">${doc.is_private ? '🔒 Private' : '🌐 Public'}</span>
+            &nbsp;·&nbsp; ${doc.category || '—'}
+            ${doc.file_name ? `&nbsp;·&nbsp; ${doc.file_name}` : ''}
+            &nbsp;·&nbsp; ${new Date(doc.created_at).toLocaleDateString()}
+          </div>
+          ${doc.description ? `<div style="font-size:.8rem;color:var(--muted);margin-top:.4rem;">${escHtml(doc.description)}</div>` : ''}
+        </div>
+        <div class="doc-actions">
+          ${doc.file_url ? `<button class="btn btn-outline btn-sm" onclick="copyLink('${doc.file_url}')">Copy Link</button>` : ''}
+          ${doc.file_url ? `<a href="${doc.file_url}" target="_blank" class="btn btn-outline btn-sm" onclick="trackDownload('${doc.id}')">View ↗</a>` : ''}
+          <span style="font-size:.72rem;color:var(--muted);padding:0 .4rem;">${doc.download_count||0} ⬇</span>
+          <button class="btn btn-outline btn-sm" onclick="toggleEditDoc('${doc.id}')">✏ Edit</button>
+          <button class="btn btn-outline btn-sm" onclick="togglePrivacy('${doc.id}', ${doc.is_private})">${doc.is_private ? '🌐 Make Public' : '🔒 Make Private'}</button>
+          <button class="btn btn-red btn-sm" onclick="deleteDoc('${doc.id}')">Delete</button>
+        </div>
+      </div>
+      <!-- Inline Edit Panel -->
+      <div id="editdoc-${doc.id}" style="display:none;border-top:1px solid var(--border);margin-top:.9rem;padding-top:.9rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem;">
+          <div><div style="font-size:.6rem;color:var(--gold);margin-bottom:.2rem;letter-spacing:.08em;text-transform:uppercase;">Title (EN)</div>
+            <input type="text" id="det-en-${doc.id}" value="${escHtml(doc.title_en)}" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.4rem .6rem;font-size:.85rem;font-family:inherit;"></div>
+          <div><div style="font-size:.6rem;color:var(--gold);margin-bottom:.2rem;letter-spacing:.08em;text-transform:uppercase;">العنوان (AR)</div>
+            <input type="text" id="det-ar-${doc.id}" value="${escHtml(doc.title_ar||'')}" dir="rtl" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.4rem .6rem;font-size:.85rem;font-family:inherit;"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem;">
+          <div><div style="font-size:.6rem;color:var(--gold);margin-bottom:.2rem;letter-spacing:.08em;text-transform:uppercase;">Category</div>
+            <select id="det-cat-${doc.id}" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.4rem .6rem;font-size:.85rem;font-family:inherit;">${catOpts()}</select>
+          </div>
+          <div><div style="font-size:.6rem;color:var(--gold);margin-bottom:.2rem;letter-spacing:.08em;text-transform:uppercase;">Description</div>
+            <input type="text" id="det-desc-${doc.id}" value="${escHtml(doc.description||'')}" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.4rem .6rem;font-size:.85rem;font-family:inherit;"></div>
+        </div>
+        <div style="display:flex;gap:.5rem;justify-content:flex-end;">
+          <button class="btn btn-outline btn-sm" onclick="toggleEditDoc('${doc.id}')">Cancel</button>
+          <button class="btn btn-gold btn-sm" onclick="saveDoc('${doc.id}')">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  `).join('') + '</div>';
+  // Set current category value after render
+  docs.forEach(doc => {
+    const sel = document.getElementById(`det-cat-${doc.id}`);
+    if(sel && doc.category_id) sel.value = doc.category_id;
+  });
+}
+
+function toggleEditDoc(id) {
+  const f = document.getElementById(`editdoc-${id}`);
+  if(f) f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+async function saveDoc(id) {
+  const titleEn = document.getElementById(`det-en-${id}`)?.value.trim();
+  const titleAr = document.getElementById(`det-ar-${id}`)?.value.trim();
+  const catId   = document.getElementById(`det-cat-${id}`)?.value || null;
+  const desc    = document.getElementById(`det-desc-${id}`)?.value.trim();
+  if(!titleEn) { toast('Title (EN) is required','error'); return; }
+  const cat = docCats.find(c => c.id === catId);
+  const catName = cat ? cat.name_en.toLowerCase() : '';
+  const { error } = await db.from('documents').update({
+    title_en: titleEn, title_ar: titleAr,
+    description: desc,
+    category: catName,
+    category_id: catId
+  }).eq('id', id);
+  if(error) { toast('Error: '+error.message,'error'); return; }
+  toast('Document updated ✓','success');
+  loadDocuments();
+}
+
+async function uploadDocument() {
+  const titleEn = document.getElementById('doc-title-en').value.trim();
+  const titleAr = document.getElementById('doc-title-ar').value.trim();
+  const desc     = document.getElementById('doc-desc').value.trim();
+  const category = document.getElementById('doc-category').value;
+  const isPrivate = document.getElementById('doc-private').value === 'true';
+  const fileInput = document.getElementById('doc-file');
+  const file      = fileInput.files[0];
+  if (!titleEn) { toast('Please enter a title (English)', 'error'); return; }
+
+  let fileUrl = null, fileName = null, fileSize = 0;
+  if (file) {
+    const bar = document.getElementById('doc-progress-bar');
+    const fill = document.getElementById('doc-progress-fill');
+    bar.style.display = 'block';
+    fill.style.width = '30%';
+    const path = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+    const { data: upData, error: upErr } = await db.storage.from('documents').upload(path, file);
+    fill.style.width = '80%';
+    if (upErr) { toast('File upload failed: ' + upErr.message, 'error'); bar.style.display = 'none'; return; }
+    const { data: urlData } = db.storage.from('documents').getPublicUrl(path);
+    fileUrl  = urlData.publicUrl;
+    fileName = file.name;
+    fileSize = file.size;
+    fill.style.width = '100%';
+    setTimeout(() => { bar.style.display = 'none'; fill.style.width = '0%'; }, 500);
+  }
+
+  const catId = document.getElementById('doc-category').value || null;
+  const { error } = await db.from('documents').insert({ title_en: titleEn, title_ar: titleAr, description: desc, category, category_id: catId, is_private: isPrivate, file_url: fileUrl, file_name: fileName, file_size: fileSize });
+  if (error) { toast('Failed to save document: ' + error.message, 'error'); return; }
+  toast('Document uploaded ✓', 'success');
+  hideUploadForm('doc');
+  clearDocForm();
+  loadDocuments();
+  loadStats();
+}
+
+async function trackDownload(docId) {
+  await db.from('documents').update({ download_count: db.rpc ? undefined : undefined }).eq('id', docId);
+  // increment via raw SQL approach
+  await db.rpc('increment_download', { doc_id: docId }).catch(() => {
+    // fallback: read then write
+    db.from('documents').select('download_count').eq('id',docId).single().then(({data}) => {
+      if(data) db.from('documents').update({download_count:(data.download_count||0)+1}).eq('id',docId);
+    });
+  });
+}
+
+async function togglePrivacy(id, currentPrivate) {
+  const { error } = await db.from('documents').update({ is_private: !currentPrivate }).eq('id', id);
+  if (error) { toast('Update failed', 'error'); return; }
+  toast(currentPrivate ? '🌐 Document is now Public' : '🔒 Document is now Private', 'success');
+  loadDocuments();
+}
+
+function copyLink(url) {
+  navigator.clipboard.writeText(url).then(() => toast('Link copied! ✓', 'success'));
+}
+
+async function deleteDoc(id) {
+  if (!confirm('Delete this document?')) return;
+  const { error } = await db.from('documents').delete().eq('id', id);
+  if (error) { toast('Delete failed', 'error'); return; }
+  toast('Document deleted', 'success');
+  loadDocuments(); loadStats();
+}
+
+// ── PRIVATE FILES ───────────────────────────────────────────
+async function loadPrivateFiles() {
+  const { data, error } = await db.from('profile_files').select('*').order('created_at', { ascending: false });
+  if (error) { toast('Failed to load files', 'error'); return; }
+  renderFiles(data || []);
+}
+
+function renderFiles(files) {
+  const el = document.getElementById('files-list');
+  if (!files.length) { el.innerHTML = '<div class="empty">No private files yet. Your personal documents will appear here.</div>'; return; }
+  el.innerHTML = '<div class="file-list">' + files.map(f => `
+    <div class="file-item">
+      <div class="file-icon">🔒</div>
+      <div class="file-info">
+        <div class="file-name">${escHtml(f.title)}</div>
+        <div class="file-meta">${f.file_name || ''} ${f.file_size ? `· ${formatBytes(f.file_size)}` : ''} · ${new Date(f.created_at).toLocaleDateString()}</div>
+        ${f.notes ? `<div style="font-size:.75rem;color:var(--muted);margin-top:2px;">${escHtml(f.notes)}</div>` : ''}
+      </div>
+      <div class="file-actions">
+        ${f.file_url ? `<a href="${f.file_url}" target="_blank" class="btn btn-outline btn-sm">Download</a>` : ''}
+        <button class="btn btn-red btn-sm" onclick="deleteFile('${f.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('') + '</div>';
+}
+
+async function uploadPrivateFile() {
+  const title = document.getElementById('file-title').value.trim();
+  const notes = document.getElementById('file-notes').value.trim();
+  const fileInput = document.getElementById('file-input');
+  const file = fileInput.files[0];
+  if (!title) { toast('Please enter a title', 'error'); return; }
+  if (!file) { toast('Please select a file', 'error'); return; }
+
+  const bar = document.getElementById('file-progress-bar');
+  const fill = document.getElementById('file-progress-fill');
+  bar.style.display = 'block'; fill.style.width = '30%';
+
+  const path = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
+  const { data: upData, error: upErr } = await db.storage.from('profile-files').upload(path, file);
+  fill.style.width = '80%';
+  if (upErr) { toast('Upload failed: ' + upErr.message, 'error'); bar.style.display = 'none'; return; }
+
+  const { data: urlData } = await db.storage.from('profile-files').createSignedUrl(path, 60 * 60 * 24 * 365);
+  fill.style.width = '100%';
+
+  const { error } = await db.from('profile_files').insert({ title, notes, file_url: urlData?.signedUrl || path, file_name: file.name, file_size: file.size });
+  if (error) { toast('Failed to save: ' + error.message, 'error'); return; }
+
+  toast('File uploaded securely ✓', 'success');
+  hideUploadForm('file');
+  document.getElementById('file-title').value = '';
+  document.getElementById('file-notes').value = '';
+  fileInput.value = '';
+  document.getElementById('file-name-display').textContent = '';
+  setTimeout(() => { bar.style.display = 'none'; fill.style.width = '0%'; }, 300);
+  loadPrivateFiles(); loadStats();
+}
+
+async function deleteFile(id) {
+  if (!confirm('Delete this file?')) return;
+  const { error } = await db.from('profile_files').delete().eq('id', id);
+  if (error) { toast('Delete failed', 'error'); return; }
+  toast('File deleted', 'success');
+  loadPrivateFiles(); loadStats();
+}
+
+// ── SETTINGS ────────────────────────────────────────────────
+async function loadSettings() {
+  const { data } = await db.from('site_settings').select('*');
+  if (!data) return;
+  const s = Object.fromEntries(data.map(r => [r.key, r.value]));
+  document.getElementById('set-linkedin').value  = s.linkedin_url   || '';
+  document.getElementById('set-cv').value        = s.cv_url         || '';
+  document.getElementById('set-whatsapp').value  = s.whatsapp_number|| '';
+  document.getElementById('set-email').value     = s.site_email     || '';
+  if (s.profile_photo_url) {
+    const preview = document.getElementById('photo-preview');
+    preview.innerHTML = `<img src="${s.profile_photo_url}" style="width:100%;height:100%;object-fit:cover;">`;
+  }
+}
+
+async function saveSocialLinks() {
+  const updates = [
+    { key: 'linkedin_url',    value: document.getElementById('set-linkedin').value.trim() },
+    { key: 'cv_url',          value: document.getElementById('set-cv').value.trim() },
+    { key: 'whatsapp_number', value: document.getElementById('set-whatsapp').value.trim() },
+    { key: 'site_email',      value: document.getElementById('set-email').value.trim() },
+  ];
+  for (const u of updates) {
+    await db.from('site_settings').upsert({ key: u.key, value: u.value }, { onConflict: 'key' });
+  }
+  toast('Settings saved ✓', 'success');
+}
+
+async function uploadProfilePhoto() {
+  const file = document.getElementById('photo-input').files[0];
+  if (!file) { toast('Please select a photo first', 'error'); return; }
+  if (file.size > 5 * 1024 * 1024) { toast('Photo must be under 5MB', 'error'); return; }
+  const bar  = document.getElementById('photo-progress-bar');
+  const fill = document.getElementById('photo-progress-fill');
+  bar.style.display = 'block'; fill.style.width = '20%';
+  try {
+    const ext  = file.name.split('.').pop().toLowerCase();
+    const path = `profile.${ext}`;
+    // Try upload with upsert
+    const { data: upData, error: upErr } = await db.storage
+      .from('profile-photo')
+      .upload(path, file, { upsert: true, contentType: file.type });
+    fill.style.width = '70%';
+    if (upErr) {
+      // If bucket doesn't exist, show clear message
+      if (upErr.message?.includes('not found') || upErr.message?.includes('Bucket')) {
+        toast('⚠️ Run the migration SQL first! (migration_settings_links.sql)', 'error');
+      } else {
+        toast('Upload error: ' + upErr.message, 'error');
+      }
+      bar.style.display = 'none'; return;
+    }
+    const { data: urlData } = db.storage.from('profile-photo').getPublicUrl(path);
+    const photoUrl = urlData.publicUrl + '?v=' + Date.now();
+    fill.style.width = '90%';
+    await db.from('site_settings').upsert({ key: 'profile_photo_url', value: photoUrl }, { onConflict: 'key' });
+    fill.style.width = '100%';
+    document.getElementById('photo-preview').innerHTML =
+      `<img src="${photoUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:2px;">`;
+    setTimeout(() => { bar.style.display = 'none'; fill.style.width = '0%'; }, 400);
+    toast('✓ Profile photo updated! Refresh your portfolio to see it.', 'success');
+  } catch(e) {
+    bar.style.display = 'none';
+    toast('Unexpected error: ' + e.message, 'error');
+  }
+}
+
+document.getElementById('photo-input')?.addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (f) document.getElementById('photo-file-name').textContent = `📸 ${f.name}`;
+});
+
+// ── NAV LINKS ────────────────────────────────────────────────
+async function loadNavLinks() {
+  const { data } = await db.from('links').select('*').eq('type', 'social').order('sort_order').order('created_at');
+  renderNavLinks(data || []);
+}
+
+function renderNavLinks(links) {
+  const el = document.getElementById('nav-links-list');
+  if (!links.length) { el.innerHTML = '<div class="empty">No custom nav links yet.</div>'; return; }
+  el.innerHTML = links.map(l => `
+    <div class="file-item">
+      <div class="file-icon" style="font-size:1.3rem;">${l.label_ar?.startsWith('icon:') ? l.label_ar.replace('icon:','') : '🔗'}</div>
+      <div class="file-info">
+        <div class="file-name">${escHtml(l.label_en)} ${l.label_ar && !l.label_ar.startsWith('icon:') ? `· ${escHtml(l.label_ar)}` : ''}</div>
+        <div class="file-meta">${escHtml(l.url)}</div>
+      </div>
+      <div class="file-actions">
+        <button type="button" class="btn btn-outline btn-sm" onclick="toggleNavLink('${l.id}', ${l.is_active})">${l.is_active ? 'Hide' : 'Show'}</button>
+        <button type="button" class="btn btn-red btn-sm" onclick="deleteNavLink('${l.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function showAddNavLink() { document.getElementById('add-nav-link-form').style.display = 'block'; }
+function hideAddNavLink() { document.getElementById('add-nav-link-form').style.display = 'none'; }
+
+async function addNavLink() {
+  const labelEn = document.getElementById('nav-label-en').value.trim();
+  const labelAr = document.getElementById('nav-label-ar').value.trim();
+  const url     = document.getElementById('nav-link-url').value.trim();
+  if (!labelEn || !url) { toast('Please fill in name and URL', 'error'); return; }
+  const { error } = await db.from('links').insert({ label_en: labelEn, label_ar: labelAr, url, type: 'social', is_active: true });
+  if (error) { toast('Failed: ' + error.message, 'error'); return; }
+  toast('Social link added ✓', 'success');
+  ['nav-label-en','nav-label-ar','nav-link-url'].forEach(id => document.getElementById(id).value = '');
+  hideAddNavLink();
+  loadNavLinks();
+}
+
+async function toggleNavLink(id, current) {
+  await db.from('links').update({ is_active: !current }).eq('id', id);
+  toast(current ? 'Link hidden' : 'Link visible', 'success');
+  loadNavLinks();
+}
+
+async function deleteNavLink(id) {
+  if (!confirm('Delete this nav link?')) return;
+  await db.from('links').delete().eq('id', id);
+  toast('Deleted', 'success');
+  loadNavLinks();
+}
+
+// ── CERT LINKS ───────────────────────────────────────────────
+async function loadLinks() {
+  const { data } = await db.from('links').select('*').order('sort_order').order('created_at');
+  renderLinks(data || []);
+}
+
+function renderLinks(links) {
+  const el = document.getElementById('links-list');
+  if (!links.length) { el.innerHTML = '<div class="empty">No certificate links yet. Add your first one above.</div>'; return; }
+  el.innerHTML = links.map(l => `
+    <div class="file-item">
+      <div class="file-icon">📜</div>
+      <div class="file-info">
+        <div class="file-name">${escHtml(l.label_en)} ${l.label_ar ? `· ${escHtml(l.label_ar)}` : ''}</div>
+        <div class="file-meta" style="word-break:break-all;">${escHtml(l.url)}</div>
+      </div>
+      <div class="file-actions">
+        <a href="${l.url}" target="_blank" class="btn btn-outline btn-sm">View</a>
+        <button class="btn btn-outline btn-sm" onclick="copyLink('${l.url}')">Copy</button>
+        <button class="btn btn-red btn-sm" onclick="deleteLink('${l.id}')">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function showAddLink()  { document.getElementById('add-link-form').style.display = 'block'; }
+function hideAddLink()  { document.getElementById('add-link-form').style.display = 'none'; }
+
+async function addCertLink() {
+  const labelEn = document.getElementById('link-label-en').value.trim();
+  const labelAr = document.getElementById('link-label-ar').value.trim();
+  const url     = document.getElementById('link-url').value.trim();
+  if (!labelEn || !url) { toast('Please fill in name and URL', 'error'); return; }
+  const { error } = await db.from('links').insert({ label_en: labelEn, label_ar: labelAr, url, type: 'certificate' });
+  if (error) { toast('Failed: ' + error.message, 'error'); return; }
+  toast('Link added ✓', 'success');
+  document.getElementById('link-label-en').value = '';
+  document.getElementById('link-label-ar').value = '';
+  document.getElementById('link-url').value = '';
+  hideAddLink();
+  loadLinks();
+}
+
+async function deleteLink(id) {
+  if (!confirm('Delete this link?')) return;
+  await db.from('links').delete().eq('id', id);
+  toast('Link deleted', 'success');
+  loadLinks();
+}
+
+// ── UI HELPERS ──────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+function showUploadForm(type) {
+  document.getElementById(type === 'doc' ? 'doc-upload-form' : 'file-upload-form').style.display = 'block';
+}
+function hideUploadForm(type) {
+  document.getElementById(type === 'doc' ? 'doc-upload-form' : 'file-upload-form').style.display = 'none';
+}
+function clearDocForm() {
+  ['doc-title-en','doc-title-ar','doc-desc'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('doc-file').value = '';
+  document.getElementById('doc-file-name').textContent = '';
+}
+
+document.getElementById('doc-file')?.addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (f) document.getElementById('doc-file-name').textContent = `📎 ${f.name} (${formatBytes(f.size)})`;
+});
+document.getElementById('file-input')?.addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (f) document.getElementById('file-name-display').textContent = `📎 ${f.name} (${formatBytes(f.size)})`;
+});
+
+function toast(msg, type = 'info') {
+  const el = document.createElement('div');
+  el.className = `toast-item toast-${type}`;
+  el.textContent = msg;
+  document.getElementById('toast').appendChild(el);
+  setTimeout(() => el.remove(), 3500);
+}
+
+function formatBytes(b) {
+  if (!b) return ''; if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(1) + ' MB';
+}
+
+function escHtml(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── NAV PAGES MANAGER ───────────────────────────────────────
+let _adminNavPages = [];
+
+async function loadNavPagesAdmin() {
+  const {data} = await db.from('nav_pages').select('*').order('sort_order');
+  _adminNavPages = data || [];
+  renderNavPages();
+}
+
+function renderNavPages() {
+  const el = document.getElementById('nav-pages-list');
+  if(!el) return;
+  if(!_adminNavPages.length) {
+    el.innerHTML='<div class="empty" style="color:var(--red);">No nav pages found — run nav_migration.sql in Supabase first.</div>';
+    return;
+  }
+  const topPages = _adminNavPages.filter(p=>!p.parent_id);
+  const subMap   = {};
+  _adminNavPages.filter(p=>p.parent_id).forEach(p=>{ (subMap[p.parent_id]=subMap[p.parent_id]||[]).push(p); });
+
+  el.innerHTML = topPages.map((p,i)=>{
+    const subs = subMap[p.id]||[];
+    return `
+    <div style="border:1px solid var(--border);margin-bottom:.6rem;overflow:hidden;">
+      <!-- Main page row -->
+      <div style="display:grid;grid-template-columns:110px 1fr 1fr 60px 80px;gap:.6rem;align-items:center;padding:.75rem;background:var(--bg3);">
+        <div style="font-size:.72rem;color:var(--muted);font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">/${p.href==='/'?'':p.href}</div>
+        <div>
+          <div style="font-size:.6rem;color:var(--muted);margin-bottom:.2rem;letter-spacing:.06em;">ENGLISH</div>
+          <input type="text" value="${escHtml(p.label_en)}" oninput="updNav('${p.id}','label_en',this.value)"
+            style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.35rem .6rem;font-size:.82rem;font-family:inherit;">
+        </div>
+        <div>
+          <div style="font-size:.6rem;color:var(--muted);margin-bottom:.2rem;letter-spacing:.06em;">عربي</div>
+          <input type="text" value="${escHtml(p.label_ar)}" oninput="updNav('${p.id}','label_ar',this.value)" dir="rtl"
+            style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.35rem .6rem;font-size:.82rem;font-family:inherit;">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:3px;align-items:center;">
+          <button onclick="moveNavTop('${p.id}',-1)" ${i===0?'disabled':''} style="background:var(--bg2);border:1px solid var(--border);color:${i===0?'var(--muted)':'var(--cream)'};width:28px;height:22px;cursor:${i===0?'not-allowed':'pointer'};font-size:.75rem;">▲</button>
+          <button onclick="moveNavTop('${p.id}',1)"  ${i===topPages.length-1?'disabled':''} style="background:var(--bg2);border:1px solid var(--border);color:${i===topPages.length-1?'var(--muted)':'var(--cream)'};width:28px;height:22px;cursor:${i===topPages.length-1?'not-allowed':'pointer'};font-size:.75rem;">▼</button>
+        </div>
+        <label style="display:flex;align-items:center;gap:.4rem;cursor:pointer;font-size:.75rem;color:${p.is_visible?'var(--green)':'var(--red)'};" id="nvl-${p.id}">
+          <input type="checkbox" ${p.is_visible?'checked':''} onchange="updNav('${p.id}','is_visible',this.checked);document.getElementById('nvl-${p.id}').style.color=this.checked?'var(--green)':'var(--red)'"
+            style="width:auto;accent-color:var(--gold);cursor:pointer;">
+          ${p.is_visible?'Visible':'Hidden'}
+        </label>
+      </div>
+      <!-- Sub-pages -->
+      ${subs.map(s=>`
+        <div style="display:grid;grid-template-columns:24px 100px 1fr 1fr auto;gap:.5rem;align-items:center;padding:.5rem .75rem;background:rgba(196,163,90,.03);border-top:1px solid rgba(196,163,90,.08);">
+          <span style="font-size:.7rem;color:var(--muted);">↳</span>
+          <div style="font-size:.68rem;color:var(--muted);font-family:monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(s.href)}</div>
+          <input type="text" value="${escHtml(s.label_en)}" oninput="updNav('${s.id}','label_en',this.value)"
+            style="background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.3rem .5rem;font-size:.78rem;font-family:inherit;width:100%;">
+          <input type="text" value="${escHtml(s.label_ar)}" oninput="updNav('${s.id}','label_ar',this.value)" dir="rtl"
+            style="background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.3rem .5rem;font-size:.78rem;font-family:inherit;width:100%;">
+          <button onclick="delSubPage('${s.id}')" style="background:rgba(204,68,68,.15);border:1px solid rgba(204,68,68,.3);color:#cc4444;padding:3px 8px;font-size:.65rem;cursor:pointer;white-space:nowrap;font-family:inherit;">✕</button>
+        </div>`).join('')}
+      <!-- Add sub-page trigger -->
+      <div style="padding:.5rem .75rem;border-top:1px solid rgba(196,163,90,.12);background:rgba(196,163,90,.04);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;">
+        <button onclick="toggleSubForm('${p.id}')" style="background:transparent;border:1px solid rgba(196,163,90,.4);color:var(--gold);padding:.3rem .9rem;font-size:.72rem;cursor:pointer;font-family:inherit;letter-spacing:.06em;transition:all .2s;" onmouseover="this.style.background='rgba(196,163,90,.1)'" onmouseout="this.style.background='transparent'">＋ Add Sub-page (Dropdown)</button>
+        <span style="font-size:.65rem;color:var(--muted);">← click to add a dropdown item under this page</span>
+        <div id="subf-${p.id}" style="display:none;width:100%;margin-top:.5rem;">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:.5rem;align-items:end;">
+            <div><div style="font-size:.58rem;color:var(--muted);margin-bottom:.2rem;">URL PATH</div><input type="text" id="sh-${p.id}" placeholder="documents#excel" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.3rem .5rem;font-size:.78rem;font-family:inherit;"></div>
+            <div><div style="font-size:.58rem;color:var(--muted);margin-bottom:.2rem;">ENGLISH</div><input type="text" id="se-${p.id}" placeholder="Excel Files" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.3rem .5rem;font-size:.78rem;font-family:inherit;"></div>
+            <div><div style="font-size:.58rem;color:var(--muted);margin-bottom:.2rem;">عربي</div><input type="text" id="sa-${p.id}" placeholder="ملفات إكسيل" dir="rtl" style="width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.3rem .5rem;font-size:.78rem;font-family:inherit;"></div>
+            <button onclick="addSubPage('${p.id}')" style="background:var(--gold);color:#080809;border:none;padding:.3rem .75rem;font-size:.72rem;cursor:pointer;font-weight:600;font-family:inherit;white-space:nowrap;height:32px;">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updNav(id, field, val) {
+  const p = _adminNavPages.find(x=>x.id===id);
+  if(p) p[field] = val;
+}
+
+function toggleSubForm(pid) {
+  const f = document.getElementById(`subf-${pid}`);
+  if(f) f.style.display = f.style.display==='none' ? 'block' : 'none';
+}
+
+function moveNavTop(id, dir) {
+  const top = _adminNavPages.filter(p=>!p.parent_id);
+  const i   = top.findIndex(p=>p.id===id);
+  const ni  = i + dir;
+  if(ni<0||ni>=top.length) return;
+  const ai = _adminNavPages.indexOf(top[i]);
+  const bi = _adminNavPages.indexOf(top[ni]);
+  [_adminNavPages[ai], _adminNavPages[bi]] = [_adminNavPages[bi], _adminNavPages[ai]];
+  renderNavPages();
+}
+
+async function addSubPage(pid) {
+  const href = document.getElementById(`sh-${pid}`)?.value.trim();
+  const enL  = document.getElementById(`se-${pid}`)?.value.trim();
+  const arL  = document.getElementById(`sa-${pid}`)?.value.trim();
+  if(!href||!enL){ toast('URL and English label required','error'); return; }
+  const maxOrd = Math.max(0,...(_adminNavPages.filter(p=>p.parent_id===pid).map(p=>p.sort_order||0)));
+  const {data,error} = await db.from('nav_pages').insert({
+    href, label_en:enL, label_ar:arL||enL, parent_id:pid, sort_order:maxOrd+1, is_visible:true
+  }).select().single();
+  if(error){ toast('Error adding sub-page','error'); return; }
+  _adminNavPages.push(data);
+  renderNavPages();
+  toast('Sub-page added! ✓','success');
+}
+
+async function delSubPage(id) {
+  await db.from('nav_pages').delete().eq('id',id);
+  _adminNavPages = _adminNavPages.filter(p=>p.id!==id);
+  renderNavPages();
+  toast('Sub-page removed','success');
+}
+
+function toggleAddPageForm() {
+  const f = document.getElementById('add-page-form');
+  if(f) f.style.display = f.style.display === 'none' ? 'block' : 'none';
+}
+
+async function addNavPage() {
+  const href  = document.getElementById('np-href')?.value.trim().replace(/^\//, '');
+  const enL   = document.getElementById('np-en')?.value.trim();
+  const arL   = document.getElementById('np-ar')?.value.trim();
+  if(!href || !enL) { toast('URL path and English name required','error'); return; }
+  const maxOrd = Math.max(0, ..._adminNavPages.filter(p=>!p.parent_id).map(p=>p.sort_order||0));
+  const { data, error } = await db.from('nav_pages').insert({
+    href, label_en: enL, label_ar: arL || enL, sort_order: maxOrd + 1, is_visible: true
+  }).select().single();
+  if(error) { toast('Error: ' + error.message, 'error'); return; }
+  _adminNavPages.push(data);
+  renderNavPages();
+  toast('Page added ✓ — press Save Changes to confirm','success');
+  document.getElementById('np-href').value = '';
+  document.getElementById('np-en').value = '';
+  document.getElementById('np-ar').value = '';
+  document.getElementById('add-page-form').style.display = 'none';
+}
+
+async function saveAllNavPages() {
+  try {
+    const top = _adminNavPages.filter(p=>!p.parent_id);
+    for(let i=0;i<top.length;i++) {
+      await db.from('nav_pages').update({ label_en:top[i].label_en, label_ar:top[i].label_ar, is_visible:top[i].is_visible, sort_order:i+1 }).eq('id',top[i].id);
+    }
+    for(const s of _adminNavPages.filter(p=>p.parent_id)) {
+      await db.from('nav_pages').update({ label_en:s.label_en, label_ar:s.label_ar, is_visible:s.is_visible!==false }).eq('id',s.id);
+    }
+    toast('Navigation saved! ✓','success');
+  } catch(e) { toast('Error saving navigation','error'); }
+}
+
+// ── USAGE STATS ─────────────────────────────────────────────
+async function loadUsageStats() {
+  renderDomainTracker();
+  await loadSupabaseUsage();
+}
+
+async function loadSupabaseUsage() {
+  const el = document.getElementById('usage-supabase');
+  try {
+    // DB size via RPC
+    const { data: dbSizeData } = await db.rpc('get_db_size');
+    const dbBytes = dbSizeData || 0;
+
+    // User count via RPC
+    const { data: userCountData } = await db.rpc('get_user_count');
+    const userCount = userCountData || 0;
+
+    // Storage from our tables
+    const [docRes, fileRes] = await Promise.all([
+      db.from('documents').select('file_size'),
+      db.from('profile_files').select('file_size')
+    ]);
+    const docBytes  = (docRes.data  || []).reduce((a, d) => a + (d.file_size || 0), 0);
+    const fileBytes = (fileRes.data || []).reduce((a, f) => a + (f.file_size || 0), 0);
+    const storageBytes = docBytes + fileBytes;
+
+    // Row counts
+    const [views, docs, vids] = await Promise.all([
+      db.from('page_views').select('*', {count:'exact', head:true}),
+      db.from('documents').select('*',  {count:'exact', head:true}),
+      db.from('videos').select('*',     {count:'exact', head:true})
+    ]);
+
+    // Limits
+    const DB_LIMIT      = 500  * 1024 * 1024;   // 500 MB
+    const STORAGE_LIMIT = 1024 * 1024 * 1024;   // 1 GB
+    const USER_LIMIT    = 50000;
+
+    const usageBar = (used, limit, label, unit, note) => {
+      const pct   = Math.min(100, (used / limit) * 100);
+      const color = pct > 80 ? 'var(--red)' : pct > 50 ? '#e8a12a' : 'var(--green)';
+      return `
+        <div style="margin-bottom:.9rem;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:.35rem;">
+            <span style="font-size:.75rem;color:var(--cream);">${label}</span>
+            <span style="font-size:.72rem;color:${color};font-weight:500;">${formatBytes(used)} / ${unit} &nbsp;(${pct.toFixed(1)}%)</span>
+          </div>
+          <div style="height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+            <div style="height:100%;width:${pct}%;background:${color};border-radius:3px;transition:width .5s;"></div>
+          </div>
+          <div style="font-size:.65rem;color:var(--muted);margin-top:.25rem;">⚠ أكتر حاجة بتستهلكها: ${note}</div>
+        </div>`;
+    };
+
+    el.innerHTML = `
+      ${usageBar(dbBytes, DB_LIMIT, '🗄 Database Size', '500 MB', 'جدول page_views — كل زيارة بتضيف صف جديد تلقائياً')}
+      ${usageBar(storageBytes, STORAGE_LIMIT, '📦 File Storage', '1 GB', 'الملفات المرفوعة (PDF, Word) — استخدم Google Drive بدلها للملفات الكبيرة')}
+      <div style="margin-bottom:.9rem;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:.35rem;">
+          <span style="font-size:.75rem;color:var(--cream);">👤 Auth Users</span>
+          <span style="font-size:.72rem;color:${userCount > 40000 ? 'var(--red)' : 'var(--green)'};font-weight:500;">${userCount.toLocaleString()} / 50,000</span>
+        </div>
+        <div style="height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${Math.min(100,(userCount/USER_LIMIT)*100)}%;background:var(--green);border-radius:3px;"></div>
+        </div>
+        <div style="font-size:.65rem;color:var(--muted);margin-top:.25rem;">⚠ أكتر حاجة بتستهلكها: الزوار اللي بيسجلوا دخول عشان يحملوا الوثائق</div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:.75rem;display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:.75rem;">
+        <div><div style="font-size:.68rem;color:var(--muted);">Page Views</div><div style="font-size:1.1rem;color:var(--gold);">${(views.count||0).toLocaleString()}</div></div>
+        <div><div style="font-size:.68rem;color:var(--muted);">Documents</div><div style="font-size:1.1rem;color:var(--gold);">${docs.count||0}</div></div>
+        <div><div style="font-size:.68rem;color:var(--muted);">Videos</div><div style="font-size:1.1rem;color:var(--gold);">${vids.count||0}</div></div>
+      </div>
+      <a href="https://supabase.com/dashboard/project/gkspykbqyaodwbveuheh" target="_blank" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Open Supabase Dashboard ↗</a>`;
+  } catch(e) {
+    el.innerHTML = `<div style="font-size:.8rem;color:var(--muted);padding:.5rem;">
+      ⚠️ Run <code>rpc_usage_stats.sql</code> in Supabase first to enable usage tracking.
+    </div>`;
+  }
+}
+
+function renderDomainTracker() {
+  const el = document.getElementById('usage-domain');
+
+  // Domain
+  const domainBuy    = new Date('2026-05-07');
+  const domainExpiry = new Date('2027-05-07');
+  const today        = new Date();
+  const domainTotal  = 365;
+  const domainElapsed   = Math.max(0, Math.floor((today - domainBuy) / 86400000));
+  const domainRemaining = Math.max(0, Math.ceil((domainExpiry - today) / 86400000));
+  const domainPct       = Math.min(100, Math.round(domainElapsed / domainTotal * 100));
+  const domainColor     = domainRemaining > 90 ? 'var(--green)' : domainRemaining > 30 ? '#e8a12a' : 'var(--red)';
+  const domainStatus    = domainRemaining > 90 ? '✅ Active' : domainRemaining > 30 ? '⚠️ Renew Soon' : '🔴 Urgent';
+
+  const trackBar = (pct, color, label, sub) => `
+    <div style="margin-bottom:1.2rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.35rem;">
+        <span style="font-size:.78rem;color:var(--cream);font-weight:500;">${label}</span>
+        <span style="font-size:.7rem;color:${color};">${sub}</span>
+      </div>
+      <div style="height:8px;background:var(--bg3);border-radius:4px;overflow:hidden;">
+        <div style="height:100%;width:${pct}%;background:${color};border-radius:4px;transition:width .5s;"></div>
+      </div>
+    </div>`;
+
+  el.innerHTML = `
+    ${trackBar(domainPct, domainColor,
+      `🌐 mahmoudeldeberky.com`,
+      `${domainStatus} — ${domainRemaining} days left`)}
+    <div style="font-size:.72rem;color:var(--muted);margin-bottom:1.2rem;margin-top:-.6rem;">
+      Purchased: May 7, 2026 &nbsp;·&nbsp; Expires: <span style="color:${domainColor};">May 7, 2027</span>
+    </div>
+
+    <div style="border-top:1px solid var(--border);padding-top:.9rem;">
+      <div style="font-size:.68rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem;">Netlify — Free Tier</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;">
+        <div style="background:var(--bg3);padding:.6rem .75rem;">
+          <div style="font-size:.65rem;color:var(--muted);">Bandwidth</div>
+          <div style="font-size:.85rem;color:var(--cream);">100 GB / month</div>
+        </div>
+        <div style="background:var(--bg3);padding:.6rem .75rem;">
+          <div style="font-size:.65rem;color:var(--muted);">Build Minutes</div>
+          <div style="font-size:.85rem;color:var(--cream);">300 min / month</div>
+        </div>
+      </div>
+      <a href="https://app.netlify.com" target="_blank" class="btn btn-outline btn-sm" style="margin-top:.75rem;width:100%;justify-content:center;">Open Netlify Dashboard ↗</a>
+    </div>`;
+}
+
+// Enter key for login
+document.getElementById('password').addEventListener('keydown', e => { if (e.key === 'Enter') login(); });
+</script>
+</body>
+</html>
