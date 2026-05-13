@@ -1091,7 +1091,7 @@ function esc(s) {
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── DOWNLOAD PDF (FIXED) ─────────────────────────────────────
+// ── DOWNLOAD PDF (FIXED + Arabic BiDi) ───────────────────────
 async function downloadPDF() {
   const preview = document.getElementById('cvb-preview-panel');
   const paper   = document.getElementById('cv-paper');
@@ -1108,7 +1108,9 @@ async function downloadPDF() {
       margin: [8, 8],
       filename: name.replace(/\s+/g,'_') + '_CV.pdf',
       image: { type:'jpeg', quality:0.98 },
-      html2canvas: { scale:2, useCORS:true, backgroundColor:'#ffffff', scrollY:0 },
+      // foreignObjectRendering: true → lets the browser render Arabic BiDi text natively
+      // instead of Canvas fillText() which breaks Unicode right-to-left shaping
+      html2canvas: { scale:2, useCORS:true, backgroundColor:'#ffffff', scrollY:0, foreignObjectRendering: true },
       jsPDF: { unit:'mm', format:'a4', orientation:'portrait' }
     }).from(paper).save();
   } finally {
@@ -1117,50 +1119,184 @@ async function downloadPDF() {
   }
 }
 
-// ── DOWNLOAD WORD (FIXED) ────────────────────────────────────
+// ── DOWNLOAD WORD (DATA-DRIVEN, A4, RTL-AWARE) ───────────────
 function downloadWord() {
-  const preview = document.getElementById('cvb-preview-panel');
-  const paper   = document.getElementById('cv-paper');
-  const name    = cv.personal.name || 'Resume';
+  const cvName  = cv.personal.name || 'Resume';
+  const isRTL   = theme.dir === 'rtl';
+  const acc     = theme.accent || '#C4A35A';
+  const dir     = isRTL ? 'rtl' : 'ltr';
+  const align   = isRTL ? 'right' : 'left';
+  const fontFam = isRTL
+    ? "Calibri,'Traditional Arabic','Simplified Arabic',Arial,sans-serif"
+    : "Calibri,Arial,sans-serif";
 
-  // Lift overflow so content is fully in DOM before serialising
-  const origOverflow = preview.style.overflow;
-  const origHeight   = preview.style.height;
-  preview.style.overflow = 'visible';
-  preview.style.height   = 'auto';
+  // ── helpers ──────────────────────────────────────────────────
+  const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const nl2br = s => esc(s).replace(/\n/g,'<br>');
 
-  const inner = paper.innerHTML;
+  // Section title row (spans full width)
+  function secTitle(label) {
+    return `<tr><td colspan="2" style="font-size:9pt;font-weight:bold;text-transform:uppercase;
+      letter-spacing:1pt;color:#1a1a1a;border-bottom:1.5pt solid ${acc};
+      padding:14pt 0 3pt;mso-border-bottom-alt:solid ${acc} 1.5pt;">${esc(label)}</td></tr>`;
+  }
 
-  preview.style.overflow = origOverflow;
-  preview.style.height   = origHeight;
+  // ── PERSONAL HEADER ──────────────────────────────────────────
+  const p = cv.personal;
+  const contactParts = [p.email, p.phone, p.location, p.linkedin, p.website]
+    .filter(Boolean).map(esc).join(' &nbsp;|&nbsp; ');
 
+  let body = `
+  <table width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="width:100%;border-collapse:collapse;font-family:${fontFam};direction:${dir};">
+    <tr><td style="padding-bottom:3pt;">
+      <div style="font-size:22pt;font-weight:bold;color:#1a1a1a;">${esc(p.name)}</div>
+      ${p.title ? `<div style="font-size:12pt;color:#555555;margin-top:2pt;">${esc(p.title)}</div>` : ''}
+      ${contactParts ? `<div style="font-size:9pt;color:#555555;margin-top:5pt;
+        padding-bottom:6pt;border-bottom:1.5pt solid ${acc};">${contactParts}</div>` : ''}
+    </td></tr>
+  </table>`;
+
+  // ── MAIN CONTENT TABLE ───────────────────────────────────────
+  body += `<table width="100%" cellpadding="0" cellspacing="0" border="0"
+    style="width:100%;border-collapse:collapse;font-family:${fontFam};
+    font-size:10pt;color:#222;direction:${dir};">`;
+
+  // Render sections in sectionOrder
+  for (const sec of cv.sectionOrder) {
+    if (sec === 'summary' && cv.summary) {
+      body += secTitle(L('cv_summary'));
+      body += `<tr><td colspan="2" style="padding:4pt 0 8pt;font-size:10pt;
+        color:#333;line-height:1.6;">${nl2br(cv.summary)}</td></tr>`;
+    }
+
+    if (sec === 'experience' && cv.experience.length) {
+      body += secTitle(L('cv_experience'));
+      cv.experience.forEach(exp => {
+        const dates = [exp.start, exp.current ? L('present') : exp.end].filter(Boolean).join(' – ');
+        body += `<tr>
+          <td style="padding:5pt 0 1pt;font-weight:bold;font-size:10.5pt;color:#1a1a1a;">
+            ${esc(exp.company)}
+          </td>
+          <td style="padding:5pt 0 1pt;font-size:9pt;color:#777;text-align:${isRTL?'left':'right'};">
+            ${esc(dates)}
+          </td>
+        </tr>`;
+        if (exp.role) body += `<tr><td colspan="2" style="font-style:italic;color:#444;
+          font-size:9.5pt;padding-bottom:3pt;">${esc(exp.role)}</td></tr>`;
+        if (exp.desc) body += `<tr><td colspan="2" style="font-size:9.5pt;color:#333;
+          line-height:1.55;padding-bottom:8pt;">${nl2br(exp.desc)}</td></tr>`;
+      });
+    }
+
+    if (sec === 'education' && cv.education.length) {
+      body += secTitle(L('cv_education'));
+      cv.education.forEach(edu => {
+        const dates = [edu.start, edu.end].filter(Boolean).join(' – ');
+        body += `<tr>
+          <td style="padding:5pt 0 1pt;font-weight:bold;font-size:10.5pt;color:#1a1a1a;">
+            ${esc(edu.institution)}
+          </td>
+          <td style="padding:5pt 0 1pt;font-size:9pt;color:#777;text-align:${isRTL?'left':'right'};">
+            ${esc(dates)}
+          </td>
+        </tr>`;
+        if (edu.degree) body += `<tr><td colspan="2" style="font-size:9.5pt;
+          color:#444;padding-bottom:8pt;">${esc(edu.degree)}</td></tr>`;
+      });
+    }
+
+    if (sec === 'certifications' && cv.certifications.length) {
+      body += secTitle(L('cv_certifications'));
+      cv.certifications.forEach(cert => {
+        const line = [cert.name, cert.issuer, cert.year].filter(Boolean);
+        body += `<tr><td colspan="2" style="padding:3pt 0;font-size:9.5pt;color:#333;">
+          <strong>${esc(cert.name)}</strong>
+          ${cert.issuer ? ` — ${esc(cert.issuer)}` : ''}
+          ${cert.year  ? ` <span style="color:#777;">(${esc(cert.year)})</span>` : ''}
+        </td></tr>`;
+      });
+    }
+
+    if (sec === 'skills') {
+      const sk = cv.skills;
+      if (sk.hr || sk.tech || sk.soft) {
+        body += secTitle(L('cv_skills'));
+        if (sk.hr)   body += `<tr><td colspan="2" style="padding:3pt 0;font-size:9.5pt;color:#333;">
+          <strong style="color:#111;">${L('cv_skills_hr')}</strong> ${esc(sk.hr)}</td></tr>`;
+        if (sk.tech) body += `<tr><td colspan="2" style="padding:3pt 0;font-size:9.5pt;color:#333;">
+          <strong style="color:#111;">${L('cv_skills_tech')}</strong> ${esc(sk.tech)}</td></tr>`;
+        if (sk.soft) body += `<tr><td colspan="2" style="padding:3pt 0;font-size:9.5pt;color:#333;">
+          <strong style="color:#111;">${L('cv_skills_soft')}</strong> ${esc(sk.soft)}</td></tr>`;
+      }
+    }
+
+    if (sec === 'languages' && cv.languages.length) {
+      body += secTitle(L('cv_languages'));
+      const langLine = cv.languages
+        .filter(l => l.name)
+        .map(l => `<strong>${esc(l.name)}</strong>${l.level ? ` (${esc(l.level)})` : ''}`)
+        .join(' &nbsp;·&nbsp; ');
+      body += `<tr><td colspan="2" style="padding:4pt 0 8pt;font-size:9.5pt;
+        color:#333;">${langLine}</td></tr>`;
+    }
+  }
+
+  // Custom sections (always at end)
+  (cv.customSections || []).forEach(cs => {
+    if (!cs.title) return;
+    body += secTitle(cs.title);
+    body += `<tr><td colspan="2" style="padding:4pt 0 8pt;font-size:9.5pt;
+      color:#333;line-height:1.55;">${nl2br(cs.content)}</td></tr>`;
+  });
+
+  // Footer brand
+  body += `<tr><td colspan="2" style="padding-top:14pt;border-top:1pt solid #eeeeee;
+    font-size:7.5pt;color:#bbbbbb;text-align:center;">
+    Created with mahmoudeldeberky.com · CV Builder
+  </td></tr>`;
+
+  body += `</table>`;
+
+  // ── WRAP IN WORD-COMPATIBLE HTML ─────────────────────────────
   const doc = `<html xmlns:o='urn:schemas-microsoft-com:office:office'
-    xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-  <head><meta charset='utf-8'><style>
-    body{font-family:Calibri,Arial,sans-serif;font-size:11pt;margin:1in;color:#1a1a1a;}
-    .cv-name{font-size:22pt;font-weight:bold;margin-bottom:2pt;}
-    .cv-job-title{font-size:12pt;color:#555;margin-bottom:4pt;}
-    .cv-contact-row{font-size:9pt;color:#555;border-bottom:1.5pt solid ${theme.accent};padding-bottom:6pt;margin-bottom:10pt;}
-    .cv-section-title{font-size:9pt;font-weight:bold;text-transform:uppercase;letter-spacing:1pt;border-bottom:1.5pt solid ${theme.accent};padding-bottom:2pt;margin:14pt 0 7pt;display:block;}
-    .cv-summary-text{font-size:10pt;color:#333;line-height:1.6;}
-    .cv-exp-header{display:flex;justify-content:space-between;}
-    .cv-exp-company{font-weight:bold;font-size:10.5pt;}
-    .cv-exp-dates{font-size:9pt;color:#777;}
-    .cv-exp-role{font-style:italic;color:#444;}
-    .cv-exp-desc,.cv-cert-item,.cv-skills-row,.cv-lang-item,.cv-custom-item{font-size:9.5pt;color:#333;line-height:1.55;}
-    .cv-skills-label,.cv-lang-name,.cv-cert-name{font-weight:bold;color:#111;}
-    .cv-edu-item{display:flex;justify-content:space-between;margin-bottom:7pt;}
-    .cv-edu-inst{font-weight:bold;}
-    .cv-edu-degree{font-size:9.5pt;color:#444;}
-    .cv-edu-dates{font-size:9pt;color:#777;}
-    .cv-footer-brand{margin-top:16pt;padding-top:6pt;border-top:1pt solid #eee;font-size:7.5pt;color:#bbb;text-align:center;}
-    .cv-sb-left,.cv-sb-right,.cv-sb-cols{display:block;}
-  </style></head><body>${inner}</body></html>`;
+    xmlns:w='urn:schemas-microsoft-com:office:word'
+    xmlns='http://www.w3.org/TR/REC-html40'>
+  <head>
+    <meta charset='utf-8'>
+    <!--[if gte mso 9]><xml>
+      <w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom>
+        <w:DoNotOptimizeForBrowser/>
+      </w:WordDocument>
+    </xml><![endif]-->
+    <style>
+      @page WordSection1 {
+        size: 21cm 29.7cm;
+        margin: 2cm 2.5cm 2cm 2.5cm;
+        mso-page-orientation: portrait;
+      }
+      div.WordSection1 { page: WordSection1; }
+      body {
+        font-family: ${fontFam};
+        font-size: 10pt;
+        color: #222222;
+        direction: ${dir};
+        text-align: ${align};
+      }
+      table { border-collapse: collapse; width: 100%; }
+      td { vertical-align: top; }
+    </style>
+  </head>
+  <body>
+    <div class="WordSection1">${body}</div>
+  </body>
+  </html>`;
 
-  const blob = new Blob(['﻿', doc], { type:'application/msword' });
+  const blob = new Blob(['﻿', doc], { type: 'application/msword' });
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
-  a.href = url; a.download = name.replace(/\s+/g,'_') + '_CV.doc';
+  a.href = url;
+  a.download = cvName.replace(/\s+/g, '_') + '_CV.doc';
   a.click();
   setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
