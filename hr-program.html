@@ -164,6 +164,70 @@ select.cvb-input{cursor:pointer;}
 .cvb-cs-block{background:var(--bg3);border:1px solid var(--border);padding:.9rem;margin-bottom:.8rem;}
 
 /* SMART IMPORT MODAL */
+/* AI SETTINGS MODAL */
+.cvb-ai-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:970;display:none;align-items:center;justify-content:center;padding:2rem;}
+.cvb-ai-overlay.open{display:flex;}
+.cvb-ai-modal{background:var(--bg2);border:1px solid var(--border);max-width:440px;width:100%;padding:1.7rem;}
+.cvb-ai-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;}
+.cvb-ai-title{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);}
+.cvb-ai-close{background:transparent;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:0;}
+.cvb-ai-desc{font-size:.75rem;color:rgba(232,226,212,.65);line-height:1.7;margin-bottom:1.1rem;}
+.cvb-ai-desc a{color:var(--gold);text-decoration:none;}
+.cvb-ai-desc a:hover{text-decoration:underline;}
+.cvb-ai-row{display:flex;gap:.6rem;margin-bottom:.75rem;}
+.cvb-ai-input{flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem .75rem;font-size:.82rem;font-family:inherit;outline:none;transition:border-color .2s;}
+.cvb-ai-input:focus{border-color:var(--gold);}
+.cvb-ai-save-btn{background:var(--gold);color:#080809;border:none;padding:.5rem 1rem;font-size:.75rem;font-family:inherit;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .2s;}
+.cvb-ai-save-btn:hover{background:#e8c97a;}
+.cvb-ai-status{font-size:.7rem;line-height:1.6;padding:.55rem .75rem;margin-bottom:.8rem;display:none;}
+.cvb-ai-status.active{display:block;background:rgba(196,163,90,.08);border:1px solid rgba(196,163,90,.25);color:rgba(196,163,90,.9);}
+.cvb-ai-status.inactive{display:block;background:rgba(255,255,255,.04);border:1px solid var(--border);color:var(--muted);}
+.cvb-ai-clear-btn{background:transparent;border:1px solid rgba(204,68,68,.35);color:rgba(204,68,68,.75);padding:.35rem .75rem;font-size:.68rem;font-family:inherit;cursor:pointer;transition:all .2s;}
+.cvb-ai-clear-btn:hover{border-color:rgba(204,68,68,.7);color:#cc4444;}
+.cvb-ai-btn{display:inline-flex;align-items:center;gap:.35rem;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;padding:.38rem .8rem;cursor:pointer;font-family:inherit;transition:all .2s;border:1px solid rgba(196,163,90,.35);background:transparent;color:var(--muted);}
+.cvb-ai-btn.ai-on{color:var(--gold);border-color:rgba(196,163,90,.5);background:rgba(196,163,90,.06);}
+.cvb-ai-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* VERSIONS MODAL */
+.cvb-ver-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:960;display:none;align-items:center;justify-content:center;padding:2rem;}
+.cvb-ver-overlay.open{display:flex;}
+.cvb-ver-modal{background:var(--bg2);border:1px solid var(--border);max-width:420px;width:100%;padding:1.6rem;}
+.cvb-ver-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem;}
+.cvb-ver-title{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);}
+.cvb-ver-close{background:transparent;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:0;}
+.cvb-ver-card{border:1px solid var(--border);padding:.95rem 1.1rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.8rem;transition:border-color .2s;}
+.cvb-ver-card:last-child{margin-bottom:0;}
+.cvb-ver-card.has-data:hover{border-color:rgba(196,163,90,.4);}
+.cvb-ver-card.empty{opacity:.45;}
+.cvb-ver-flag{font-size:1.4rem;flex-shrink:0;}
+.cvb-ver-info{flex:1;min-width:0;}
+.cvb-ver-lang{font-size:.8rem;color:var(--cream);font-weight:600;margin-bottom:.2rem;}
+.cvb-ver-meta{font-size:.67rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cvb-ver-load-btn{font-size:.68rem;background:var(--gold);color:#080809;border:none;padding:.35rem .85rem;cursor:pointer;font-family:inherit;font-weight:700;letter-spacing:.04em;flex-shrink:0;transition:background .2s;}
+.cvb-ver-load-btn:hover{background:#e8c97a;}
+.cvb-ver-unsaved{font-size:.68rem;color:var(--muted);font-style:italic;flex-shrink:0;}
+.cvb-mycvs-btn{display:inline-flex;align-items:center;gap:.35rem;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;background:transparent;border:1px solid rgba(196,163,90,.35);color:var(--gold);padding:.38rem .8rem;cursor:pointer;font-family:inherit;transition:all .2s;}
+.cvb-mycvs-btn:hover{background:rgba(196,163,90,.08);border-color:var(--gold);}
+
+/* TRANSLATE PANEL */
+.cvb-tr-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:950;display:none;align-items:center;justify-content:center;padding:2rem;}
+.cvb-tr-overlay.open{display:flex;}
+.cvb-tr-modal{background:var(--bg2);border:1px solid var(--border);max-width:440px;width:100%;padding:1.6rem;}
+.cvb-tr-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;}
+.cvb-tr-title{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);}
+.cvb-tr-close{background:transparent;border:none;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:0;}
+.cvb-tr-dir-row{display:flex;gap:.6rem;margin-bottom:1.1rem;}
+.cvb-tr-dir-btn{flex:1;padding:.5rem;font-size:.75rem;font-family:inherit;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all .2s;letter-spacing:.04em;}
+.cvb-tr-dir-btn.active,.cvb-tr-dir-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(196,163,90,.07);}
+.cvb-tr-note{font-size:.72rem;color:var(--muted);line-height:1.6;margin-bottom:1.1rem;}
+.cvb-tr-fields{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem;}
+.cvb-tr-field-row{display:flex;align-items:center;gap:.5rem;font-size:.75rem;color:var(--cream);}
+.cvb-tr-field-row input{accent-color:var(--gold);}
+.cvb-tr-go-btn{width:100%;padding:.55rem;background:var(--gold);color:#080809;border:none;font-size:.78rem;font-family:inherit;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.cvb-tr-go-btn:hover{background:#e8c97a;}
+.cvb-tr-go-btn:disabled{background:rgba(196,163,90,.35);cursor:default;}
+.cvb-tr-progress{font-size:.72rem;color:var(--gold);margin-top:.7rem;min-height:1.2rem;text-align:center;}
+
 .si-overlay{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:900;display:none;align-items:center;justify-content:center;padding:2rem;}
 .si-overlay.open{display:flex;}
 .si-modal{background:var(--bg2);border:1px solid var(--border);max-width:580px;width:100%;max-height:90vh;overflow-y:auto;position:relative;}
@@ -258,6 +322,62 @@ select.cvb-input{cursor:pointer;}
 <!-- TOAST -->
 <div class="cvb-toast" id="cvb-toast"></div>
 
+<!-- AI INFO MODAL -->
+<div class="cvb-ai-overlay" id="cvb-ai-overlay">
+  <div class="cvb-ai-modal">
+    <div class="cvb-ai-head">
+      <span class="cvb-ai-title">🤖 Gemini AI</span>
+      <button class="cvb-ai-close" onclick="closeAISettings()">✕</button>
+    </div>
+    <div class="cvb-ai-status active" style="display:block;margin-bottom:1rem;">
+      ✓ AI مفعّل — مدعوم بـ Google Gemini 1.5 Flash
+    </div>
+    <div class="cvb-ai-desc">
+      الـ AI بيشتغل تلقائياً بدون أي إعداد.<br><br>
+      <strong style="color:var(--cream)">Smart Import 🤖</strong> — ارفع أي CV (PDF أو Word) وـ Gemini بيفهم المحتوى ويوزعه على الحقول تلقائياً بدقة عالية.<br><br>
+      <strong style="color:var(--cream)">Translate 🌐</strong> — يترجم كل الـ CV في طلب واحد مع الحفاظ على المصطلحات المهنية.
+    </div>
+  </div>
+</div>
+
+<!-- MY CVs VERSIONS MODAL -->
+<div class="cvb-ver-overlay" id="cvb-ver-overlay">
+  <div class="cvb-ver-modal">
+    <div class="cvb-ver-head">
+      <span class="cvb-ver-title">📂 My Saved CVs</span>
+      <button class="cvb-ver-close" onclick="closeVersions()">✕</button>
+    </div>
+    <div id="cvb-ver-list">
+      <div style="color:var(--muted);font-size:.75rem;">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSLATE MODAL -->
+<div class="cvb-tr-overlay" id="cvb-tr-overlay">
+  <div class="cvb-tr-modal">
+    <div class="cvb-tr-head">
+      <span class="cvb-tr-title">🌐 Translate CV</span>
+      <button class="cvb-tr-close" onclick="closeTranslate()">✕</button>
+    </div>
+    <div class="cvb-tr-dir-row">
+      <button class="cvb-tr-dir-btn active" id="tr-btn-enar" onclick="setTrDir('en','ar')">English → العربية</button>
+      <button class="cvb-tr-dir-btn" id="tr-btn-aren" onclick="setTrDir('ar','en')">العربية → English</button>
+    </div>
+    <p class="cvb-tr-note">اختار الحقول اللي عايز تترجمها. الترجمة بتحافظ على المصطلحات المهنية زي أسماء الشركات والدرجات العلمية.</p>
+    <div class="cvb-tr-fields">
+      <label class="cvb-tr-field-row"><input type="checkbox" id="tr-f-title" checked> Job Title</label>
+      <label class="cvb-tr-field-row"><input type="checkbox" id="tr-f-summary" checked> Professional Summary</label>
+      <label class="cvb-tr-field-row"><input type="checkbox" id="tr-f-exp" checked> Experience descriptions</label>
+      <label class="cvb-tr-field-row"><input type="checkbox" id="tr-f-edu" checked> Education degrees</label>
+      <label class="cvb-tr-field-row"><input type="checkbox" id="tr-f-skills" checked> Skills</label>
+      <label class="cvb-tr-field-row"><input type="checkbox" id="tr-f-certs"> Certification names</label>
+    </div>
+    <button class="cvb-tr-go-btn" id="cvb-tr-go-btn" onclick="runTranslate()">✦ Translate Now</button>
+    <div class="cvb-tr-progress" id="cvb-tr-progress"></div>
+  </div>
+</div>
+
 <!-- SMART IMPORT MODAL -->
 <div class="si-overlay" id="si-overlay">
   <div class="si-modal">
@@ -301,7 +421,8 @@ Jan 2020 – Present
       <div class="si-actions">
         <button class="si-cancel-btn" onclick="closeSmartImport()">Cancel</button>
         <button class="si-apply-btn" id="si-apply-btn" onclick="applyImport()">✓ Apply to Builder</button>
-        <button class="si-parse-btn" onclick="runSmartImport()">✦ Parse Now</button>
+        <button class="si-parse-btn" id="si-ai-parse-btn" onclick="runSmartImportAI()" style="display:none;background:#1a6b3a;color:#fff">🤖 Parse with AI</button>
+        <button class="si-parse-btn" id="si-parse-btn" onclick="runSmartImport()">✦ Parse Now</button>
       </div>
     </div>
   </div>
@@ -404,7 +525,10 @@ Jan 2020 – Present
           <div class="cvb-toolbar">
             <span class="cvb-toolbar-title">CV Builder</span>
             <button class="cvb-import-btn" onclick="openSmartImport()">✦ Smart Import</button>
-            <button class="cvb-save-btn" id="cvb-save-btn" onclick="saveCV()" style="display:none">💾 Save</button>
+            <button class="cvb-import-btn" onclick="openTranslate()" title="Translate CV fields">🌐 Translate</button>
+            <button class="cvb-ai-btn" id="cvb-ai-btn" onclick="openAISettings()" title="Gemini AI Settings">🤖 AI</button>
+            <button class="cvb-mycvs-btn" id="cvb-mycvs-btn" onclick="openVersions()" style="display:none">📂 My CVs</button>
+            <button class="cvb-save-btn" id="cvb-save-btn" onclick="saveCV()" style="display:none">💾 Save (EN)</button>
             <span class="cvb-save-status" id="cvb-save-status"></span>
           </div>
 
@@ -732,6 +856,7 @@ function applyDirection(dir) {
   renderFormSection('custom');
   renderOrderPanel();
   renderCV();
+  _updateSaveLabel();
 }
 
 function updateFormLabels() {
@@ -1091,32 +1216,151 @@ function esc(s) {
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── DOWNLOAD PDF (FIXED + Arabic BiDi) ───────────────────────
-async function downloadPDF() {
-  const preview = document.getElementById('cvb-preview-panel');
-  const paper   = document.getElementById('cv-paper');
-  const name    = cv.personal.name || 'Resume';
+// ── DOWNLOAD PDF (CSS-VAR RESOLVED + Arabic BiDi) ────────────
+function downloadPDF() {
+  // ── WHY NOT html2canvas? ──────────────────────────────────
+  // html2canvas uses canvas.fillText() which doesn't support Unicode BiDi →
+  // Arabic characters appear reversed/separated.
+  // foreignObjectRendering "fixes" Arabic but blocks external fonts/styles for
+  // security → blank white pages.
+  //
+  // SOLUTION: use the browser's native print engine — it handles Arabic,
+  // RTL, fonts, and CSS perfectly.  User picks "Save as PDF" in the dialog.
+  // ─────────────────────────────────────────────────────────────────────────
+  const paper = document.getElementById('cv-paper');
+  const name  = cv.personal.name || 'Resume';
+  const isRTL = theme.dir === 'rtl';
+  const acc   = theme.accent || '#C4A35A';
 
-  // Temporarily lift overflow clipping so html2canvas captures the full paper
-  const origOverflow = preview.style.overflow;
-  const origHeight   = preview.style.height;
-  preview.style.overflow = 'visible';
-  preview.style.height   = 'auto';
-
-  try {
-    await html2pdf().set({
-      margin: [8, 8],
-      filename: name.replace(/\s+/g,'_') + '_CV.pdf',
-      image: { type:'jpeg', quality:0.98 },
-      // foreignObjectRendering: true → lets the browser render Arabic BiDi text natively
-      // instead of Canvas fillText() which breaks Unicode right-to-left shaping
-      html2canvas: { scale:2, useCORS:true, backgroundColor:'#ffffff', scrollY:0, foreignObjectRendering: true },
-      jsPDF: { unit:'mm', format:'a4', orientation:'portrait' }
-    }).from(paper).save();
-  } finally {
-    preview.style.overflow = origOverflow;
-    preview.style.height   = origHeight;
+  // Collect all inline <style> rules from this page
+  let inlineStyles = '';
+  for (const ss of document.styleSheets) {
+    try {
+      inlineStyles += Array.from(ss.cssRules).map(r => r.cssText).join('\n');
+    } catch(e) { /* cross-origin sheet — skip */ }
   }
+
+  const printDoc = `<!DOCTYPE html>
+<html lang="${isRTL ? 'ar' : 'en'}" dir="${isRTL ? 'rtl' : 'ltr'}">
+<head>
+<meta charset="UTF-8">
+<title>${name.replace(/</g,'&lt;')} — CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap">
+<style>
+/* ── CSS variables (re-declared so the paper sees them) ── */
+:root {
+  --gold:   ${acc};
+  --gold2:  #e8c97a;
+  --cream:  #E8E2D4;
+  --bg:     #080809;
+  --bg2:    #0E0E10;
+  --bg3:    #131316;
+  --border: rgba(196,163,90,.12);
+  --muted:  rgba(232,226,212,.45);
+  --ff-h:   'Playfair Display', Georgia, serif;
+}
+/* ── All original styles ── */
+${inlineStyles}
+
+/* ── Print overrides ── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fff; }
+
+/* ── Page numbers via CSS (works in Chrome/Edge) ── */
+@page {
+  size: A4 portrait;
+  margin: 1.2cm 1.6cm 1.5cm 1.6cm;
+  @bottom-center {
+    content: counter(page) " / " counter(pages);
+    font-size: 8pt;
+    color: #888;
+    font-family: 'Lato', sans-serif;
+  }
+  @top-left    { content: ''; }
+  @top-center  { content: ''; }
+  @top-right   { content: ''; }
+  @bottom-left { content: ''; }
+  @bottom-right{ content: ''; }
+}
+
+@media print {
+  /* Force browser to print background colors and images */
+  *, *::before, *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  html, body { background: white; }
+  /* Hide the tip banner when printing */
+  .print-tip { display: none !important; }
+  #cv-paper {
+    width:      100% !important;
+    min-height: unset !important;
+    box-shadow: none !important;
+    margin:     0 !important;
+    padding:    0 !important;
+    border:     none !important;
+    page-break-inside: auto;
+  }
+  .cv-exp-item, .cv-edu-item, .cv-cert-item {
+    page-break-inside: avoid;
+  }
+}
+
+@media screen {
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px;
+    background: #e8e8e8;
+    min-height: 100vh;
+  }
+  .print-tip {
+    background: #1a3a1a;
+    color: #a8d5a2;
+    border: 1px solid #2d5a2d;
+    border-radius: 6px;
+    padding: 10px 18px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-family: 'Lato', sans-serif;
+    max-width: 794px;
+    width: 100%;
+    text-align: center;
+  }
+  #cv-paper {
+    max-width: 794px;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 6px 30px rgba(0,0,0,.18);
+    padding: 32px 36px;
+    margin: 0 auto;
+  }
+}
+</style>
+</head>
+<body>
+<div class="print-tip">
+  💡 <strong>For a clean PDF:</strong> In the print dialog → <em>More settings</em> → uncheck <strong>"Headers and footers"</strong>
+</div>
+${paper.outerHTML}
+<script>
+  // Auto-open print dialog after fonts load
+  window.addEventListener('load', () => {
+    document.title = ${JSON.stringify(name + ' — CV')};
+    setTimeout(() => window.print(), 600);
+  });
+<\/script>
+</body>
+</html>`;
+
+  const blob = new Blob([printDoc], { type: 'text/html;charset=utf-8' });
+  const url  = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+  setTimeout(() => URL.revokeObjectURL(url), 15000);
 }
 
 // ── DOWNLOAD WORD (DATA-DRIVEN, A4, RTL-AWARE) ───────────────
@@ -1304,62 +1548,151 @@ function downloadWord() {
 // ── SUPABASE SAVE / LOAD ─────────────────────────────────────
 async function saveCV() {
   if (!window._currentUser || !_db) return;
-  const btn = document.getElementById('cvb-save-btn');
+  const btn    = document.getElementById('cvb-save-btn');
   const status = document.getElementById('cvb-save-status');
+  const lang   = theme.dir === 'rtl' ? 'ar' : 'en';
+
   btn.disabled = true;
-  status.textContent = 'Saving...';
+  status.textContent = 'Saving…';
 
   const { error } = await _db.from('cv_saves').upsert({
     user_id:    window._currentUser.id,
+    lang,
     cv_data:    { personal:cv.personal, summary:cv.summary, experience:cv.experience,
                   education:cv.education, certifications:cv.certifications,
-                  skills:cv.skills, languages:cv.languages, customSections:cv.customSections,
-                  sectionOrder:cv.sectionOrder },
+                  skills:cv.skills, languages:cv.languages,
+                  customSections:cv.customSections, sectionOrder:cv.sectionOrder },
     theme_data: { accent:theme.accent, font:theme.font, layout:theme.layout, dir:theme.dir },
     updated_at: new Date().toISOString()
-  }, { onConflict: 'user_id' });
+  }, { onConflict: 'user_id,lang' });
 
   btn.disabled = false;
   if (error) {
     status.textContent = 'Save failed';
-    showToast('❌ Could not save CV. Try again.');
+    showToast('❌ Could not save CV: ' + error.message);
   } else {
-    status.textContent = 'Saved ✓';
-    showToast('CV saved successfully ✓');
+    const label = lang === 'ar' ? 'العربي' : 'English';
+    status.textContent = `Saved (${lang.toUpperCase()}) ✓`;
+    showToast(`✦ ${label} CV saved ✓`);
     setTimeout(() => { status.textContent = ''; }, 4000);
   }
 }
 
+// Load most-recently-updated version on sign-in
 async function loadCV() {
   if (!window._currentUser || !_db) return;
   const { data, error } = await _db.from('cv_saves')
-    .select('cv_data,theme_data').eq('user_id', window._currentUser.id).single();
+    .select('cv_data,theme_data,lang')
+    .eq('user_id', window._currentUser.id)
+    .order('updated_at', { ascending: false })
+    .limit(1)
+    .single();
   if (error || !data) return;
+  _applyVersionData(data);
+  showToast('CV loaded ✓');
+}
 
+// ── VERSIONS MODAL ────────────────────────────────────────────
+function openVersions() {
+  document.getElementById('cvb-ver-overlay').classList.add('open');
+  _renderVersionsList();
+}
+function closeVersions() {
+  document.getElementById('cvb-ver-overlay').classList.remove('open');
+}
+
+async function _renderVersionsList() {
+  const list = document.getElementById('cvb-ver-list');
+  list.innerHTML = '<div style="color:var(--muted);font-size:.75rem;padding:.4rem 0">Loading…</div>';
+
+  if (!_db || !window._currentUser) {
+    list.innerHTML = '<div style="color:var(--muted);font-size:.75rem;padding:.4rem 0">⚠ Please sign in to view saved CVs.</div>';
+    return;
+  }
+
+  let data;
+  try {
+    const res = await _db.from('cv_saves')
+      .select('lang,cv_data,updated_at')
+      .eq('user_id', window._currentUser.id);
+    if (res.error) throw new Error(res.error.message);
+    data = res.data;
+  } catch(err) {
+    list.innerHTML = `<div style="color:#c45a5a;font-size:.75rem;padding:.4rem 0">⚠ Error loading CVs: ${err.message}<br><small>Make sure you ran the migration SQL in Supabase.</small></div>`;
+    return;
+  }
+
+  const saved = {};
+  (data || []).forEach(r => { saved[r.lang] = r; });
+
+  const fmtDate = iso => iso
+    ? new Date(iso).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' })
+    : '';
+
+  list.innerHTML = [
+    { lang:'en', flag:'🇬🇧', label:'English Version' },
+    { lang:'ar', flag:'🌙', label:'النسخة العربية' }
+  ].map(({ lang, flag, label }) => {
+    const v = saved[lang];
+    const name = v?.cv_data?.personal?.name || '';
+    if (v) {
+      return `<div class="cvb-ver-card has-data">
+        <div class="cvb-ver-flag">${flag}</div>
+        <div class="cvb-ver-info">
+          <div class="cvb-ver-lang">${label}</div>
+          <div class="cvb-ver-meta">${name ? name + ' · ' : ''}Saved ${fmtDate(v.updated_at)}</div>
+        </div>
+        <button class="cvb-ver-load-btn" onclick="loadVersion('${lang}')">Load</button>
+      </div>`;
+    }
+    return `<div class="cvb-ver-card empty">
+      <div class="cvb-ver-flag">${flag}</div>
+      <div class="cvb-ver-info">
+        <div class="cvb-ver-lang">${label}</div>
+        <div class="cvb-ver-meta" style="font-style:italic">Not saved yet</div>
+      </div>
+      <span class="cvb-ver-unsaved">—</span>
+    </div>`;
+  }).join('');
+}
+
+async function loadVersion(lang) {
+  if (!window._currentUser || !_db) return;
+  const { data, error } = await _db.from('cv_saves')
+    .select('cv_data,theme_data,lang')
+    .eq('user_id', window._currentUser.id)
+    .eq('lang', lang)
+    .single();
+  if (error || !data) { showToast('Version not found.'); return; }
+  _applyVersionData(data);
+  closeVersions();
+  showToast('✦ ' + (lang === 'ar' ? 'Arabic' : 'English') + ' CV loaded ✓');
+}
+
+function _applyVersionData(data) {
   const d = data.cv_data || {};
   Object.assign(cv.personal, d.personal || {});
-  cv.summary          = d.summary || '';
-  cv.experience       = d.experience || [];
-  cv.education        = d.education || [];
-  cv.certifications   = d.certifications || [];
-  Object.assign(cv.skills, d.skills || {});
-  cv.languages        = d.languages || [];
-  cv.customSections   = d.customSections || [];
-  if (Array.isArray(d.sectionOrder) && d.sectionOrder.length === 6)
+  cv.summary        = d.summary        || '';
+  cv.experience     = d.experience     || [];
+  cv.education      = d.education      || [];
+  cv.certifications = d.certifications || [];
+  Object.assign(cv.skills, d.skills   || {});
+  cv.languages      = d.languages      || [];
+  cv.customSections = d.customSections || [];
+  if (Array.isArray(d.sectionOrder) && d.sectionOrder.length >= 4)
     cv.sectionOrder = d.sectionOrder;
 
-  if (data.theme_data) {
-    if (data.theme_data.accent) theme.accent = data.theme_data.accent;
-    if (data.theme_data.font)   theme.font   = data.theme_data.font;
-    if (data.theme_data.layout) theme.layout = data.theme_data.layout;
-    if (data.theme_data.dir)    theme.dir    = data.theme_data.dir;
-  }
+  const t = data.theme_data || {};
+  if (t.accent) theme.accent = t.accent;
+  if (t.font)   theme.font   = t.font;
+  if (t.layout) theme.layout = t.layout;
+  if (t.dir)    theme.dir    = t.dir;
 
   populateForm();
   applyTheme(theme.accent, theme.font);
   applyLayout(theme.layout);
   renderCV();
-  showToast('CV loaded ✓');
+  _updateSaveLabel();
 }
 
 function populateForm() {
@@ -1397,6 +1730,9 @@ function populateForm() {
 function initCVBuilder() {
   // Check current user state
   updateAuthUI();
+  // Init AI button state
+  _updateAIButton();
+  _updateSIAIButton();
   // Listen for auth changes (login/logout)
   if (_db) {
     _db.auth.onAuthStateChange((event, session) => {
@@ -1407,15 +1743,25 @@ function initCVBuilder() {
   }
 }
 
+function _updateSaveLabel() {
+  const btn = document.getElementById('cvb-save-btn');
+  if (btn && btn.style.display !== 'none')
+    btn.textContent = '💾 Save (' + (theme.dir === 'rtl' ? 'AR' : 'EN') + ')';
+}
+
 function updateAuthUI() {
-  const notice  = document.getElementById('cvb-guest-notice');
-  const saveBtn = document.getElementById('cvb-save-btn');
+  const notice   = document.getElementById('cvb-guest-notice');
+  const saveBtn  = document.getElementById('cvb-save-btn');
+  const mycvsBtn = document.getElementById('cvb-mycvs-btn');
   if (window._currentUser) {
-    if (notice)  notice.style.display  = 'none';
-    if (saveBtn) saveBtn.style.display = 'inline-flex';
+    if (notice)   notice.style.display   = 'none';
+    if (saveBtn)  saveBtn.style.display  = 'inline-flex';
+    if (mycvsBtn) mycvsBtn.style.display = 'inline-flex';
+    _updateSaveLabel();
   } else {
-    if (notice)  notice.style.display  = 'flex';
-    if (saveBtn) saveBtn.style.display = 'none';
+    if (notice)   notice.style.display   = 'flex';
+    if (saveBtn)  saveBtn.style.display  = 'none';
+    if (mycvsBtn) mycvsBtn.style.display = 'none';
   }
 }
 
@@ -1560,185 +1906,287 @@ function applyImport() {
   showToast('✦ Smart Import applied!');
 }
 
-// ── TEXT PARSER ──────────────────────────────────────────────
-function parseImportText(text) {
+// ── TEXT PARSER (ENHANCED) ───────────────────────────────────
+function parseImportText(rawText) {
+  // Normalise: unify line endings, collapse multiple blanks → single blank
+  const text  = rawText.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
   const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
   const result = {
     personal: {},
-    summary: '',
-    experience: [],
-    education: [],
-    certifications: [],
-    skills: { hr:'', tech:'', soft:'' },
-    languages: []
+    summary: '', experience: [], education: [],
+    certifications: [], skills:{ hr:'', tech:'', soft:'' }, languages: []
   };
 
-  // ── Contact Info (regex extraction) ──────────────────
-  const emailM = text.match(/[\w.+'-]+@[\w-]+\.[\w.]+/);
+  // ── 1. Contact Info ──────────────────────────────────────────
+  const emailM     = text.match(/[\w.+'-]+@[\w.-]+\.[a-z]{2,}/i);
   if (emailM) result.personal.email = emailM[0];
 
-  const phoneM = text.match(/(?:\+?\d[\d\s\-().]{8,16})/);
+  const phoneM = text.match(/(?:\+?\d{1,3}[\s\-.]?)?\(?\d{2,4}\)?[\s\-.]?\d{3,4}[\s\-.]?\d{3,5}/);
   if (phoneM) result.personal.phone = phoneM[0].trim();
 
-  const linkedinM = text.match(/linkedin\.com\/in\/([\w-]+)/i);
-  if (linkedinM) result.personal.linkedin = 'linkedin.com/in/' + linkedinM[1];
+  const liM = text.match(/linkedin\.com\/in\/([\w\-]+)/i);
+  if (liM) result.personal.linkedin = 'linkedin.com/in/' + liM[1];
 
-  const websiteM = text.match(/(?:https?:\/\/)?(?:www\.)?((?!linkedin\.com)[\w-]+\.(?:com|net|org|io|dev|me|co)(?:\/[\w-]*)?)/i);
-  if (websiteM && !websiteM[0].includes('@')) result.personal.website = websiteM[1];
+  const webM = text.match(/(?:https?:\/\/)?(?:www\.)?((?!linkedin\.com)[\w\-]+\.(?:com|net|org|io|dev|me|co|eg)(?:\/[\w\-]*)?)/i);
+  if (webM && !webM[0].includes('@')) result.personal.website = webM[1];
 
-  // ── Name & Title (heuristic: first short clean lines) ─
-  const sectionRE = /^(summary|profile|objective|experience|education|skill|certif|language|work|academic|volunteer|project|award|reference|خبر|تعليم|مهار|لغ|شهاد|ملخص|نبذ|مشار|مراجع)/i;
-  const contactRE = /@|\+\d{2,}|linkedin|http|www\.|gmail|yahoo|hotmail|\.com|\.net|,\s*\d{5}/i;
-  let nameFound = false;
+  // City + Arab country
+  const locM = text.match(/\b([A-Z][a-z]+(?: [A-Z][a-z]+)*,?\s*(?:Egypt|Libya|UAE|Saudi Arabia|Jordan|Lebanon|Kuwait|Qatar|Bahrain|Oman|Tunisia|Morocco|Algeria|Sudan|مصر|السعودية|الإمارات|الكويت|قطر))\b/);
+  if (locM) result.personal.location = locM[1];
+  // Arabic city pattern
+  if (!result.personal.location) {
+    const arLocM = text.match(/(?:القاهرة|الإسكندرية|الجيزة|الرياض|جدة|دبي|أبوظبي|عمان|بيروت|الدوحة)/);
+    if (arLocM) result.personal.location = arLocM[0];
+  }
 
-  for (const line of lines) {
-    if (sectionRE.test(line) || contactRE.test(line) || line.length < 3 || line.length > 65) continue;
-    if (!nameFound && !result.personal.name) {
-      result.personal.name = line;
-      nameFound = true;
-    } else if (nameFound && !result.personal.title) {
-      result.personal.title = line;
-      break;
+  // ── 2. Name & Title detection ────────────────────────────────
+  const secHeaderRE = /^(summary|profile|objective|experience|employment|education|skill|certif|language|work history|volunteer|project|award|reference|contact|خبر|تعليم|مهار|لغ|شهاد|ملخص|نبذ|مشار|مراجع|السيرة)/i;
+  const contactLineRE = /@|\+\d{2,}|linkedin|http|www\.|gmail|yahoo|hotmail|\.com|\.net|\.io|,\s*\d{5}/i;
+  const allCapsRE = /^[A-Z\s\-.']+$/; // "JOHN SMITH" style headers
+  let nameIdx = -1;
+
+  for (let i = 0; i < Math.min(lines.length, 10); i++) {
+    const l = lines[i];
+    if (secHeaderRE.test(l) || contactLineRE.test(l) || l.length < 2 || l.length > 70) continue;
+    if (!result.personal.name) {
+      result.personal.name = l;
+      nameIdx = i;
+    } else if (!result.personal.title && i > nameIdx) {
+      // Title: shorter than name, no digits, not a contact line
+      if (l.length < 80 && !/^\d/.test(l)) { result.personal.title = l; break; }
     }
   }
 
-  // ── Location (city/country patterns) ──────────────────
-  const locM = text.match(/\b([A-Z][a-z]+(?:\s[A-Z][a-z]+)*,\s*(?:Egypt|Libya|UAE|Saudi|Jordan|Lebanon|Kuwait|Qatar|Bahrain|Oman|Tunisia|Morocco|Algeria|Sudan))\b/);
-  if (locM) result.personal.location = locM[1];
-
-  // ── Section detection ─────────────────────────────────
+  // ── 3. Section segmentation ──────────────────────────────────
   const SECTIONS = {
-    summary:        /^(summary|professional summary|profile|about me|objective|نبذ|ملخص المهن|الملخص)/i,
-    experience:     /^(experience|work experience|employment history|career|professional experience|خبر|الخبر|تاريخ العمل|الوظيف)/i,
-    education:      /^(education|academic|qualifications|educational background|التعليم|المؤهل|الدراسة)/i,
-    certifications: /^(certif|licenses|professional development|شهادات|الشهادات)/i,
-    skills:         /^(skills|competencies|expertise|core competencies|مهارات|المهارات|الكفاءات)/i,
-    languages:      /^(languages|language proficiency|اللغات|اللغة)/i,
+    summary:        /^(summary|professional summary|profile|about\s?me|objective|career objective|personal statement|نبذة|ملخص مهني?|الملخص|نبذة تعريفية)/i,
+    experience:     /^(experience|work experience|employment(?: history)?|career history|professional experience|work history|الخبر|خبرة|تاريخ العمل|الوظائف|الوظيف|المسيرة)/i,
+    education:      /^(education|academic(?: background)?|qualifications?|educational background|التعليم|المؤهلات|الدراسة|التأهيل)/i,
+    certifications: /^(certif|licens|professional development|training|courses|شهادات|الشهادات|دورات|تدريب)/i,
+    skills:         /^(skills?|competencies|expertise|core competencies|technical skills|key skills|مهارات|الكفاءات|القدرات)/i,
+    languages:      /^(languages?(?:\s+proficiency)?|اللغات|إجادة اللغات)/i,
   };
 
-  let currentSection = null;
-  const sectionData  = {};
+  let curSec = null;
+  const secData = {};
 
   for (const line of lines) {
     let isHeader = false;
     for (const [sec, re] of Object.entries(SECTIONS)) {
-      if (re.test(line) && line.length < 65) {
-        currentSection = sec;
-        sectionData[sec] = sectionData[sec] || [];
-        isHeader = true;
-        break;
+      if (re.test(line) && line.length < 70) {
+        curSec = sec; secData[sec] = secData[sec] || []; isHeader = true; break;
       }
     }
-    if (!isHeader && currentSection && line !== result.personal.name && line !== result.personal.title) {
-      sectionData[currentSection].push(line);
+    if (!isHeader && curSec
+        && line !== result.personal.name
+        && line !== result.personal.title) {
+      secData[curSec].push(line);
     }
   }
 
-  // ── Summary ────────────────────────────────────────────
-  if (sectionData.summary) {
-    result.summary = sectionData.summary.slice(0, 5).join(' ').substring(0, 500);
+  // ── 4. Summary ───────────────────────────────────────────────
+  if (secData.summary) {
+    // Join and clean up — take up to 600 chars
+    result.summary = secData.summary.join(' ').replace(/\s+/g,' ').trim().substring(0, 600);
   }
 
-  // ── Skills ─────────────────────────────────────────────
-  if (sectionData.skills) {
-    const combined = sectionData.skills
-      .join(', ')
-      .replace(/[•\-*·]/g, ',')
+  // ── 5. Skills (auto-categorise into HR / Tech / Soft) ────────
+  if (secData.skills) {
+    const raw = secData.skills
+      .join(' | ')
+      .replace(/[•\-*·▪◆]/g, ',')
       .replace(/,+/g, ',')
       .replace(/\s+/g, ' ')
       .trim();
-    result.skills.hr = combined.substring(0, 300);
+
+    // Keywords to route into Tech bucket
+    const TECH_KW = /excel|word|powerpoint|sap|oracle|workday|hrms|hris|erp|python|sql|tableau|power\s?bi|vba|outlook|crm|payroll|ats|applicant/i;
+    // Keywords to route into Soft bucket
+    const SOFT_KW = /communicat|leadership|teamwork|problem.solv|analytical|negotiat|present|time.manage|adaptab|collaborat|critical think|تواصل|قيادة|عمل جماعي|حل مشكل|إدارة وقت/i;
+
+    const parts = raw.split(',').map(s => s.trim()).filter(Boolean);
+    const hrArr = [], techArr = [], softArr = [];
+    parts.forEach(p => {
+      if (TECH_KW.test(p))      techArr.push(p);
+      else if (SOFT_KW.test(p)) softArr.push(p);
+      else                      hrArr.push(p);
+    });
+    result.skills.hr   = hrArr.join(', ').substring(0,300);
+    result.skills.tech = techArr.join(', ').substring(0,300);
+    result.skills.soft = softArr.join(', ').substring(0,300);
+    // Fallback: if everything went to hr and nothing in tech/soft, keep as-is
+    if (!result.skills.tech && !result.skills.soft && result.skills.hr.length > 200) {
+      // Try to guess: first third → HR, rest → soft
+    }
   }
 
-  // ── Languages ──────────────────────────────────────────
-  if (sectionData.languages) {
-    const levelRE = /native|fluent|advanced|intermediate|basic|proficient|أصلي|بطلاقة|متقدم|متوسط|أساسي/i;
-    sectionData.languages.forEach(line => {
-      if (line.length < 60) {
-        const levelM = line.match(levelRE);
-        const langName = line.replace(levelRE, '').replace(/[-:–—|()]/g, '').trim();
-        if (langName && langName.length > 1) {
-          result.languages.push({
-            name:  langName.substring(0, 30),
-            level: levelM ? capFirst(levelM[0]) : 'Fluent'
-          });
-        }
+  // ── 6. Languages ─────────────────────────────────────────────
+  if (secData.languages) {
+    const levelRE = /native|mother\s?tongue|fluent|advanced|upper.inter|intermediate|basic|beginner|proficient|أصلي|لغة أم|بطلاقة|متقدم|متوسط|أساسي|ممتاز|جيد جدا|جيد/i;
+    secData.languages.forEach(line => {
+      if (line.length > 80) return;
+      // Handle "Arabic: Native" or "Arabic — Advanced"
+      const parts = line.split(/[:\-–—|,\/]/);
+      if (parts.length >= 2) {
+        const name  = parts[0].replace(/[•\*]/g,'').trim();
+        const level = parts.slice(1).join(' ').replace(/[•\*]/g,'').trim();
+        if (name.length > 1 && name.length < 30)
+          result.languages.push({ name, level: capFirst(level) || 'Fluent' });
+      } else {
+        const levelM   = line.match(levelRE);
+        const langName = line.replace(levelRE,'').replace(/[-:–—|()\*•]/g,'').trim();
+        if (langName && langName.length > 1 && langName.length < 40)
+          result.languages.push({ name: langName, level: levelM ? capFirst(levelM[0]) : 'Fluent' });
       }
+    });
+    // Deduplicate
+    const seen = new Set();
+    result.languages = result.languages.filter(l => {
+      const k = l.name.toLowerCase();
+      if (seen.has(k)) return false; seen.add(k); return true;
     });
   }
 
-  // ── Experience ─────────────────────────────────────────
-  if (sectionData.experience) {
-    const dateRE = /\b(\d{4}|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/i;
-    const rangeSep = /\s*[–—\-/to]+\s*/i;
+  // ── 7. Experience ────────────────────────────────────────────
+  if (secData.experience) {
+    const YEAR_RE  = /\b(19|20)\d{2}\b/;
+    const MONTH_RE = /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|يناير|فبراير|مارس|أبريل|مايو|يونيو|يوليو|أغسطس|سبتمبر|أكتوبر|نوفمبر|ديسمبر)/i;
+    const DATE_RE  = new RegExp(YEAR_RE.source + '|' + MONTH_RE.source, 'i');
+    const RANGE_RE = /(\w+\.?\s*(?:19|20)\d{2}|(?:19|20)\d{2})\s*[–—\-\/to]+\s*(\w+\.?\s*(?:19|20)\d{2}|present|current|now|الآن|حتى الآن|till now)/i;
+    const BULLET_RE= /^[•\-*▪◆►]/;
+
+    // Role title keywords — if a short line matches these it's likely a role not a company
+    const ROLE_KW = /manager|specialist|officer|analyst|director|coordinator|executive|consultant|recruiter|trainer|advisor|lead|head of|مدير|أخصائي|مسؤول|محلل|مستشار|منسق|مدرب/i;
+
     let curExp = null;
 
-    sectionData.experience.forEach(line => {
-      const hasDate = dateRE.test(line);
-      const isShort = line.length < 90;
-      const isBullet= /^[•\-*]/.test(line);
+    const pushExp = () => {
+      if (curExp && (curExp.company || curExp.role)) {
+        // If we never found a company but found a role, promote
+        if (!curExp.company && curExp.role) { curExp.company = curExp.role; curExp.role = ''; }
+        result.experience.push(curExp);
+        curExp = null;
+      }
+    };
 
-      if (isBullet && curExp) {
-        curExp.desc += (curExp.desc ? '\n' : '') + line;
+    secData.experience.forEach(line => {
+      const hasBullet = BULLET_RE.test(line);
+      const hasDate   = DATE_RE.test(line);
+      const isShort   = line.length < 100;
+
+      // Bullet → append to description of current entry
+      if (hasBullet && curExp) {
+        curExp.desc += (curExp.desc ? '\n' : '') + line.replace(/^[•\-*▪◆►]\s*/,'');
         return;
       }
 
-      if (hasDate && isShort && !isBullet) {
-        if (curExp) result.experience.push(curExp);
-        const rangeM = line.match(/(\w+\.?\s*\d{4}|\d{4})\s*[–—\-/to]+\s*(\w+\.?\s*\d{4}|present|current|الآن|حتى الآن)/i);
+      // Line with year/date range → start of a new experience block
+      if (hasDate && isShort) {
+        pushExp();
+        const rangeM = line.match(RANGE_RE);
         curExp = {
-          company: '', role: '',
+          company:'', role:'',
           start: rangeM?.[1]?.trim() || '',
-          end:   /present|current|الآن|حتى الآن/i.test(rangeM?.[2]||'') ? '' : (rangeM?.[2]?.trim() || ''),
-          current: /present|current|الآن|حتى الآن/i.test(line),
+          end:   /present|current|now|الآن|حتى الآن/i.test(rangeM?.[2]||'') ? '' : (rangeM?.[2]?.trim()||''),
+          current: /present|current|now|الآن|حتى الآن/i.test(line),
           desc: ''
         };
-        const noDate = line.replace(/(\w+\.?\s*\d{4}|\d{4})[^a-zA-Z؀-ۿ]*/g,'').replace(rangeSep,'').trim();
-        if (noDate.length > 1) curExp.company = noDate;
-      } else if (curExp) {
-        if (!curExp.company && isShort) curExp.company = line;
-        else if (!curExp.role && isShort && line.length < 80) curExp.role = line;
-        else curExp.desc += (curExp.desc ? '\n' : '') + line;
-      } else if (isShort && !hasDate) {
-        if (curExp) result.experience.push(curExp);
-        curExp = { company:line, role:'', start:'', end:'', current:false, desc:'' };
+        // Remainder of line after stripping dates is often the company name
+        const noDate = line
+          .replace(RANGE_RE,'')
+          .replace(/\b(19|20)\d{2}\b/g,'')
+          .replace(/[–—\-\/|]/g,' ')
+          .replace(/\s+/g,' ').trim();
+        if (noDate.length > 1) {
+          if (ROLE_KW.test(noDate)) curExp.role = noDate;
+          else curExp.company = noDate;
+        }
+        return;
+      }
+
+      if (curExp) {
+        if (!curExp.company && isShort && !ROLE_KW.test(line)) {
+          curExp.company = line;
+        } else if (!curExp.role && isShort && line.length < 80) {
+          curExp.role = line;
+        } else {
+          curExp.desc += (curExp.desc ? '\n' : '') + line;
+        }
+      } else if (isShort) {
+        // Line before any date seen → start accumulating
+        pushExp();
+        if (ROLE_KW.test(line)) curExp = { company:'', role:line, start:'', end:'', current:false, desc:'' };
+        else                    curExp = { company:line, role:'',  start:'', end:'', current:false, desc:'' };
       }
     });
-    if (curExp && (curExp.company||curExp.role)) result.experience.push(curExp);
+    pushExp();
   }
 
-  // ── Education ──────────────────────────────────────────
-  if (sectionData.education) {
-    const yearRE = /\d{4}/g;
+  // ── 8. Education ─────────────────────────────────────────────
+  if (secData.education) {
+    const YEAR_RE  = /\b(19|20)\d{2}\b/g;
+    const DEG_RE   = /\b(bachelor|master|mba|phd|doctorate|diploma|associate|b\.?sc|m\.?sc|b\.?a|m\.?a|ليسانس|بكالوريوس|ماجستير|دكتوراه|دبلوم)/i;
     let curEdu = null;
 
-    sectionData.education.forEach(line => {
-      const isBullet = /^[•\-*]/.test(line);
-      if (isBullet) return;
-      const years = line.match(yearRE);
+    const pushEdu = () => {
+      if (curEdu && curEdu.institution) { result.education.push(curEdu); curEdu = null; }
+    };
 
-      if (!curEdu || (line.length < 90 && !line.startsWith(' '))) {
-        if (curEdu) result.education.push(curEdu);
-        curEdu = { institution:line.replace(/\d{4}[-–\s\d]*/g,'').trim(), degree:'', field:'', start:'', end:'' };
+    secData.education.forEach(line => {
+      if (/^[•\-*]/.test(line)) return; // skip bullets
+      const years   = line.match(YEAR_RE);
+      const hasDeg  = DEG_RE.test(line);
+      const isShort = line.length < 100;
+
+      if (isShort && !hasDeg && !years && curEdu && !curEdu.degree) {
+        // Might be the degree line
+        if (line.length < 80) { curEdu.degree = line; return; }
+      }
+
+      if (isShort && (years || !curEdu)) {
+        pushEdu();
+        const clean = line.replace(YEAR_RE,'').replace(/[-–—,|]/g,' ').replace(/\s+/g,' ').trim();
+        curEdu = { institution: clean, degree:'', field:'', start:'', end:'' };
         if (years) {
-          curEdu.end   = years[years.length-1];
-          curEdu.start = years.length > 1 ? years[0] : '';
+          const yrs = line.match(YEAR_RE); // re-match after reassignment
+          curEdu.end   = yrs?.[yrs.length-1] || '';
+          curEdu.start = yrs?.length > 1 ? yrs[0] : '';
         }
-      } else if (curEdu && !curEdu.degree && line.length < 100) {
-        curEdu.degree = line.replace(/\d{4}[-–\s\d]*/g,'').trim();
+        if (hasDeg) {
+          // Degree is on same line as institution — split
+          const degM = line.match(DEG_RE);
+          if (degM) {
+            curEdu.degree      = degM[0];
+            curEdu.institution = line.replace(degM[0],'').replace(YEAR_RE,'')
+                                     .replace(/[-–—,|]/g,' ').replace(/\s+/g,' ').trim();
+          }
+        }
+      } else if (curEdu && isShort) {
+        if (!curEdu.degree) curEdu.degree = line.replace(YEAR_RE,'').trim();
       }
     });
-    if (curEdu && curEdu.institution) result.education.push(curEdu);
+    pushEdu();
   }
 
-  // ── Certifications ─────────────────────────────────────
-  if (sectionData.certifications) {
-    sectionData.certifications.forEach(line => {
-      if (line.length < 5) return;
-      const yearM = line.match(/\d{4}/);
-      const certName = line.replace(/\d{4}/g,'').replace(/[•\-*,|]/g,'').trim();
+  // ── 9. Certifications ────────────────────────────────────────
+  if (secData.certifications) {
+    secData.certifications.forEach(line => {
+      if (line.length < 3) return;
+      const yearM  = line.match(/\b(19|20)\d{2}\b/);
+      // Issuer often after " — " or " by " or " | "
+      const issuerM = line.match(/(?:—|by|from|issued by|جهة:)\s*(.+)/i);
+      const certName = line
+        .replace(/\b(19|20)\d{2}\b/g,'')
+        .replace(/(?:—|by|from|issued by|جهة:)\s*.+/i,'')
+        .replace(/[•\-*,|]/g,'')
+        .trim();
       if (certName.length > 2) {
-        result.certifications.push({ name:certName.substring(0,100), issuer:'', date:yearM?.[0]||'' });
+        result.certifications.push({
+          name:   certName.substring(0,100),
+          issuer: issuerM?.[1]?.trim() || '',
+          year:   yearM?.[0] || ''
+        });
       }
     });
   }
@@ -1748,6 +2196,451 @@ function parseImportText(text) {
 
 function capFirst(s) {
   return s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : s;
+}
+
+// ── GEMINI AI CORE (via Supabase Edge Function) ───────────────
+// Key محفوظ عند Mahmoud في Supabase Secrets — المستخدم ما يحتاجش يعمل أي حاجة
+function _hasAI() { return !!_db; } // AI متاح طالما Supabase متصل
+
+async function _callGemini(prompt, fileParts) {
+  if (!_db) throw new Error('Supabase not connected');
+
+  const body = { prompt };
+  // PDF file → send as inline_data
+  if (fileParts?.[0]?.inline_data) body.fileData = fileParts[0].inline_data;
+
+  const { data, error } = await _db.functions.invoke('gemini-proxy', { body });
+  if (error) throw new Error(error.message || 'Edge Function error');
+  if (data?.error) throw new Error(data.error);
+  return data?.text || '';
+}
+
+// ── AI INFO MODAL ─────────────────────────────────────────────
+function openAISettings() {
+  document.getElementById('cvb-ai-overlay').classList.add('open');
+}
+function closeAISettings() {
+  document.getElementById('cvb-ai-overlay').classList.remove('open');
+}
+function _updateAIButton() {
+  const btn = document.getElementById('cvb-ai-btn');
+  if (!btn) return;
+  btn.classList.add('ai-on');
+  btn.textContent = '🤖 AI';
+}
+function _updateSIAIButton() {
+  const aib = document.getElementById('si-ai-parse-btn');
+  if (aib) aib.style.display = 'inline-flex';
+}
+
+// ── AI SMART IMPORT ───────────────────────────────────────────
+async function runSmartImportAI() {
+  if (!_hasAI()) { openAISettings(); return; }
+  const ta     = document.getElementById('si-textarea');
+  const fileEl = document.getElementById('si-file-input');
+  const text   = ta.value.trim();
+  const file   = fileEl.files[0];
+  if (!text && !file) { showToast('Paste CV text or upload a file first.'); return; }
+
+  const parseBtn = document.getElementById('si-ai-parse-btn');
+  parseBtn.disabled = true;
+  parseBtn.textContent = '⏳ Analysing…';
+
+  try {
+    // Extract text from any uploaded file — works with text-only AI (Groq)
+    if (file && file.name.match(/\.pdf$/i)) {
+      parseBtn.textContent = '⏳ Reading PDF…';
+      const extracted = await extractTextFromPDF(file);
+      ta.value = extracted;
+    } else if (file && file.name.match(/\.(docx?|doc)$/i)) {
+      const buf    = await file.arrayBuffer();
+      const result = await mammoth.extractRawText({ arrayBuffer: buf });
+      ta.value     = result.value;
+    }
+
+    const cvText = ta.value.trim() || text;
+    if (!cvText) throw new Error('No CV text found. Please paste text or upload a file.');
+
+    parseBtn.textContent = '⏳ Analysing…';
+
+    const prompt = `You are an expert CV/Resume parser. Extract ALL information from the CV text below and return ONLY valid JSON with exactly this structure (no markdown, no explanation):
+
+{
+  "personal": { "name":"","title":"","email":"","phone":"","location":"","linkedin":"","website":"" },
+  "summary": "",
+  "experience": [{ "company":"","role":"","start":"","end":"","current":false,"desc":"" }],
+  "education": [{ "institution":"","degree":"","field":"","start":"","end":"" }],
+  "certifications": [{ "name":"","issuer":"","year":"" }],
+  "skills": { "hr":"","tech":"","soft":"" },
+  "languages": [{ "name":"","level":"" }],
+  "customSections": []
+}
+
+Rules:
+- skills.hr = HR, management, soft domain skills
+- skills.tech = software, tools, systems
+- skills.soft = interpersonal / soft skills
+- desc: keep bullet points separated by newlines
+- Return ONLY the JSON object, nothing else
+
+CV TEXT:
+${cvText}`;
+
+    const raw  = await _callGemini(prompt);
+    const json = raw.match(/\{[\s\S]*\}/)?.[0];
+    if (!json) throw new Error('Gemini did not return valid JSON. Try again.');
+
+    _parsedImport = JSON.parse(json);
+    _parsedImport._detectedDir = detectLanguage(
+      [_parsedImport.personal?.name, _parsedImport.summary,
+       ...(_parsedImport.experience||[]).map(e=>e.desc)].join(' ')
+    );
+    showImportPreview(_parsedImport);
+    showToast('🤖 AI parsed your CV successfully!');
+
+  } catch(err) {
+    showToast('⚠ AI error: ' + err.message);
+  } finally {
+    parseBtn.disabled = false;
+    parseBtn.textContent = '🤖 Parse with AI';
+  }
+}
+
+// ── AI TRANSLATE ─────────────────────────────────────────────
+let _trSrc = 'en', _trTgt = 'ar';
+
+// Month / date word lookup — no API call needed for dates
+const _MONTHS_EN_AR = {
+  'january':'يناير','february':'فبراير','march':'مارس','april':'أبريل',
+  'may':'مايو','june':'يونيو','july':'يوليو','august':'أغسطس',
+  'september':'سبتمبر','october':'أكتوبر','november':'نوفمبر','december':'ديسمبر',
+  'jan':'يناير','feb':'فبراير','mar':'مارس','apr':'أبريل',
+  'jun':'يونيو','jul':'يوليو','aug':'أغسطس','sep':'سبتمبر',
+  'oct':'أكتوبر','nov':'نوفمبر','dec':'ديسمبر',
+  'present':'الآن','current':'الآن','now':'الآن'
+};
+const _MONTHS_AR_EN = {
+  'يناير':'Jan','فبراير':'Feb','مارس':'Mar','أبريل':'Apr',
+  'مايو':'May','يونيو':'Jun','يوليو':'Jul','أغسطس':'Aug',
+  'سبتمبر':'Sep','أكتوبر':'Oct','نوفمبر':'Nov','ديسمبر':'Dec',
+  'الآن':'Present','حتى الآن':'Present'
+};
+
+function _trDate(str, src) {
+  if (!str) return str;
+  const map = src === 'en' ? _MONTHS_EN_AR : _MONTHS_AR_EN;
+  let out = str;
+  for (const [k, v] of Object.entries(map))
+    out = out.replace(new RegExp(k, 'gi'), v);
+  return out;
+}
+
+function openTranslate() {
+  document.getElementById('cvb-tr-overlay').classList.add('open');
+  document.getElementById('cvb-tr-progress').textContent = '';
+  setTrDir('en','ar');
+}
+function closeTranslate() {
+  document.getElementById('cvb-tr-overlay').classList.remove('open');
+}
+function setTrDir(src, tgt) {
+  _trSrc = src; _trTgt = tgt;
+  document.getElementById('tr-btn-enar').classList.toggle('active', src==='en');
+  document.getElementById('tr-btn-aren').classList.toggle('active', src==='ar');
+}
+
+async function translateText(text, src, tgt) {
+  if (!text || !text.trim() || text.trim().length < 2) return text;
+  try {
+    const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text.trim())}&langpair=${src}|${tgt}&de=mahmoudeldeberky@gmail.com`;
+    const res  = await fetch(url);
+    const data = await res.json();
+    if (data.responseStatus === 200 && data.responseData?.translatedText) {
+      return data.responseData.translatedText;
+    }
+  } catch(e) {}
+  return text;
+}
+
+// Helper: translate long text in sentence-chunks to keep API happy
+async function _trLong(text, src, tgt, delay = 150) {
+  if (!text) return text;
+  const chunks = text.match(/[^.!?؟\n]+[.!?؟\n]*/g) || [text];
+  const out = [];
+  for (const c of chunks) {
+    if (c.trim()) out.push(await translateText(c.trim(), src, tgt));
+    else out.push(c);
+    await new Promise(r => setTimeout(r, delay));
+  }
+  return out.join(' ').trim();
+}
+
+// Gemini-powered translation — sends entire CV as JSON in one request
+async function _runTranslateGemini(btn, prog) {
+  const src     = _trSrc, tgt = _trTgt;
+  const srcName = src === 'en' ? 'English' : 'Arabic';
+  const tgtName = tgt === 'ar' ? 'Arabic'  : 'English';
+  const setP    = msg => { prog.textContent = msg; };
+
+  const doTitle   = document.getElementById('tr-f-title').checked;
+  const doSummary = document.getElementById('tr-f-summary').checked;
+  const doExp     = document.getElementById('tr-f-exp').checked;
+  const doEdu     = document.getElementById('tr-f-edu').checked;
+  const doSkills  = document.getElementById('tr-f-skills').checked;
+  const doCerts   = document.getElementById('tr-f-certs').checked;
+
+  try {
+    setP('🤖 Building translation request…');
+
+    // Build a snapshot of fields to translate
+    const payload = {
+      personal: {
+        name:     cv.personal.name     || '',
+        title:    doTitle ? (cv.personal.title    || '') : '__SKIP__',
+        location: cv.personal.location || ''
+      },
+      summary:        doSummary ? (cv.summary || '') : '__SKIP__',
+      experience: doExp ? cv.experience.map(e => ({
+        company: e.company, role: e.role,
+        start: _trDate(e.start, src), end: _trDate(e.end, src),
+        desc: e.desc
+      })) : '__SKIP__',
+      education: doEdu ? cv.education.map(e => ({
+        institution: e.institution, degree: e.degree,
+        start: _trDate(e.start, src), end: _trDate(e.end, src)
+      })) : '__SKIP__',
+      skills:  doSkills ? cv.skills : '__SKIP__',
+      certifications: doCerts ? cv.certifications.map(c => ({ name:c.name, issuer:c.issuer })) : '__SKIP__',
+      languages: cv.languages.map(l => ({ name:l.name, level:l.level })),
+      customSections: (cv.customSections||[]).map(s => ({ title:s.title, content:s.content }))
+    };
+
+    const prompt = `You are a professional CV translator. Translate this CV data from ${srcName} to ${tgtName}.
+
+Rules:
+- Return ONLY valid JSON with the exact same structure as input — no explanation, no markdown
+- Fields with value "__SKIP__" must be returned as "__SKIP__" unchanged
+- Translate text content accurately, preserving professional HR/business terminology
+- Company names: transliterate if no official ${tgtName} name exists
+- Dates and numbers: keep as-is (already converted)
+- Keep bullet point structure in desc fields (newlines)
+- Translate language level labels (e.g. "Fluent" → "بطلاقة")
+
+CV JSON to translate:
+${JSON.stringify(payload, null, 2)}`;
+
+    setP('🤖 Translating with Gemini…');
+    const raw  = await _callGemini(prompt);
+    const json = raw.match(/\{[\s\S]*\}/)?.[0];
+    if (!json) throw new Error('Gemini returned invalid JSON. Try again.');
+
+    const t = JSON.parse(json);
+
+    // Apply translated values back
+    if (t.personal?.name)     cv.personal.name     = t.personal.name;
+    if (t.personal?.title !== '__SKIP__' && t.personal?.title)
+                              cv.personal.title    = t.personal.title;
+    if (t.personal?.location) cv.personal.location = t.personal.location;
+
+    if (t.summary !== '__SKIP__' && t.summary) cv.summary = t.summary;
+
+    if (t.experience !== '__SKIP__' && Array.isArray(t.experience)) {
+      t.experience.forEach((te, i) => {
+        if (!cv.experience[i]) return;
+        if (te.company) cv.experience[i].company = te.company;
+        if (te.role)    cv.experience[i].role    = te.role;
+        if (te.desc)    cv.experience[i].desc    = te.desc;
+        if (te.start)   cv.experience[i].start   = te.start;
+        if (te.end)     cv.experience[i].end     = te.end;
+      });
+    }
+
+    if (t.education !== '__SKIP__' && Array.isArray(t.education)) {
+      t.education.forEach((te, i) => {
+        if (!cv.education[i]) return;
+        if (te.institution) cv.education[i].institution = te.institution;
+        if (te.degree)      cv.education[i].degree      = te.degree;
+        if (te.start)       cv.education[i].start       = te.start;
+        if (te.end)         cv.education[i].end         = te.end;
+      });
+    }
+
+    if (t.skills !== '__SKIP__' && t.skills) {
+      if (t.skills.hr)   cv.skills.hr   = t.skills.hr;
+      if (t.skills.tech) cv.skills.tech = t.skills.tech;
+      if (t.skills.soft) cv.skills.soft = t.skills.soft;
+    }
+
+    if (t.certifications !== '__SKIP__' && Array.isArray(t.certifications)) {
+      t.certifications.forEach((tc, i) => {
+        if (!cv.certifications[i]) return;
+        if (tc.name)   cv.certifications[i].name   = tc.name;
+        if (tc.issuer) cv.certifications[i].issuer = tc.issuer;
+      });
+    }
+
+    if (Array.isArray(t.languages)) {
+      t.languages.forEach((tl, i) => {
+        if (!cv.languages[i]) return;
+        if (tl.name)  cv.languages[i].name  = tl.name;
+        if (tl.level) cv.languages[i].level = tl.level;
+      });
+    }
+
+    if (Array.isArray(t.customSections)) {
+      t.customSections.forEach((ts, i) => {
+        if (!cv.customSections[i]) return;
+        if (ts.title)   cv.customSections[i].title   = ts.title;
+        if (ts.content) cv.customSections[i].content = ts.content;
+      });
+    }
+
+    applyDirection(tgt === 'ar' ? 'rtl' : 'ltr');
+    populateForm(); renderCV();
+    setP('✓ تمت الترجمة بواسطة Gemini AI');
+    showToast('🤖 AI Translation complete!');
+    setTimeout(() => closeTranslate(), 2000);
+
+  } catch(err) {
+    setP('⚠ ' + err.message);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+async function runTranslate() {
+  const btn  = document.getElementById('cvb-tr-go-btn');
+  const prog = document.getElementById('cvb-tr-progress');
+  btn.disabled = true;
+
+  // If Gemini key is available, use AI translation (much better quality)
+  if (_hasAI()) {
+    await _runTranslateGemini(btn, prog);
+    return;
+  }
+
+  const doTitle   = document.getElementById('tr-f-title').checked;
+  const doSummary = document.getElementById('tr-f-summary').checked;
+  const doExp     = document.getElementById('tr-f-exp').checked;
+  const doEdu     = document.getElementById('tr-f-edu').checked;
+  const doSkills  = document.getElementById('tr-f-skills').checked;
+  const doCerts   = document.getElementById('tr-f-certs').checked;
+  const src = _trSrc, tgt = _trTgt;
+  const setP = msg => { prog.textContent = msg; };
+  let done = 0;
+
+  try {
+    // ── Personal ───────────────────────────────────────────────
+    setP('Translating personal info…');
+    if (cv.personal.name)
+      cv.personal.name     = await translateText(cv.personal.name, src, tgt);
+    await new Promise(r => setTimeout(r, 130));
+
+    if (doTitle && cv.personal.title)
+      cv.personal.title    = await translateText(cv.personal.title, src, tgt);
+    await new Promise(r => setTimeout(r, 130));
+
+    if (cv.personal.location)
+      cv.personal.location = await translateText(cv.personal.location, src, tgt);
+    await new Promise(r => setTimeout(r, 130));
+    done++;
+
+    // ── Summary ────────────────────────────────────────────────
+    if (doSummary && cv.summary) {
+      setP('Translating summary…');
+      cv.summary = await _trLong(cv.summary, src, tgt, 160);
+      done++;
+    }
+
+    // ── Experience ─────────────────────────────────────────────
+    if (doExp && cv.experience.length) {
+      for (let i = 0; i < cv.experience.length; i++) {
+        const exp = cv.experience[i];
+        setP(`Translating experience ${i+1}/${cv.experience.length}…`);
+        if (exp.company) { exp.company = await translateText(exp.company, src, tgt); await new Promise(r=>setTimeout(r,130)); }
+        if (exp.role)    { exp.role    = await translateText(exp.role,    src, tgt); await new Promise(r=>setTimeout(r,130)); }
+        // Dates: use lookup table, no API needed
+        exp.start = _trDate(exp.start, src);
+        exp.end   = _trDate(exp.end,   src);
+        // Description lines
+        if (exp.desc) {
+          const lines = exp.desc.split('\n');
+          const out = [];
+          for (const ln of lines) {
+            out.push(ln.trim() ? await translateText(ln, src, tgt) : ln);
+            await new Promise(r => setTimeout(r, 120));
+          }
+          exp.desc = out.join('\n');
+        }
+        await new Promise(r => setTimeout(r, 150));
+      }
+      done++;
+    }
+
+    // ── Education ──────────────────────────────────────────────
+    if (doEdu && cv.education.length) {
+      for (let i = 0; i < cv.education.length; i++) {
+        const edu = cv.education[i];
+        setP(`Translating education ${i+1}/${cv.education.length}…`);
+        if (edu.institution) { edu.institution = await translateText(edu.institution, src, tgt); await new Promise(r=>setTimeout(r,130)); }
+        if (edu.degree)      { edu.degree      = await translateText(edu.degree,      src, tgt); await new Promise(r=>setTimeout(r,130)); }
+        edu.start = _trDate(edu.start, src);
+        edu.end   = _trDate(edu.end,   src);
+      }
+      done++;
+    }
+
+    // ── Skills ─────────────────────────────────────────────────
+    if (doSkills) {
+      setP('Translating skills…');
+      if (cv.skills.hr)   { cv.skills.hr   = await translateText(cv.skills.hr,   src, tgt); await new Promise(r=>setTimeout(r,150)); }
+      if (cv.skills.tech) { cv.skills.tech = await translateText(cv.skills.tech, src, tgt); await new Promise(r=>setTimeout(r,150)); }
+      if (cv.skills.soft) { cv.skills.soft = await translateText(cv.skills.soft, src, tgt); await new Promise(r=>setTimeout(r,150)); }
+      done++;
+    }
+
+    // ── Certifications ─────────────────────────────────────────
+    if (doCerts && cv.certifications.length) {
+      for (let i = 0; i < cv.certifications.length; i++) {
+        setP('Translating certifications…');
+        if (cv.certifications[i].name)   { cv.certifications[i].name   = await translateText(cv.certifications[i].name,   src, tgt); await new Promise(r=>setTimeout(r,130)); }
+        if (cv.certifications[i].issuer) { cv.certifications[i].issuer = await translateText(cv.certifications[i].issuer, src, tgt); await new Promise(r=>setTimeout(r,130)); }
+      }
+      done++;
+    }
+
+    // ── Languages ──────────────────────────────────────────────
+    if (cv.languages.length) {
+      setP('Translating languages…');
+      for (const lang of cv.languages) {
+        if (lang.name)  { lang.name  = await translateText(lang.name,  src, tgt); await new Promise(r=>setTimeout(r,120)); }
+        if (lang.level) { lang.level = await translateText(lang.level, src, tgt); await new Promise(r=>setTimeout(r,120)); }
+      }
+      done++;
+    }
+
+    // ── Custom sections ────────────────────────────────────────
+    if (cv.customSections?.length) {
+      for (const cs of cv.customSections) {
+        if (cs.title)   { cs.title   = await translateText(cs.title,   src, tgt); await new Promise(r=>setTimeout(r,130)); }
+        if (cs.content) { cs.content = await _trLong(cs.content, src, tgt, 130); }
+      }
+      done++;
+    }
+
+    // Auto-switch direction
+    applyDirection(tgt === 'ar' ? 'rtl' : 'ltr');
+    populateForm();
+    renderCV();
+    setP(`✓ تمت الترجمة — ${done} أقسام`);
+    showToast('✦ Translation complete!');
+    setTimeout(() => closeTranslate(), 2000);
+
+  } catch(err) {
+    setP('⚠ خطأ: ' + err.message);
+  } finally {
+    btn.disabled = false;
+  }
 }
 
 // ── TOAST ────────────────────────────────────────────────────
