@@ -157,6 +157,7 @@
       <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('dashboard')">Dashboard</button>
         <button class="tab-btn" onclick="switchTab('content')">Site Content</button>
+        <button class="tab-btn" onclick="switchTab('pages')">📄 Pages</button>
         <button class="tab-btn" onclick="switchTab('settings')">Settings</button>
         <button class="tab-btn" onclick="switchTab('videos')">Videos</button>
         <button class="tab-btn" onclick="switchTab('documents')">Documents</button>
@@ -211,6 +212,84 @@
         <button class="filter-btn" onclick="filterContent('contact',this)">Contact</button>
       </div>
       <div id="content-list"><div class="empty"><span class="spinner"></span><br><br>Loading content...</div></div>
+    </div>
+
+    <!-- PAGES TAB -->
+    <div class="tab-panel" id="tab-pages">
+      <div class="section-head">
+        <div>
+          <div class="section-title">📄 Pages Manager</div>
+          <div class="section-sub">Create and edit content for any page on the site</div>
+        </div>
+      </div>
+
+      <!-- Page selector -->
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-end;margin-bottom:1.5rem;">
+        <div style="flex:1;min-width:220px;">
+          <label class="form-label">Select Page</label>
+          <select id="pm-page-select" onchange="pmLoadPage(this.value)" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem .8rem;font-family:inherit;font-size:.85rem;">
+            <option value="">— choose a page —</option>
+          </select>
+        </div>
+        <div style="flex:1;min-width:180px;">
+          <label class="form-label">Or enter new slug</label>
+          <div style="display:flex;gap:.4rem;">
+            <input id="pm-new-slug" placeholder="e.g. hr-material/templates" style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem .8rem;font-family:inherit;font-size:.85rem;">
+            <button class="btn btn-sm" onclick="pmLoadPage(document.getElementById('pm-new-slug').value)">Open</button>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-outline" onclick="window.open('/' + _pmSlug,'_blank')" id="pm-preview-btn" style="display:none">↗ Preview</button>
+      </div>
+
+      <!-- Page editor area -->
+      <div id="pm-editor" style="display:none;">
+        <!-- Page meta -->
+        <div style="background:var(--bg2);border:1px solid var(--border);padding:1.2rem;margin-bottom:1.5rem;">
+          <div class="section-title" style="font-size:.8rem;margin-bottom:1rem;">Page Title & Description</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem;">
+            <div>
+              <label class="form-label">Title (EN)</label>
+              <input id="pm-title-en" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem .8rem;font-family:inherit;font-size:.85rem;">
+            </div>
+            <div>
+              <label class="form-label">Title (AR)</label>
+              <input id="pm-title-ar" dir="rtl" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem .8rem;font-family:inherit;font-size:.85rem;">
+            </div>
+            <div>
+              <label class="form-label">Description (EN)</label>
+              <input id="pm-desc-en" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem .8rem;font-family:inherit;font-size:.85rem;">
+            </div>
+            <div>
+              <label class="form-label">Description (AR)</label>
+              <input id="pm-desc-ar" dir="rtl" style="width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem .8rem;font-family:inherit;font-size:.85rem;">
+            </div>
+          </div>
+          <button class="btn btn-sm" onclick="pmSaveMeta()">💾 Save Title & Description</button>
+        </div>
+
+        <!-- Content blocks -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+          <div class="section-title" style="font-size:.8rem;">Content Blocks</div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;">
+            <select id="pm-block-type" style="background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.4rem .7rem;font-family:inherit;font-size:.8rem;">
+              <option value="text">📝 Text / Paragraph</option>
+              <option value="heading2">📌 Heading (H2)</option>
+              <option value="heading3">📌 Heading (H3)</option>
+              <option value="html">🔧 HTML (raw)</option>
+              <option value="divider">— Divider</option>
+              <option value="card">🃏 Cards (JSON)</option>
+              <option value="file">📎 Files / Downloads (JSON)</option>
+            </select>
+            <button class="btn btn-sm" onclick="pmAddBlock()">+ Add Block</button>
+          </div>
+        </div>
+
+        <div id="pm-blocks-list"></div>
+
+        <div id="pm-no-blocks" style="text-align:center;color:var(--muted);padding:2rem;font-size:.85rem;">
+          No content blocks yet. Add your first block above.
+        </div>
+      </div>
     </div>
 
     <!-- SETTINGS TAB -->
@@ -324,7 +403,27 @@
             <div class="field"><label>Certificate Name (EN)</label><input type="text" id="link-label-en" placeholder="e.g. Master's Degree Certificate"></div>
             <div class="field"><label>اسم الشهادة (AR)</label><input type="text" id="link-label-ar" placeholder="مثال: شهادة الماجستير" dir="rtl"></div>
           </div>
-          <div class="field"><label>Certificate URL</label><input type="text" id="link-url" placeholder="https://..."></div>
+          <div class="field">
+            <label>Certificate ID (matches card on credentials page)</label>
+            <select id="link-cert-id">
+              <option value="">— None / Not linked to a card —</option>
+              <option value="llm-ain-shams">llm-ain-shams — Master of Laws (LL.M.)</option>
+              <option value="bachelor-azhar">bachelor-azhar — Bachelor's Sharia & Law</option>
+              <option value="strategic-hr">strategic-hr — Strategic Human Resources</option>
+              <option value="hiring-managers">hiring-managers — Hiring an Employee for Managers</option>
+              <option value="accountability-culture">accountability-culture — Building Accountability into Your Culture</option>
+              <option value="payroll-workshop">payroll-workshop — Payroll Workshop</option>
+              <option value="excel-365">excel-365 — Excel Essential Training</option>
+              <option value="powerbi">powerbi — Data Analysis with Power BI</option>
+              <option value="ms-office">ms-office — Microsoft Office Suite</option>
+              <option value="english-level16">english-level16 — English Conversation Level 16</option>
+              <option value="wca-square1">wca-square1 — 2nd Place Square-1 WCA</option>
+              <option value="wca-6x6">wca-6x6 — 3rd Place 6×6×6 WCA</option>
+              <option value="armed-forces">armed-forces — Armed Forces Appreciation</option>
+            </select>
+          </div>
+          <div class="field"><label>View URL (online certificate link)</label><input type="text" id="link-url" placeholder="https://..."></div>
+          <div class="field"><label>Download PDF URL (optional — direct PDF link)</label><input type="text" id="link-download-url" placeholder="https://... (leave blank if no PDF download)"></div>
           <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;">
             <button class="btn btn-outline btn-sm" onclick="hideAddLink()">Cancel</button>
             <button class="btn btn-gold btn-sm" onclick="addCertLink()">Add Link</button>
@@ -614,7 +713,7 @@ db.auth.getSession().then(({ data: { session } }) => {
 async function initApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  await Promise.all([loadStats(), loadContent(), loadDocuments(), loadDocCategories(), loadPrivateFiles(), loadSettings(), loadLinks(), loadNavLinks(), loadAdminVideos(), loadAnalytics(), loadNavPagesAdmin(), loadUsageStats()]);
+  await Promise.all([loadStats(), loadContent(), loadDocuments(), loadDocCategories(), loadPrivateFiles(), loadSettings(), loadLinks(), loadNavLinks(), loadAdminVideos(), loadAnalytics(), loadNavPagesAdmin(), loadUsageStats(), pmInit()]);
 }
 
 // ── STATS ───────────────────────────────────────────────────
@@ -1365,7 +1464,7 @@ async function deleteNavLink(id) {
 
 // ── CERT LINKS ───────────────────────────────────────────────
 async function loadLinks() {
-  const { data } = await db.from('links').select('*').order('sort_order').order('created_at');
+  const { data } = await db.from('links').select('*').eq('type','certificate').order('created_at');
   renderLinks(data || []);
 }
 
@@ -1377,11 +1476,14 @@ function renderLinks(links) {
       <div class="file-icon">📜</div>
       <div class="file-info">
         <div class="file-name">${escHtml(l.label_en)} ${l.label_ar ? `· ${escHtml(l.label_ar)}` : ''}</div>
-        <div class="file-meta" style="word-break:break-all;">${escHtml(l.url)}</div>
+        ${l.cert_id ? `<div class="file-meta">🔗 ID: <code style="color:var(--gold);font-size:.7rem;">${escHtml(l.cert_id)}</code></div>` : ''}
+        <div class="file-meta" style="word-break:break-all;">View: ${escHtml(l.url || '—')}</div>
+        ${l.download_url ? `<div class="file-meta" style="word-break:break-all;">PDF: ${escHtml(l.download_url)}</div>` : ''}
       </div>
       <div class="file-actions">
-        <a href="${l.url}" target="_blank" class="btn btn-outline btn-sm">View</a>
-        <button class="btn btn-outline btn-sm" onclick="copyLink('${l.url}')">Copy</button>
+        ${l.url ? `<a href="${escHtml(l.url)}" target="_blank" class="btn btn-outline btn-sm">View</a>` : ''}
+        ${l.download_url ? `<a href="${escHtml(l.download_url)}" target="_blank" class="btn btn-outline btn-sm">PDF</a>` : ''}
+        <button class="btn btn-outline btn-sm" onclick="copyLink('${escHtml(l.url || l.download_url || '')}')">Copy</button>
         <button class="btn btn-red btn-sm" onclick="deleteLink('${l.id}')">Delete</button>
       </div>
     </div>
@@ -1392,16 +1494,21 @@ function showAddLink()  { document.getElementById('add-link-form').style.display
 function hideAddLink()  { document.getElementById('add-link-form').style.display = 'none'; }
 
 async function addCertLink() {
-  const labelEn = document.getElementById('link-label-en').value.trim();
-  const labelAr = document.getElementById('link-label-ar').value.trim();
-  const url     = document.getElementById('link-url').value.trim();
-  if (!labelEn || !url) { toast('Please fill in name and URL', 'error'); return; }
-  const { error } = await db.from('links').insert({ label_en: labelEn, label_ar: labelAr, url, type: 'certificate' });
+  const labelEn     = document.getElementById('link-label-en').value.trim();
+  const labelAr     = document.getElementById('link-label-ar').value.trim();
+  const certId      = document.getElementById('link-cert-id').value.trim();
+  const url         = document.getElementById('link-url').value.trim();
+  const downloadUrl = document.getElementById('link-download-url').value.trim();
+  if (!labelEn) { toast('Please fill in the certificate name', 'error'); return; }
+  if (!url && !downloadUrl) { toast('Please fill in at least a View URL or Download URL', 'error'); return; }
+  const row = { label_en: labelEn, label_ar: labelAr, url: url || '', type: 'certificate', is_active: true };
+  if (certId)      row.cert_id      = certId;
+  if (downloadUrl) row.download_url = downloadUrl;
+  const { error } = await db.from('links').insert(row);
   if (error) { toast('Failed: ' + error.message, 'error'); return; }
   toast('Link added ✓', 'success');
-  document.getElementById('link-label-en').value = '';
-  document.getElementById('link-label-ar').value = '';
-  document.getElementById('link-url').value = '';
+  ['link-label-en','link-label-ar','link-url','link-download-url'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('link-cert-id').value = '';
   hideAddLink();
   loadLinks();
 }
@@ -1458,6 +1565,168 @@ function formatBytes(b) {
 
 function escHtml(s) {
   return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── PAGES MANAGER (CMS) ─────────────────────────────────────
+let _pmSlug    = '';
+let _pmNavId   = null;
+let _pmBlocks  = [];
+
+async function pmInit() {
+  // Populate page selector from nav_pages
+  const { data } = await db.from('nav_pages').select('*').order('sort_order');
+  const sel = document.getElementById('pm-page-select');
+  sel.innerHTML = '<option value="">— choose a page —</option>';
+  (data || []).forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.href;
+    opt.textContent = `${p.label_en} (${p.href})`;
+    sel.appendChild(opt);
+  });
+}
+
+async function pmLoadPage(slug) {
+  slug = (slug || '').trim().replace(/^\/|\/$/g,'');
+  if (!slug) return;
+  _pmSlug = slug;
+  document.getElementById('pm-editor').style.display = 'block';
+  document.getElementById('pm-preview-btn').style.display = '';
+  document.getElementById('pm-blocks-list').innerHTML = '<div style="color:var(--muted);font-size:.85rem;padding:1rem 0">Loading…</div>';
+
+  // Load nav_pages meta
+  const { data: navRow } = await db.from('nav_pages').select('*').eq('href', slug).maybeSingle();
+  _pmNavId = navRow?.id || null;
+  document.getElementById('pm-title-en').value = navRow?.label_en || slug;
+  document.getElementById('pm-title-ar').value = navRow?.label_ar || '';
+  document.getElementById('pm-desc-en').value  = navRow?.desc_en  || '';
+  document.getElementById('pm-desc-ar').value  = navRow?.desc_ar  || '';
+
+  // Load content blocks
+  const { data: blocks } = await db.from('site_content').select('*').eq('section', slug).order('key');
+  _pmBlocks = blocks || [];
+  pmRenderBlocks();
+}
+
+function pmRenderBlocks() {
+  const list = document.getElementById('pm-blocks-list');
+  const none = document.getElementById('pm-no-blocks');
+  if (!_pmBlocks.length) {
+    list.innerHTML = '';
+    none.style.display = 'block';
+    return;
+  }
+  none.style.display = 'none';
+  list.innerHTML = _pmBlocks.map((b, i) => `
+    <div style="background:var(--bg2);border:1px solid var(--border);padding:1.1rem;margin-bottom:.7rem;" id="pmb-${b.id}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem;">
+        <span style="font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);">${b.key}</span>
+        <div style="display:flex;gap:.4rem;">
+          <button class="btn btn-sm" onclick="pmMoveBlock('${b.id}','up')" title="Move up">↑</button>
+          <button class="btn btn-sm" onclick="pmMoveBlock('${b.id}','down')" title="Move down">↓</button>
+          <button class="btn btn-sm" style="background:#c45a5a;color:#fff;border-color:#c45a5a;" onclick="pmDeleteBlock('${b.id}')">✕ Delete</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;">
+        <div>
+          <label class="form-label">Content (EN)</label>
+          <textarea id="pmen-${b.id}" style="width:100%;min-height:80px;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem;font-family:inherit;font-size:.82rem;resize:vertical;">${escHtml(b.value_en||'')}</textarea>
+        </div>
+        <div>
+          <label class="form-label">Content (AR)</label>
+          <textarea id="pmar-${b.id}" dir="rtl" style="width:100%;min-height:80px;background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.5rem;font-family:inherit;font-size:.82rem;resize:vertical;">${escHtml(b.value_ar||'')}</textarea>
+        </div>
+      </div>
+      <button class="btn btn-sm" style="margin-top:.6rem;" onclick="pmSaveBlock('${b.id}')">💾 Save Block</button>
+    </div>
+  `).join('');
+}
+
+async function pmAddBlock() {
+  const type = document.getElementById('pm-block-type').value;
+  const maxKey = _pmBlocks.length
+    ? Math.max(..._pmBlocks.map(b => parseInt(b.key?.split('_').pop()) || 0)) + 1
+    : 1;
+  const key = `${type}_${String(maxKey).padStart(3,'0')}`;
+  const { data, error } = await db.from('site_content').insert({
+    section: _pmSlug, key, value_en: '', value_ar: ''
+  }).select().single();
+  if (error) { toast('Error: ' + error.message, 'error'); return; }
+  _pmBlocks.push(data);
+  pmRenderBlocks();
+  toast('Block added ✓', 'success');
+  // Scroll to new block
+  setTimeout(() => document.getElementById(`pmb-${data.id}`)?.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
+}
+
+async function pmSaveBlock(id) {
+  const enVal = document.getElementById(`pmen-${id}`)?.value || '';
+  const arVal = document.getElementById(`pmar-${id}`)?.value || '';
+  const btn   = document.querySelector(`#pmb-${id} button[onclick*="pmSaveBlock"]`);
+  if (btn) { btn.textContent = '⏳ Saving…'; btn.disabled = true; }
+  const { error } = await db.from('site_content').update({ value_en: enVal, value_ar: arVal }).eq('id', id);
+  if (btn) { btn.textContent = '💾 Save Block'; btn.disabled = false; }
+  if (error) { toast('Save failed: ' + error.message, 'error'); return; }
+  const b = _pmBlocks.find(x => x.id === id);
+  if (b) { b.value_en = enVal; b.value_ar = arVal; }
+  toast('Saved ✓', 'success');
+}
+
+async function pmDeleteBlock(id) {
+  if (!confirm('Delete this block?')) return;
+  await db.from('site_content').delete().eq('id', id);
+  _pmBlocks = _pmBlocks.filter(b => b.id !== id);
+  pmRenderBlocks();
+  toast('Block deleted', 'success');
+}
+
+async function pmMoveBlock(id, dir) {
+  const idx = _pmBlocks.findIndex(b => b.id === id);
+  if (dir === 'up'   && idx === 0) return;
+  if (dir === 'down' && idx === _pmBlocks.length - 1) return;
+  const swap = dir === 'up' ? idx - 1 : idx + 1;
+  // Swap keys
+  const keyA = _pmBlocks[idx].key;
+  const keyB = _pmBlocks[swap].key;
+  await Promise.all([
+    db.from('site_content').update({ key: keyB }).eq('id', _pmBlocks[idx].id),
+    db.from('site_content').update({ key: keyA }).eq('id', _pmBlocks[swap].id),
+  ]);
+  _pmBlocks[idx].key  = keyB;
+  _pmBlocks[swap].key = keyA;
+  [_pmBlocks[idx], _pmBlocks[swap]] = [_pmBlocks[swap], _pmBlocks[idx]];
+  pmRenderBlocks();
+}
+
+async function pmSaveMeta() {
+  const enL = document.getElementById('pm-title-en').value.trim();
+  const arL = document.getElementById('pm-title-ar').value.trim();
+  const enD = document.getElementById('pm-desc-en').value.trim();
+  const arD = document.getElementById('pm-desc-ar').value.trim();
+  if (!enL) { toast('English title required', 'error'); return; }
+  if (_pmNavId) {
+    const { error } = await db.from('nav_pages')
+      .update({ label_en: enL, label_ar: arL || enL, desc_en: enD, desc_ar: arD })
+      .eq('id', _pmNavId);
+    if (error) { toast('Error: ' + error.message, 'error'); return; }
+  } else {
+    // Create new nav_pages entry
+    const maxOrd = Math.max(0, ...(_adminNavPages.map(p => p.sort_order || 0)));
+    const { data, error } = await db.from('nav_pages').insert({
+      href: _pmSlug, label_en: enL, label_ar: arL || enL,
+      desc_en: enD, desc_ar: arD,
+      sort_order: maxOrd + 1, is_visible: true
+    }).select().single();
+    if (error) { toast('Error: ' + error.message, 'error'); return; }
+    _pmNavId = data.id;
+    _adminNavPages.push(data);
+  }
+  toast('Page meta saved ✓', 'success');
+  // Refresh select
+  pmInit();
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ── NAV PAGES MANAGER ───────────────────────────────────────

@@ -10,6 +10,7 @@ const PAGES_EN = [
   { href:'videos',         label:'Videos'      },
   { href:'documents',      label:'Documents'   },
   { href:'hr-material',    label:'HR Material' },
+  { href:'hr-program',     label:'HR Tools'    },
   { href:'contact',        label:'Contact'     },
 ];
 const PAGES_AR = [
@@ -19,10 +20,12 @@ const PAGES_AR = [
   { href:'videos',         label:'الفيديوهات'  },
   { href:'documents',      label:'الوثائق'     },
   { href:'hr-material',    label:'موارد HR'    },
+  { href:'hr-program',     label:'أدوات HR'    },
   { href:'contact',        label:'تواصل'       },
 ];
 
 let _db = null;
+window._db = null; // expose globally for page.html and other inline scripts
 let currentLang = localStorage.getItem('lang') || 'en';
 window._currentUser = null;
 let _navPages = null; // populated from Supabase nav_pages table
@@ -42,7 +45,10 @@ async function loadNavPages() {
 }
 
 function initSupabase() {
-  if (window.supabase) _db = window.supabase.createClient(SB_URL, SB_KEY);
+  if (window.supabase) {
+    _db = window.supabase.createClient(SB_URL, SB_KEY);
+    window._db = _db; // keep window._db in sync
+  }
 }
 
 // ── NAV ──────────────────────────────────────────────────────

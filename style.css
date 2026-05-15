@@ -25,8 +25,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links a:hover,.nav-links a.active{color:var(--gold);}
 /* NAV DROPDOWN */
 .nav-has-dropdown{position:relative;}
-.nav-dropdown{display:none;position:absolute;top:calc(100% + 10px);left:0;background:rgba(8,8,9,.97);border:1px solid var(--border);min-width:190px;z-index:200;backdrop-filter:blur(14px);padding:.3rem 0;}
-.nav-has-dropdown:hover .nav-dropdown{display:block;}
+.nav-dropdown{
+  display:none;
+  position:absolute;
+  top:100%;           /* flush with parent — no gap */
+  left:0;
+  background:rgba(8,8,9,.97);
+  border:1px solid var(--border);
+  min-width:190px;
+  z-index:200;
+  backdrop-filter:blur(14px);
+  padding:.3rem 0;
+  /* invisible bridge fills the gap so mouse can travel down */
+  padding-top:12px;
+  margin-top:-2px;
+}
+/* show on hover of parent li OR the dropdown itself */
+.nav-has-dropdown:hover .nav-dropdown,
+.nav-dropdown:hover{display:block;}
 .nav-dropdown a{display:block;padding:.45rem 1.1rem;color:var(--muted);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:color .2s,background .2s;white-space:nowrap;border-bottom:1px solid rgba(196,163,90,.07);}
 .nav-dropdown a:last-child{border-bottom:none;}
 .nav-dropdown a:hover{color:var(--gold);background:rgba(196,163,90,.05);}

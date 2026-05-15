@@ -1,0 +1,15 @@
+# Netlify redirects — pretty URLs + CMS fallback
+# Known pages get their own HTML file directly
+/                   /index.html         200
+/experience         /experience.html    200
+/credentials        /credentials.html   200
+/videos             /videos.html        200
+/documents          /documents.html     200
+/hr-material        /hr-material.html   200
+/hr-program         /hr-program.html    200
+/contact            /contact.html       200
+/admin              /admin.html         200
+/404                /404.html           200
+
+# Any other path → CMS generic page (page.html handles the slug)
+/*                  /page.html          200
