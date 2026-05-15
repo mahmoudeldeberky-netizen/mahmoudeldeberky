@@ -35,6 +35,62 @@
 .launch-btn{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;background:var(--gold);color:#080809;padding:6px 16px;border:none;cursor:pointer;font-family:inherit;font-weight:600;transition:background .2s;}
 .launch-btn:hover{background:var(--gold2);}
 
+/* ── Performance Evaluation Tool ── */
+#pe-section{display:none;background:var(--bg2);border-top:1px solid var(--border);padding:3rem 5vw 5rem;}
+.pe-inner{max-width:1100px;margin:0 auto;}
+.pe-toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
+.pe-close{background:transparent;color:var(--muted);border:1px solid var(--border);padding:.45rem 1rem;font-size:.78rem;letter-spacing:.06em;cursor:pointer;font-family:inherit;transition:all .2s;}
+.pe-close:hover{border-color:var(--gold);color:var(--gold);}
+.pe-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2.5rem;}
+.pe-step{background:var(--bg3);border:1px solid var(--border);padding:1.2rem;position:relative;}
+.pe-step-num{font-family:var(--ff-h);font-size:2rem;color:rgba(196,163,90,.1);position:absolute;top:.4rem;right:1rem;line-height:1;}
+html[dir="rtl"] .pe-step-num{right:auto;left:1rem;}
+.pe-step-title{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem;}
+.pe-step-desc{font-size:.78rem;color:var(--muted);line-height:1.6;}
+.pe-dl-btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--gold);color:#0a0a0c;font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.7rem 1.6rem;border:none;cursor:pointer;transition:background .2s;font-family:inherit;}
+.pe-dl-btn:hover{background:#e8c97a;}
+.pe-upload-zone{border:2px dashed rgba(196,163,90,.3);padding:2.5rem;text-align:center;cursor:pointer;transition:all .2s;position:relative;background:var(--bg3);margin:1.5rem 0;}
+.pe-upload-zone:hover,.pe-upload-zone.drag{border-color:var(--gold);background:rgba(196,163,90,.04);}
+.pe-upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.pe-upload-status{font-size:.82rem;margin-top:.5rem;}
+.pe-rating-guide{display:flex;gap:.5rem;flex-wrap:wrap;margin:.8rem 0;}
+.pe-rg{font-size:.7rem;padding:2px 9px;border:1px solid var(--border);color:var(--muted);}
+.pe-rg-5{border-color:#27AE6066;color:#27AE60;}.pe-rg-4{border-color:#2ECC7166;color:#2ECC71;}
+.pe-rg-3{border-color:#F39C1266;color:#F39C12;}.pe-rg-2{border-color:#E67E2266;color:#E67E22;}
+.pe-rg-1{border-color:#C0392B66;color:#C0392B;}
+.pe-crit-bar{display:grid;grid-template-columns:repeat(8,1fr);gap:.3rem;padding:0 1.4rem;margin-bottom:.4rem;}
+.pe-crit-lbl{font-size:.58rem;letter-spacing:.03em;text-transform:uppercase;color:var(--muted);text-align:center;line-height:1.3;}
+.pe-emp-row{background:var(--bg3);border:1px solid var(--border);padding:.9rem 1.4rem;margin-bottom:.5rem;transition:border-color .2s;}
+.pe-emp-row:hover{border-color:rgba(196,163,90,.3);}
+.pe-emp-info{display:grid;grid-template-columns:2fr 1.5fr 1.5fr 1.5fr;gap:.5rem;margin-bottom:.7rem;align-items:center;}
+.pe-emp-name{font-family:var(--ff-h);font-size:.92rem;color:var(--cream);}
+.pe-emp-meta{font-size:.72rem;color:var(--muted);}
+.pe-scores{display:grid;grid-template-columns:repeat(8,1fr);gap:.3rem;}
+.pe-score-inp{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);text-align:center;padding:.3rem .2rem;font-size:.85rem;font-family:inherit;outline:none;transition:border-color .2s;-moz-appearance:textfield;}
+.pe-score-inp::-webkit-outer-spin-button,.pe-score-inp::-webkit-inner-spin-button{-webkit-appearance:none;}
+.pe-score-inp:focus{border-color:var(--gold);}.pe-score-inp.err{border-color:#cc4444;}
+.pe-emp-total{text-align:right;font-size:.78rem;color:var(--muted);margin-top:.5rem;}
+.pe-comment{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--cream);padding:.38rem .8rem;font-size:.8rem;font-family:inherit;outline:none;margin-top:.5rem;}
+.pe-comment:focus{border-color:var(--gold);}
+.pe-comment::placeholder{color:var(--muted);}
+.pe-prog-bar{height:3px;background:var(--bg3);margin:.5rem 0;overflow:hidden;}
+.pe-prog-fill{height:100%;background:var(--gold);width:0%;transition:width .4s;}
+.pe-prog-lbl{text-align:right;font-size:.72rem;color:var(--muted);margin-bottom:1.2rem;}
+.pe-secondary-btn{background:transparent;color:var(--gold);border:1px solid rgba(196,163,90,.4);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:.5rem 1.2rem;cursor:pointer;font-family:inherit;transition:all .2s;}
+.pe-secondary-btn:hover{background:rgba(196,163,90,.1);}
+.pe-summary-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.8rem;margin:1.2rem 0 1.8rem;}
+.pe-summary-tbl{width:100%;border-collapse:collapse;font-size:.83rem;}
+.pe-summary-tbl th{background:rgba(196,163,90,.12);color:var(--gold);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1rem;text-align:left;border-bottom:1px solid var(--border);}
+.pe-summary-tbl td{padding:.55rem 1rem;border-bottom:1px solid rgba(196,163,90,.1);color:var(--cream);}
+.pe-summary-tbl tr:hover td{background:rgba(196,163,90,.04);}
+.pe-lvl-badge{font-size:.65rem;letter-spacing:.05em;padding:2px 9px;border:1px solid;display:inline-block;white-space:nowrap;}
+@media(max-width:768px){
+  .pe-steps{grid-template-columns:1fr;}
+  .pe-emp-info{grid-template-columns:1fr 1fr;}
+  .pe-scores{grid-template-columns:repeat(4,1fr);}
+  .pe-crit-bar{grid-template-columns:repeat(4,1fr);}
+}
+
 /* ── CV BUILDER SECTION ─────────────────────────────────── */
 #cv-builder-section{display:none;border-top:1px solid var(--border);}
 .cvb-wrap{display:grid;grid-template-columns:430px 1fr;}
@@ -456,15 +512,17 @@ Jan 2020 – Present
         </div>
       </div>
 
-      <!-- ② KPI TRACKER -->
+      <!-- ② PERFORMANCE EVALUATION -->
       <div class="hrp-card reveal">
         <div class="hrp-icon">📊</div>
-        <h3 class="hrp-title" data-en="KPI Performance Tracker" data-ar="متتبع أداء المؤشرات">KPI Performance Tracker</h3>
+        <h3 class="hrp-title" data-en="Performance Evaluation" data-ar="تقييم الأداء">Performance Evaluation</h3>
         <p class="hrp-desc"
-           data-en="Track and measure employee KPIs with automated scoring and visual dashboards."
-           data-ar="تتبع وقياس مؤشرات أداء الموظفين مع تسجيل تلقائي ولوحات بيانات مرئية.">
-           Track employee KPIs with automated scoring and visual dashboards.</p>
-        <div class="hrp-tags"><span class="coming-soon" data-en="Coming Soon" data-ar="قريباً">Coming Soon</span></div>
+           data-en="Upload employee data via Excel template, rate on 8 criteria, and export a full evaluation report."
+           data-ar="ارفع بيانات الموظفين عبر نموذج Excel، قيّم على 8 معايير، وحمّل تقرير التقييم الكامل.">
+           Upload employee data via Excel, rate on 8 criteria, export a full report.</p>
+        <div class="hrp-tags">
+          <button class="launch-btn" onclick="launchPerfEval()" data-en="→ Launch Tool" data-ar="→ ابدأ الأداة">→ Launch Tool</button>
+        </div>
       </div>
 
       <!-- ③ JOB DESCRIPTION BUILDER -->
@@ -512,6 +570,118 @@ Jan 2020 – Present
       </div>
     </div><!-- /hrp-grid -->
   </div><!-- /inner -->
+
+  <!-- ══════════════ PERFORMANCE EVAL SECTION ══════════════ -->
+  <div id="pe-section">
+    <div class="pe-inner">
+      <div class="pe-toolbar">
+        <div>
+          <p class="stag" style="visibility:visible" data-en="HR Tools" data-ar="أدوات HR">HR Tools</p>
+          <h2 style="font-family:var(--ff-h);font-size:clamp(1.5rem,4vw,2.2rem);color:var(--cream);" data-en="Performance Evaluation" data-ar="تقييم الأداء">Performance Evaluation</h2>
+        </div>
+        <button class="pe-close" onclick="closePerfEval()">✕ &nbsp;<span data-en="Close Tool" data-ar="إغلاق الأداة">Close Tool</span></button>
+      </div>
+      <div class="divider" style="margin-bottom:2rem;"></div>
+
+      <!-- Steps -->
+      <div class="pe-steps">
+        <div class="pe-step"><div class="pe-step-num">01</div>
+          <div class="pe-step-title" data-en="Download Template" data-ar="حمّل النموذج">Download Template</div>
+          <div class="pe-step-desc" data-en="Download the Excel template and fill in your employee data." data-ar="حمّل نموذج Excel وأدخل بيانات موظفيك.">Download the Excel template and fill in your employee data.</div>
+        </div>
+        <div class="pe-step"><div class="pe-step-num">02</div>
+          <div class="pe-step-title" data-en="Upload & Rate" data-ar="ارفع وقيّم">Upload & Rate</div>
+          <div class="pe-step-desc" data-en="Upload the filled file and rate each employee on 8 criteria (1–5)." data-ar="ارفع الملف وقيّم كل موظف على 8 معايير (1–5).">Upload the filled file and rate each employee on 8 criteria (1–5).</div>
+        </div>
+        <div class="pe-step"><div class="pe-step-num">03</div>
+          <div class="pe-step-title" data-en="Export Report" data-ar="حمّل التقرير">Export Report</div>
+          <div class="pe-step-desc" data-en="Export a complete Excel report with scores, levels, and comments." data-ar="حمّل تقرير Excel كامل بالدرجات والمستويات والملاحظات.">Export a complete Excel report with scores, levels, and comments.</div>
+        </div>
+      </div>
+
+      <!-- STEP 1: Download -->
+      <div style="margin-bottom:2.5rem;">
+        <p class="stag" style="visibility:visible" data-en="Step 1" data-ar="الخطوة الأولى">Step 1</p>
+        <h3 style="font-family:var(--ff-h);color:var(--cream);margin-bottom:.6rem;" data-en="Download the Template" data-ar="حمّل نموذج Excel">Download the Template</h3>
+        <p style="color:var(--muted);font-size:.83rem;margin-bottom:1rem;" data-en="3 sheets included: Employee Data (fill this) · Instructions · Rating Scale" data-ar="يحتوي على 3 شيتات: بيانات الموظفين (هذا تملأه) · التعليمات · سلم التقييم">3 sheets included: Employee Data (fill this) · Instructions · Rating Scale</p>
+        <button class="pe-dl-btn" onclick="peDownloadTemplate()">⬇ &nbsp;<span data-en="Download Excel Template" data-ar="تحميل نموذج Excel">Download Excel Template</span></button>
+      </div>
+
+      <!-- STEP 2: Upload -->
+      <div style="margin-bottom:2rem;">
+        <p class="stag" style="visibility:visible" data-en="Step 2" data-ar="الخطوة الثانية">Step 2</p>
+        <h3 style="font-family:var(--ff-h);color:var(--cream);margin-bottom:.6rem;" data-en="Upload Your Data" data-ar="ارفع بياناتك">Upload Your Data</h3>
+        <div class="pe-rating-guide">
+          <span class="pe-rg pe-rg-5">5 — <span data-en="Outstanding" data-ar="ممتاز">Outstanding</span></span>
+          <span class="pe-rg pe-rg-4">4 — <span data-en="Exceeds" data-ar="فوق المتوقع">Exceeds</span></span>
+          <span class="pe-rg pe-rg-3">3 — <span data-en="Meets" data-ar="يلبي المتوقع">Meets</span></span>
+          <span class="pe-rg pe-rg-2">2 — <span data-en="Needs Improvement" data-ar="يحتاج تحسين">Needs Improvement</span></span>
+          <span class="pe-rg pe-rg-1">1 — <span data-en="Unsatisfactory" data-ar="غير مرضٍ">Unsatisfactory</span></span>
+        </div>
+        <div class="pe-upload-zone" id="pe-upload-zone">
+          <input type="file" accept=".xlsx,.xls" id="pe-file-input" onchange="peHandleFile(this.files[0])">
+          <div style="font-size:2rem;opacity:.4;margin-bottom:.6rem;">📂</div>
+          <div style="font-size:.88rem;color:var(--muted);"><span style="color:var(--gold)" data-en="Click to upload" data-ar="اضغط للرفع">Click to upload</span> &nbsp;<span data-en="or drag & drop your filled Excel file" data-ar="أو اسحب وأفلت ملف Excel المملوء">or drag & drop your filled Excel file</span></div>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:.3rem;" data-en="Accepts .xlsx · Max 50 employees" data-ar="يقبل .xlsx · حد أقصى 50 موظف">Accepts .xlsx · Max 50 employees</div>
+          <div id="pe-upload-status" class="pe-upload-status" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- STEP 3: Evaluation -->
+      <div id="pe-eval-section" style="display:none;">
+        <p class="stag" style="visibility:visible" data-en="Step 3" data-ar="الخطوة الثالثة">Step 3</p>
+        <h3 style="font-family:var(--ff-h);color:var(--cream);margin-bottom:.6rem;" data-en="Rate Employees" data-ar="قيّم الموظفين">Rate Employees</h3>
+        <div class="divider" style="margin-bottom:1.2rem;"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;margin-bottom:1rem;">
+          <span id="pe-emp-count" style="color:var(--muted);font-size:.83rem;"></span>
+          <div style="display:flex;gap:.6rem;">
+            <button class="pe-secondary-btn" onclick="peAutofill()" data-en="⚡ Auto-fill All (3)" data-ar="⚡ ملء تلقائي (3)">⚡ Auto-fill All (3)</button>
+            <button class="pe-secondary-btn" onclick="peClearAll()" style="color:var(--muted);" data-en="✕ Clear All" data-ar="✕ مسح الكل">✕ Clear All</button>
+          </div>
+        </div>
+        <div class="pe-crit-bar">
+          <div class="pe-crit-lbl" data-en="Job Knowledge" data-ar="معرفة العمل">Job Knowledge</div>
+          <div class="pe-crit-lbl" data-en="Work Quality" data-ar="جودة العمل">Work Quality</div>
+          <div class="pe-crit-lbl" data-en="Productivity" data-ar="الإنتاجية">Productivity</div>
+          <div class="pe-crit-lbl" data-en="Communication" data-ar="التواصل">Communication</div>
+          <div class="pe-crit-lbl" data-en="Teamwork" data-ar="العمل الجماعي">Teamwork</div>
+          <div class="pe-crit-lbl" data-en="Initiative" data-ar="المبادرة">Initiative</div>
+          <div class="pe-crit-lbl" data-en="Attendance" data-ar="الحضور">Attendance</div>
+          <div class="pe-crit-lbl" data-en="Leadership" data-ar="القيادة">Leadership</div>
+        </div>
+        <div id="pe-emp-list"></div>
+        <div class="pe-prog-bar"><div class="pe-prog-fill" id="pe-prog-fill"></div></div>
+        <div class="pe-prog-lbl" id="pe-prog-lbl"></div>
+        <button class="pe-dl-btn" onclick="peGenerateReport()" style="margin-top:.5rem;">
+          📊 &nbsp;<span data-en="Generate & Export Report" data-ar="توليد وتصدير التقرير">Generate & Export Report</span>
+        </button>
+      </div>
+
+      <!-- Summary -->
+      <div id="pe-summary" style="display:none;margin-top:2.5rem;">
+        <p class="stag" style="visibility:visible" data-en="Results" data-ar="النتائج">Results</p>
+        <h3 style="font-family:var(--ff-h);color:var(--cream);margin-bottom:.6rem;" data-en="Evaluation Summary" data-ar="ملخص التقييم">Evaluation Summary</h3>
+        <div class="divider" style="margin-bottom:1.2rem;"></div>
+        <div class="pe-summary-cards" id="pe-summary-cards"></div>
+        <table class="pe-summary-tbl">
+          <thead><tr>
+            <th data-en="Employee" data-ar="الموظف">Employee</th>
+            <th data-en="Department" data-ar="القسم">Department</th>
+            <th data-en="Job Title" data-ar="المسمى الوظيفي">Job Title</th>
+            <th data-en="Manager" data-ar="المدير">Manager</th>
+            <th data-en="Avg Score" data-ar="المتوسط">Avg Score</th>
+            <th data-en="Level" data-ar="المستوى">Level</th>
+          </tr></thead>
+          <tbody id="pe-summary-tbody"></tbody>
+        </table>
+        <div style="margin-top:1.5rem;display:flex;gap:.8rem;flex-wrap:wrap;">
+          <button class="pe-dl-btn" onclick="peExportExcel()">⬇ &nbsp;<span data-en="Export Full Excel Report" data-ar="تصدير تقرير Excel الكامل">Export Full Excel Report</span></button>
+          <button class="pe-secondary-btn" onclick="peReset()"><span data-en="↺ New Evaluation" data-ar="↺ تقييم جديد">↺ New Evaluation</span></button>
+        </div>
+      </div>
+
+    </div><!-- /pe-inner -->
+  </div><!-- /pe-section -->
 
   <!-- ══════════════ CV BUILDER SECTION ══════════════ -->
   <div id="cv-builder-section">
@@ -708,6 +878,7 @@ Jan 2020 – Present
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 <script src="shared.js"></script>
 <script>
 // ── BUILDER TOGGLE ───────────────────────────────────────────
@@ -722,6 +893,319 @@ function launchBuilder() {
 function closeBuilder() {
   document.getElementById('cv-builder-section').style.display = 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ══════════════════════════════════════════════════════
+// PERFORMANCE EVALUATION TOOL
+// ══════════════════════════════════════════════════════
+const PE_CRITERIA = [
+  { key:'c1', en:'Job Knowledge & Skills',   ar:'معرفة العمل والمهارات' },
+  { key:'c2', en:'Quality of Work',          ar:'جودة العمل' },
+  { key:'c3', en:'Productivity & Output',    ar:'الإنتاجية والإنجاز' },
+  { key:'c4', en:'Communication Skills',     ar:'مهارات التواصل' },
+  { key:'c5', en:'Teamwork & Collaboration', ar:'العمل الجماعي' },
+  { key:'c6', en:'Initiative & Innovation',  ar:'المبادرة والإبداع' },
+  { key:'c7', en:'Attendance & Punctuality', ar:'الانتظام والحضور' },
+  { key:'c8', en:'Leadership',               ar:'القيادة' },
+];
+const PE_LEVELS = [
+  { min:4.5, en:'Outstanding',          ar:'ممتاز',       color:'#27AE60' },
+  { min:3.5, en:'Exceeds Expectations', ar:'فوق المتوقع',  color:'#2ECC71' },
+  { min:2.5, en:'Meets Expectations',   ar:'يلبي المتوقع', color:'#F39C12' },
+  { min:1.5, en:'Needs Improvement',    ar:'يحتاج تحسين',  color:'#E67E22' },
+  { min:0,   en:'Unsatisfactory',       ar:'غير مرضٍ',     color:'#C0392B' },
+];
+let peEmployees = [];
+
+function peGetLevel(avg) { return PE_LEVELS.find(l => avg >= l.min) || PE_LEVELS[PE_LEVELS.length-1]; }
+function peLang() {
+  // Read from active lang button — most reliable source
+  const btn = document.querySelector('.lang-btn.active[data-lang]');
+  if (btn) return btn.dataset.lang;
+  return window.currentLang || 'en';
+}
+function peEsc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Launch / Close
+function launchPerfEval() {
+  document.getElementById('pe-section').style.display = 'block';
+  setTimeout(() => {
+    const top = document.getElementById('pe-section').getBoundingClientRect().top + window.pageYOffset - 72;
+    window.scrollTo({ top, behavior:'smooth' });
+  }, 50);
+}
+function closePerfEval() {
+  document.getElementById('pe-section').style.display = 'none';
+  window.scrollTo({ top: 0, behavior:'smooth' });
+}
+
+// Download Template
+function peDownloadTemplate() {
+  if (typeof XLSX === 'undefined') { alert('XLSX library not loaded yet, please try again.'); return; }
+  const wb = XLSX.utils.book_new();
+  const headers = ['★ Employee ID','★ Full Name','★ Department','★ Job Title','★ Direct Manager','Start Date','Email','Notes'];
+  const example = ['EMP-001','John Smith (Example)','Human Resources','HR Specialist','Sarah Johnson','2022-03-15','john@company.com','Delete this example row before uploading'];
+  const wsData  = [headers, example];
+  for (let i = 0; i < 49; i++) wsData.push(['','','','','','','','']);
+  const ws1 = XLSX.utils.aoa_to_sheet(wsData);
+  ws1['!cols'] = [{wch:14},{wch:26},{wch:20},{wch:24},{wch:22},{wch:14},{wch:28},{wch:22}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Employee Data');
+
+  const instrData = [
+    ['HOW TO USE THIS TEMPLATE  |  كيفية استخدام النموذج'],[''],
+    ['STEP 1','Fill "Employee Data" sheet from row 3 (row 2 is example — delete it).'],
+    ['الخطوة الأولى','أدخل البيانات من الصف الثالث (الصف الثاني مثال — احذفه).'],[''],
+    ['STEP 2','Delete the example row (row 2) before uploading.'],
+    ['الخطوة الثانية','احذف الصف المثال قبل رفع الملف.'],[''],
+    ['STEP 3','Save as .xlsx then upload to the Performance Evaluation tool.'],
+    ['الخطوة الثالثة','احفظ كـ .xlsx ثم ارفعه على الأداة.'],[''],
+    ['REQUIRED ★','Employee ID, Full Name, Department, Job Title, Direct Manager'],
+    ['الحقول الإلزامية ★','رقم الموظف، الاسم الكامل، القسم، المسمى الوظيفي، المدير المباشر'],
+  ];
+  const ws2 = XLSX.utils.aoa_to_sheet(instrData);
+  ws2['!cols'] = [{wch:20},{wch:65}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Instructions');
+
+  const scaleData = [
+    ['RATING SCALE  |  سلم التقييم'],[''],
+    ['Score','Level (EN)','المستوى (AR)','Description'],
+    ['5','Outstanding','ممتاز','Consistently exceeds all expectations.'],
+    ['4','Exceeds Expectations','فوق المتوقع','Frequently surpasses standard expectations.'],
+    ['3','Meets Expectations','يلبي المتوقع','Consistently meets all job requirements.'],
+    ['2','Needs Improvement','يحتاج تحسين','Partially meets expectations. Improvement required.'],
+    ['1','Unsatisfactory','غير مرضٍ','Does not meet minimum requirements.'],[''],
+    ['CRITERIA  |  المعايير'],
+    ...PE_CRITERIA.map((c,i) => [`${i+1}`, c.en, c.ar, '']),
+  ];
+  const ws3 = XLSX.utils.aoa_to_sheet(scaleData);
+  ws3['!cols'] = [{wch:12},{wch:24},{wch:22},{wch:46}];
+  XLSX.utils.book_append_sheet(wb, ws3, 'Rating Scale');
+
+  XLSX.writeFile(wb, 'performance_evaluation_template.xlsx');
+}
+
+// Upload & Parse
+const peZone = document.getElementById('pe-upload-zone');
+if (peZone) {
+  peZone.addEventListener('dragover', e => { e.preventDefault(); peZone.classList.add('drag'); });
+  peZone.addEventListener('dragleave', () => peZone.classList.remove('drag'));
+  peZone.addEventListener('drop', e => {
+    e.preventDefault(); peZone.classList.remove('drag');
+    const f = e.dataTransfer.files[0]; if (f) peHandleFile(f);
+  });
+}
+
+function peHandleFile(file) {
+  if (!file || !file.name.match(/\.xlsx?$/i)) { peStatus('⚠ Please upload an .xlsx file','#cc4444'); return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const wb   = XLSX.read(e.target.result, { type:'array' });
+      const ws   = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { header:1, defval:'' });
+      if (rows.length < 2) { peStatus('⚠ File appears empty','#cc4444'); return; }
+      const hdr     = rows[0].map(h => String(h).toLowerCase());
+      const nameCol = hdr.findIndex(h => h.includes('name'));
+      const idCol   = hdr.findIndex(h => h.includes('id'));
+      const deptCol = hdr.findIndex(h => h.includes('dept') || h.includes('department'));
+      const titlCol = hdr.findIndex(h => h.includes('title') || h.includes('job'));
+      const mgrCol  = hdr.findIndex(h => h.includes('manager') || h.includes('mgr'));
+      const dateCol = hdr.findIndex(h => h.includes('date') || h.includes('start'));
+      const emlCol  = hdr.findIndex(h => h.includes('email'));
+      const notCol  = hdr.findIndex(h => h.includes('note'));
+      peEmployees = [];
+      for (let i = 1; i < rows.length; i++) {
+        const r    = rows[i];
+        const name = String(r[nameCol] || '').trim();
+        if (!name || name.toLowerCase().includes('example')) continue;
+        peEmployees.push({
+          id:String(r[idCol]||`EMP-${String(i).padStart(3,'0')}`).trim(),
+          name, dept:String(r[deptCol]||'').trim(), title:String(r[titlCol]||'').trim(),
+          manager:String(r[mgrCol]||'').trim(), date:String(r[dateCol]||'').trim(),
+          email:String(r[emlCol]||'').trim(), notes:String(r[notCol]||'').trim(),
+          scores:{c1:'',c2:'',c3:'',c4:'',c5:'',c6:'',c7:'',c8:''}, comment:'',
+        });
+        if (peEmployees.length >= 50) break;
+      }
+      if (!peEmployees.length) { peStatus('⚠ No valid employee data found','#cc4444'); return; }
+      peStatus(`✓ ${peEmployees.length} employee${peEmployees.length>1?'s':''} loaded successfully`,'#4a9e6a');
+      peRenderEval();
+    } catch(err) { peStatus('⚠ Could not read file: ' + err.message,'#cc4444'); }
+  };
+  reader.readAsArrayBuffer(file);
+}
+function peStatus(msg, color) {
+  const el = document.getElementById('pe-upload-status');
+  el.textContent = msg; el.style.color = color; el.style.display = 'block';
+}
+
+// Render Evaluation
+function peRenderEval() {
+  const lang = peLang();
+  const list = document.getElementById('pe-emp-list');
+  document.getElementById('pe-emp-count').textContent = lang==='ar'
+    ? `${peEmployees.length} موظف · أدخل التقييم لكل موظف (1–5)`
+    : `${peEmployees.length} employee${peEmployees.length>1?'s':''} · Enter ratings for each (1–5)`;
+  list.innerHTML = peEmployees.map((emp, idx) => `
+    <div class="pe-emp-row" id="pe-row-${idx}">
+      <div class="pe-emp-info">
+        <div><div class="pe-emp-name">${peEsc(emp.name)}</div><div class="pe-emp-meta">${peEsc(emp.id)}</div></div>
+        <div class="pe-emp-meta">${peEsc(emp.dept)}</div>
+        <div class="pe-emp-meta">${peEsc(emp.title)}</div>
+        <div class="pe-emp-meta">${peEsc(emp.manager)}</div>
+      </div>
+      <div class="pe-scores">
+        ${PE_CRITERIA.map((_,ci) => `
+          <input type="number" class="pe-score-inp" min="1" max="5"
+            id="pe-sc-${idx}-${ci}" placeholder="–"
+            oninput="peOnScore(${idx})">`).join('')}
+      </div>
+      <div class="pe-emp-total" id="pe-total-${idx}"></div>
+      <input type="text" class="pe-comment" id="pe-comment-${idx}"
+        placeholder="${lang==='ar'?'ملاحظة المدير (اختياري)':'Manager comment (optional)'}"
+        oninput="peEmployees[${idx}].comment=this.value">
+    </div>`).join('');
+  document.getElementById('pe-eval-section').style.display = 'block';
+  document.getElementById('pe-summary').style.display = 'none';
+  peUpdateProg();
+  if (typeof setLang === 'function') setLang(peLang());
+}
+
+function peOnScore(idx) {
+  const scores = {};
+  let filled = 0;
+  PE_CRITERIA.forEach((c,ci) => {
+    const inp = document.getElementById(`pe-sc-${idx}-${ci}`);
+    let v = parseFloat(inp.value);
+    if (isNaN(v)) { inp.classList.remove('err'); scores[c.key]=''; }
+    else { v=Math.min(5,Math.max(1,v)); inp.value=v; inp.classList.remove('err'); scores[c.key]=v; filled++; }
+  });
+  peEmployees[idx].scores = scores;
+  const totalEl = document.getElementById(`pe-total-${idx}`);
+  if (filled===8) {
+    const avg = Object.values(scores).reduce((a,b)=>a+b,0)/8;
+    const lvl = peGetLevel(avg);
+    totalEl.innerHTML = `<span style="color:var(--muted);">${peLang()==='ar'?'المتوسط:':'Avg:'}</span> <span style="font-weight:700;color:${lvl.color}"> ${avg.toFixed(2)} — ${peLang()==='ar'?lvl.ar:lvl.en}</span>`;
+  } else {
+    totalEl.innerHTML = filled>0 ? `<span style="color:var(--muted);font-size:.72rem;">${filled}/8 ${peLang()==='ar'?'مكتمل':'filled'}</span>` : '';
+  }
+  peUpdateProg();
+}
+
+function peUpdateProg() {
+  const done = peEmployees.filter(e => Object.values(e.scores).filter(v=>v!=='').length===8).length;
+  const pct  = peEmployees.length ? Math.round(done/peEmployees.length*100) : 0;
+  document.getElementById('pe-prog-fill').style.width = pct+'%';
+  document.getElementById('pe-prog-lbl').textContent = peLang()==='ar'
+    ? `${done} من ${peEmployees.length} موظف مكتمل (${pct}%)`
+    : `${done} of ${peEmployees.length} employees completed (${pct}%)`;
+}
+
+function peAutofill() {
+  peEmployees.forEach((_,idx) => {
+    PE_CRITERIA.forEach((_,ci) => { const inp=document.getElementById(`pe-sc-${idx}-${ci}`); if(!inp.value) inp.value=3; });
+    peOnScore(idx);
+  });
+}
+function peClearAll() {
+  peEmployees.forEach((_,idx) => {
+    PE_CRITERIA.forEach((_,ci) => document.getElementById(`pe-sc-${idx}-${ci}`).value='');
+    peEmployees[idx].scores={c1:'',c2:'',c3:'',c4:'',c5:'',c6:'',c7:'',c8:''};
+    document.getElementById(`pe-total-${idx}`).innerHTML='';
+  });
+  peUpdateProg();
+}
+
+// Generate Report + Summary
+function peGenerateReport() {
+  const lang = peLang();
+  let incomplete = 0;
+  peEmployees.forEach((emp,idx) => {
+    const filled = Object.values(emp.scores).filter(v=>v!=='').length;
+    if (filled<8) {
+      incomplete++;
+      document.getElementById(`pe-row-${idx}`).style.borderColor='#cc4444';
+      PE_CRITERIA.forEach((_,ci) => { const inp=document.getElementById(`pe-sc-${idx}-${ci}`); if(!inp.value) inp.classList.add('err'); });
+    } else document.getElementById(`pe-row-${idx}`).style.borderColor='';
+  });
+  if (incomplete) {
+    alert(lang==='ar'
+      ? `⚠ ${incomplete} موظف/موظفين غير مكتملين — يرجى إدخال جميع التقييمات`
+      : `⚠ ${incomplete} employee${incomplete>1?'s':''} incomplete — please fill all ratings first`);
+    return;
+  }
+  const tbody = document.getElementById('pe-summary-tbody');
+  const cards = document.getElementById('pe-summary-cards');
+  let lvlCounts = {};
+  tbody.innerHTML = peEmployees.map(emp => {
+    const vals = Object.values(emp.scores);
+    const avg  = vals.reduce((a,b)=>+a+ +b,0)/vals.length;
+    const lvl  = peGetLevel(avg);
+    emp._avg=avg; emp._level=lvl;
+    lvlCounts[lvl.en]=(lvlCounts[lvl.en]||0)+1;
+    return `<tr>
+      <td><strong>${peEsc(emp.name)}</strong><br><span style="font-size:.7rem;color:var(--muted)">${peEsc(emp.id)}</span></td>
+      <td>${peEsc(emp.dept)}</td><td>${peEsc(emp.title)}</td><td>${peEsc(emp.manager)}</td>
+      <td><strong>${avg.toFixed(2)}</strong></td>
+      <td><span class="pe-lvl-badge" style="border-color:${lvl.color};color:${lvl.color}">${lang==='ar'?lvl.ar:lvl.en}</span></td>
+    </tr>`;
+  }).join('');
+  cards.innerHTML = PE_LEVELS.map(lvl => {
+    const count=lvlCounts[lvl.en]||0;
+    return `<div style="background:var(--bg3);border:1px solid ${lvl.color}33;padding:1rem;text-align:center;">
+      <div style="font-size:1.5rem;font-weight:700;color:${lvl.color}">${count}</div>
+      <div style="font-size:.7rem;color:var(--muted);margin-top:.2rem;">${lang==='ar'?lvl.ar:lvl.en}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('pe-summary').style.display = 'block';
+  // Re-apply language so all data-en/data-ar elements translate
+  if (typeof setLang === 'function') setLang(peLang());
+  setTimeout(()=>{ const el=document.getElementById('pe-summary'); el.scrollIntoView({behavior:'smooth',block:'start'}); },100);
+}
+
+// Export Excel
+function peExportExcel() {
+  if (typeof XLSX === 'undefined') { alert('XLSX library not loaded.'); return; }
+  const lang  = peLang();
+  const wb    = XLSX.utils.book_new();
+  const today = new Date().toISOString().split('T')[0];
+  const hdrs  = ['Employee ID','Full Name','Department','Job Title','Direct Manager',
+    ...PE_CRITERIA.map(c=>c.en),'Average Score','Performance Level','Manager Comment','Evaluation Date'];
+  const rows = [hdrs];
+  peEmployees.forEach(emp => {
+    const vals = Object.values(emp.scores);
+    const avg  = vals.reduce((a,b)=>+a+ +b,0)/vals.length;
+    const lvl  = peGetLevel(avg);
+    rows.push([emp.id,emp.name,emp.dept,emp.title,emp.manager,
+      ...PE_CRITERIA.map(c=>emp.scores[c.key]||''),
+      parseFloat(avg.toFixed(2)), lang==='ar'?lvl.ar:lvl.en, emp.comment||'', today]);
+  });
+  const ws1 = XLSX.utils.aoa_to_sheet(rows);
+  ws1['!cols'] = [{wch:14},{wch:24},{wch:18},{wch:22},{wch:22},...PE_CRITERIA.map(()=>({wch:10})),{wch:12},{wch:22},{wch:30},{wch:14}];
+  XLSX.utils.book_append_sheet(wb, ws1, 'Evaluation Results');
+  const sumRows = [['PERFORMANCE EVALUATION SUMMARY','',today],[''],['Level','Count','%']];
+  PE_LEVELS.forEach(lvl => {
+    const count=peEmployees.filter(e=>e._level?.en===lvl.en).length;
+    sumRows.push([lvl.en,count,peEmployees.length?(count/peEmployees.length*100).toFixed(1)+'%':'0%']);
+  });
+  sumRows.push([''],['Total Employees',peEmployees.length,'']);
+  const avgAll=peEmployees.reduce((s,e)=>s+(e._avg||0),0)/peEmployees.length;
+  sumRows.push(['Overall Average',parseFloat(avgAll.toFixed(2)),'']);
+  const ws2 = XLSX.utils.aoa_to_sheet(sumRows);
+  ws2['!cols'] = [{wch:24},{wch:10},{wch:12}];
+  XLSX.utils.book_append_sheet(wb, ws2, 'Summary');
+  XLSX.writeFile(wb, `performance_evaluation_${today}.xlsx`);
+}
+
+// Reset
+function peReset() {
+  peEmployees=[];
+  document.getElementById('pe-eval-section').style.display='none';
+  document.getElementById('pe-summary').style.display='none';
+  document.getElementById('pe-emp-list').innerHTML='';
+  document.getElementById('pe-upload-status').style.display='none';
+  document.getElementById('pe-file-input').value='';
+  document.getElementById('pe-section').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ── LABELS (EN / AR) ─────────────────────────────────────────
