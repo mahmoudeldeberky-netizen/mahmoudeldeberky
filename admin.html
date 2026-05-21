@@ -423,10 +423,21 @@
             </select>
           </div>
           <div class="field"><label>View URL (online certificate link)</label><input type="text" id="link-url" placeholder="https://..."></div>
-          <div class="field"><label>Download PDF URL (optional — direct PDF link)</label><input type="text" id="link-download-url" placeholder="https://... (leave blank if no PDF download)"></div>
+          <div class="field"><label>Download URL (direct link — auto-filled when you upload below)</label><input type="text" id="link-download-url" placeholder="https://... or upload a file below"></div>
+          <div class="field">
+            <label style="color:var(--muted);">— OR — Upload Certificate File directly</label>
+            <div class="upload-zone" id="cert-drop-zone" style="padding:1.5rem;">
+              <input type="file" id="cert-file-input" accept=".pdf,.jpg,.jpeg,.png,.docx">
+              <div class="upload-icon" style="font-size:1.5rem;margin-bottom:.4rem;">📜</div>
+              <div class="upload-text">Drop PDF / image or <span>browse</span></div>
+              <div id="cert-file-name" style="margin-top:.4rem;font-size:.78rem;color:var(--gold);"></div>
+            </div>
+            <div class="progress-bar" id="cert-progress-bar" style="display:none;margin-top:.4rem;"><div class="progress-fill" id="cert-progress-fill"></div></div>
+            <p style="font-size:.7rem;color:var(--muted);margin-top:.4rem;">Uploading a file will auto-fill the Download URL above.</p>
+          </div>
           <div style="display:flex;gap:.75rem;justify-content:flex-end;margin-top:.5rem;">
             <button class="btn btn-outline btn-sm" onclick="hideAddLink()">Cancel</button>
-            <button class="btn btn-gold btn-sm" onclick="addCertLink()">Add Link</button>
+            <button class="btn btn-gold btn-sm" id="add-cert-btn" onclick="addCertLink()">Add Link</button>
           </div>
         </div>
 
@@ -1472,18 +1483,26 @@ function renderLinks(links) {
   const el = document.getElementById('links-list');
   if (!links.length) { el.innerHTML = '<div class="empty">No certificate links yet. Add your first one above.</div>'; return; }
   el.innerHTML = links.map(l => `
-    <div class="file-item">
+    <div class="file-item" style="flex-wrap:wrap;gap:.75rem;" id="cl-${l.id}">
       <div class="file-icon">📜</div>
       <div class="file-info">
         <div class="file-name">${escHtml(l.label_en)} ${l.label_ar ? `· ${escHtml(l.label_ar)}` : ''}</div>
-        ${l.cert_id ? `<div class="file-meta">🔗 ID: <code style="color:var(--gold);font-size:.7rem;">${escHtml(l.cert_id)}</code></div>` : ''}
+        ${l.cert_id ? `<div class="file-meta">🔗 Linked to card: <code style="color:var(--gold);font-size:.7rem;">${escHtml(l.cert_id)}</code></div>` : ''}
         <div class="file-meta" style="word-break:break-all;">View: ${escHtml(l.url || '—')}</div>
-        ${l.download_url ? `<div class="file-meta" style="word-break:break-all;">PDF: ${escHtml(l.download_url)}</div>` : ''}
+        ${l.download_url
+          ? `<div class="file-meta" style="word-break:break-all;color:var(--green);">✓ File: <span style="color:var(--muted)">${escHtml(l.download_url.split('/').pop().split('?')[0])}</span></div>`
+          : `<div class="file-meta" style="color:var(--red);">✗ No file attached yet</div>`}
+        <!-- inline progress bar for this row -->
+        <div class="progress-bar" id="clpb-${l.id}" style="display:none;margin-top:.4rem;width:100%;"><div class="progress-fill" id="clpf-${l.id}"></div></div>
       </div>
-      <div class="file-actions">
-        ${l.url ? `<a href="${escHtml(l.url)}" target="_blank" class="btn btn-outline btn-sm">View</a>` : ''}
-        ${l.download_url ? `<a href="${escHtml(l.download_url)}" target="_blank" class="btn btn-outline btn-sm">PDF</a>` : ''}
-        <button class="btn btn-outline btn-sm" onclick="copyLink('${escHtml(l.url || l.download_url || '')}')">Copy</button>
+      <div class="file-actions" style="flex-wrap:wrap;gap:.4rem;">
+        ${l.url ? `<a href="${escHtml(l.url)}" target="_blank" class="btn btn-outline btn-sm">↗ View</a>` : ''}
+        ${l.download_url ? `<a href="${escHtml(l.download_url)}" target="_blank" class="btn btn-outline btn-sm">⬇ Download</a>` : ''}
+        <label class="btn btn-outline btn-sm" style="cursor:pointer;" title="Upload / replace certificate file">
+          📎 Upload File
+          <input type="file" accept=".pdf,.jpg,.jpeg,.png,.docx" style="display:none;" onchange="certUploadForLink('${l.id}',this)">
+        </label>
+        <button class="btn btn-outline btn-sm" onclick="copyLink('${escHtml(l.download_url || l.url || '')}')">Copy URL</button>
         <button class="btn btn-red btn-sm" onclick="deleteLink('${l.id}')">Delete</button>
       </div>
     </div>
@@ -1493,22 +1512,92 @@ function renderLinks(links) {
 function showAddLink()  { document.getElementById('add-link-form').style.display = 'block'; }
 function hideAddLink()  { document.getElementById('add-link-form').style.display = 'none'; }
 
+// ── CERTIFICATE FILE UPLOAD HELPERS ────────────────────────
+// Upload to 'certificates' bucket, fallback to 'documents/certs/'
+async function _uploadCertToStorage(file, barId, fillId) {
+  const bar  = barId  ? document.getElementById(barId)  : null;
+  const fill = fillId ? document.getElementById(fillId) : null;
+  if (bar)  { bar.style.display = 'block'; }
+  if (fill) { fill.style.width = '20%'; }
+
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const path     = `${Date.now()}-${safeName}`;
+
+  // Try 'certificates' bucket first
+  let { data: upData, error: upErr } = await db.storage.from('certificates').upload(path, file);
+  if (!upErr) {
+    const { data: urlData } = db.storage.from('certificates').getPublicUrl(path);
+    if (fill) fill.style.width = '100%';
+    setTimeout(() => { if (bar) bar.style.display = 'none'; if (fill) fill.style.width = '0%'; }, 400);
+    return urlData.publicUrl;
+  }
+
+  // Fallback: use 'documents' bucket under certs/ prefix
+  const { data: upData2, error: upErr2 } = await db.storage.from('documents').upload(`certs/${path}`, file);
+  if (upErr2) {
+    toast('Upload failed: ' + upErr2.message, 'error');
+    if (bar) bar.style.display = 'none';
+    return null;
+  }
+  const { data: urlData2 } = db.storage.from('documents').getPublicUrl(`certs/${path}`);
+  if (fill) fill.style.width = '100%';
+  setTimeout(() => { if (bar) bar.style.display = 'none'; if (fill) fill.style.width = '0%'; }, 400);
+  return urlData2.publicUrl;
+}
+
+// Inline upload for an existing cert link row
+async function certUploadForLink(linkId, input) {
+  const file = input.files[0];
+  if (!file) return;
+  const label = input.closest('.file-item')?.querySelector('.file-name')?.textContent || 'Certificate';
+  const confirmed = confirm(`Upload "${file.name}" as the certificate file for:\n${label}\n\nThis will replace the current download URL.`);
+  if (!confirmed) { input.value = ''; return; }
+
+  const url = await _uploadCertToStorage(file, `clpb-${linkId}`, `clpf-${linkId}`);
+  if (!url) return;
+
+  const { error } = await db.from('links').update({ download_url: url }).eq('id', linkId);
+  if (error) { toast('DB update failed: ' + error.message, 'error'); return; }
+  toast('✓ Certificate file uploaded and linked!', 'success');
+  input.value = '';
+  loadLinks(); // refresh list
+}
+
 async function addCertLink() {
-  const labelEn     = document.getElementById('link-label-en').value.trim();
-  const labelAr     = document.getElementById('link-label-ar').value.trim();
-  const certId      = document.getElementById('link-cert-id').value.trim();
-  const url         = document.getElementById('link-url').value.trim();
-  const downloadUrl = document.getElementById('link-download-url').value.trim();
+  const labelEn   = document.getElementById('link-label-en').value.trim();
+  const labelAr   = document.getElementById('link-label-ar').value.trim();
+  const certId    = document.getElementById('link-cert-id').value.trim();
+  const viewUrl   = document.getElementById('link-url').value.trim();
+  let   dlUrl     = document.getElementById('link-download-url').value.trim();
+
   if (!labelEn) { toast('Please fill in the certificate name', 'error'); return; }
-  if (!url && !downloadUrl) { toast('Please fill in at least a View URL or Download URL', 'error'); return; }
-  const row = { label_en: labelEn, label_ar: labelAr, url: url || '', type: 'certificate', is_active: true };
-  if (certId)      row.cert_id      = certId;
-  if (downloadUrl) row.download_url = downloadUrl;
+
+  // Upload file if one was selected — overwrites any manually typed download URL
+  const fileInput = document.getElementById('cert-file-input');
+  const certFile  = fileInput?.files[0];
+  if (certFile) {
+    const btn = document.getElementById('add-cert-btn');
+    if (btn) { btn.textContent = '⏳ Uploading…'; btn.disabled = true; }
+    const uploaded = await _uploadCertToStorage(certFile, 'cert-progress-bar', 'cert-progress-fill');
+    if (btn) { btn.textContent = 'Add Link'; btn.disabled = false; }
+    if (!uploaded) return;
+    dlUrl = uploaded;
+    document.getElementById('link-download-url').value = dlUrl;
+  }
+
+  if (!viewUrl && !dlUrl) { toast('Please add a View URL, Download URL, or upload a file', 'error'); return; }
+
+  const row = { label_en: labelEn, label_ar: labelAr, url: viewUrl || '', type: 'certificate', is_active: true };
+  if (certId) row.cert_id      = certId;
+  if (dlUrl)  row.download_url = dlUrl;
+
   const { error } = await db.from('links').insert(row);
   if (error) { toast('Failed: ' + error.message, 'error'); return; }
-  toast('Link added ✓', 'success');
+  toast('✓ Certificate link added!', 'success');
   ['link-label-en','link-label-ar','link-url','link-download-url'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('link-cert-id').value = '';
+  if (fileInput) fileInput.value = '';
+  document.getElementById('cert-file-name').textContent = '';
   hideAddLink();
   loadLinks();
 }
@@ -1543,6 +1632,10 @@ function clearDocForm() {
 document.getElementById('doc-file')?.addEventListener('change', e => {
   const f = e.target.files[0];
   if (f) document.getElementById('doc-file-name').textContent = `📎 ${f.name} (${formatBytes(f.size)})`;
+});
+document.getElementById('cert-file-input')?.addEventListener('change', e => {
+  const f = e.target.files[0];
+  if (f) document.getElementById('cert-file-name').textContent = `📜 ${f.name} (${formatBytes(f.size)})`;
 });
 document.getElementById('file-input')?.addEventListener('change', e => {
   const f = e.target.files[0];

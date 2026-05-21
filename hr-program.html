@@ -91,6 +91,52 @@ html[dir="rtl"] .pe-step-num{right:auto;left:1rem;}
   .pe-crit-bar{grid-template-columns:repeat(4,1fr);}
 }
 
+/* ── JD BUILDER SECTION ─────────────────────────────────── */
+#jd-section{display:none;background:var(--bg2);border-top:1px solid var(--border);padding:3rem 5vw 5rem;}
+.jd-inner{max-width:1100px;margin:0 auto;}
+.jd-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+.jd-field{display:flex;flex-direction:column;gap:.35rem;}
+.jd-field.full{grid-column:1/-1;}
+.jd-label{font-size:.75rem;letter-spacing:.07em;text-transform:uppercase;color:var(--gold);}
+.jd-input,.jd-select,.jd-textarea{background:var(--bg3);border:1px solid var(--border);color:var(--cream);padding:.55rem .9rem;font-size:.85rem;font-family:inherit;outline:none;transition:border-color .2s;width:100%;box-sizing:border-box;}
+.jd-input:focus,.jd-select:focus,.jd-textarea:focus{border-color:var(--gold);}
+.jd-input::placeholder,.jd-textarea::placeholder{color:var(--muted);}
+.jd-select option{background:#1a1a1e;}
+.jd-textarea{resize:vertical;min-height:80px;line-height:1.6;}
+.jd-lang-row{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;}
+.jd-lang-opt{display:flex;align-items:center;gap:.4rem;cursor:pointer;font-size:.85rem;color:var(--cream);}
+.jd-lang-opt input{accent-color:var(--gold);}
+.jd-gen-btn{display:inline-flex;align-items:center;gap:.7rem;background:var(--gold);color:#080809;font-size:.85rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.8rem 2rem;border:none;cursor:pointer;font-family:inherit;transition:background .2s;margin-top:.5rem;}
+.jd-gen-btn:hover{background:var(--gold2);}
+.jd-gen-btn:disabled{opacity:.55;cursor:wait;}
+.jd-spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(8,8,9,.5);border-top-color:#080809;border-radius:50%;animation:jd-spin .7s linear infinite;vertical-align:middle;}
+@keyframes jd-spin{to{transform:rotate(360deg)}}
+.jd-dl-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--gold);color:#080809;font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.6rem 1.4rem;border:none;cursor:pointer;font-family:inherit;transition:background .2s;}
+.jd-dl-btn:hover{background:var(--gold2);}
+.jd-dl-btn.jd-secondary{background:transparent;color:var(--gold);border:1px solid rgba(196,163,90,.4);}
+.jd-dl-btn.jd-secondary:hover{background:rgba(196,163,90,.1);}
+/* Document Preview */
+.jd-doc-wrap{background:#fff;color:#1a1a1a;padding:2.8rem 3.2rem;max-width:780px;box-shadow:0 4px 40px rgba(0,0,0,.5);font-family:"Calibri",Arial,sans-serif;font-size:10.5pt;line-height:1.7;box-sizing:border-box;}
+.jd-doc-wrap[dir="rtl"]{font-family:"Calibri","Traditional Arabic",Arial,sans-serif;}
+.jd-doc-badge{font-size:7pt;letter-spacing:.15em;text-transform:uppercase;color:#888;margin-bottom:.5rem;}
+.jd-doc-title-main{font-size:22pt;font-weight:700;color:#1a1a1a;line-height:1.2;margin-bottom:.4rem;}
+.jd-doc-meta-row{display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;font-size:9pt;color:#555;border-bottom:2.5px solid #C4A35A;padding-bottom:.8rem;margin-bottom:1.3rem;}
+.jd-doc-sec-title{font-size:9pt;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:#C4A35A;border-bottom:1px solid rgba(196,163,90,.3);padding-bottom:.3rem;margin:1.5rem 0 .6rem;}
+.jd-doc-sec-body{font-size:10pt;color:#333;line-height:1.78;}
+.jd-doc-sec-body ul{margin:.3rem 0 .4rem 1.3rem;padding:0;}
+.jd-doc-sec-body li{margin-bottom:.28rem;}
+.jd-doc-sec-body p{margin:.25rem 0;}
+.jd-doc-comp-grid{display:grid;grid-template-columns:1fr 1fr;gap:.3rem .8rem;margin-top:.3rem;}
+.jd-doc-comp-item{display:flex;align-items:flex-start;gap:.4rem;font-size:9.5pt;color:#333;padding:.15rem 0;}
+.jd-doc-comp-item::before{content:"◆";color:#C4A35A;font-size:.55rem;margin-top:.45rem;flex-shrink:0;}
+.jd-doc-footer-line{margin-top:2rem;padding-top:.7rem;border-top:1px solid #eee;font-size:7.5pt;color:#bbb;text-align:center;}
+.jd-doc-divider{border:none;border-top:2px solid #C4A35A;margin:1rem 0 2rem;opacity:.4;}
+@media(max-width:768px){
+  .jd-form-grid{grid-template-columns:1fr;}
+  .jd-doc-wrap{padding:1.5rem;}
+  .jd-doc-comp-grid{grid-template-columns:1fr;}
+}
+
 /* ── CV BUILDER SECTION ─────────────────────────────────── */
 #cv-builder-section{display:none;border-top:1px solid var(--border);}
 .cvb-wrap{display:grid;grid-template-columns:430px 1fr;}
@@ -533,7 +579,7 @@ Jan 2020 – Present
            data-en="Generate professional job descriptions in Arabic and English with structured competency frameworks."
            data-ar="إنشاء وصف وظيفي احترافي بالعربية والإنجليزية مع أطر كفاءة منظمة.">
            Generate professional job descriptions in AR & EN with competency frameworks.</p>
-        <div class="hrp-tags"><span class="coming-soon" data-en="Coming Soon" data-ar="قريباً">Coming Soon</span></div>
+        <div class="hrp-tags"><button class="launch-btn" onclick="launchJobDesc()" data-en="→ Launch Tool" data-ar="→ ابدأ الأداة">→ Launch Tool</button></div>
       </div>
 
       <!-- ④ SALARY CALCULATOR -->
@@ -682,6 +728,147 @@ Jan 2020 – Present
 
     </div><!-- /pe-inner -->
   </div><!-- /pe-section -->
+
+  <!-- ══════════════ JD BUILDER SECTION ══════════════ -->
+  <div id="jd-section">
+    <div class="jd-inner">
+      <div class="pe-toolbar">
+        <div>
+          <p class="stag" style="visibility:visible" data-en="HR Tools" data-ar="أدوات HR">HR Tools</p>
+          <h2 style="font-family:var(--ff-h);font-size:clamp(1.5rem,4vw,2.2rem);color:var(--cream);" data-en="Job Description Builder" data-ar="منشئ الوصف الوظيفي">Job Description Builder</h2>
+        </div>
+        <button class="pe-close" onclick="closeJobDesc()">✕ &nbsp;<span data-en="Close Tool" data-ar="إغلاق الأداة">Close Tool</span></button>
+      </div>
+      <div class="divider" style="margin-bottom:2rem;"></div>
+
+      <!-- ── FORM PHASE ── -->
+      <div id="jd-form-phase">
+        <p class="stag" style="visibility:visible" data-en="Job Details" data-ar="تفاصيل الوظيفة">Job Details</p>
+        <h3 style="font-family:var(--ff-h);color:var(--cream);margin-bottom:.4rem;" data-en="Fill in what you know — AI handles the rest" data-ar="أدخل ما تعرفه — والذكاء الاصطناعي يكمل الباقي">Fill in what you know — AI handles the rest</h3>
+        <p style="color:var(--muted);font-size:.83rem;margin-bottom:1.8rem;" data-en="Leave any field empty to let AI generate it automatically. Output language is chosen below." data-ar="اترك أي حقل فارغاً ليولّده الذكاء الاصطناعي تلقائياً. لغة المخرجات تُحدَّد أدناه.">Leave any field empty to let AI generate it automatically. Output language is chosen below.</p>
+
+        <div class="jd-form-grid">
+          <div class="jd-field">
+            <label class="jd-label" data-en="Job Title *" data-ar="المسمى الوظيفي *">Job Title *</label>
+            <input id="jd-title" class="jd-input" type="text" data-ph-en="e.g. Procurement Officer" data-ph-ar="مثال: مسؤول مشتريات" placeholder="e.g. Procurement Officer">
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Department" data-ar="القسم">Department</label>
+            <input id="jd-dept" class="jd-input" type="text" data-ph-en="e.g. Finance & Procurement" data-ph-ar="مثال: الإدارة المالية والمشتريات" placeholder="e.g. Finance & Procurement">
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Reports To" data-ar="يُرفع إلى">Reports To</label>
+            <input id="jd-reports" class="jd-input" type="text" data-ph-en="e.g. Finance Manager" data-ph-ar="مثال: مدير الشؤون المالية" placeholder="e.g. Finance Manager">
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Location" data-ar="الموقع الجغرافي">Location</label>
+            <input id="jd-location" class="jd-input" type="text" data-ph-en="e.g. Cairo, Egypt" data-ph-ar="مثال: القاهرة، مصر" placeholder="e.g. Cairo, Egypt">
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Industry" data-ar="القطاع / الصناعة">Industry</label>
+            <select id="jd-industry" class="jd-select">
+              <option value="">— Select Industry —</option>
+              <option value="General / Corporate">General / Corporate</option>
+              <option value="Oil & Gas / Energy">Oil &amp; Gas / Energy</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Construction & Engineering">Construction &amp; Engineering</option>
+              <option value="Healthcare & Pharmaceuticals">Healthcare &amp; Pharmaceuticals</option>
+              <option value="Information Technology">Information Technology</option>
+              <option value="Banking & Finance">Banking &amp; Finance</option>
+              <option value="Retail & FMCG">Retail &amp; FMCG</option>
+              <option value="Education">Education</option>
+              <option value="Logistics & Supply Chain">Logistics &amp; Supply Chain</option>
+              <option value="Hospitality & Tourism">Hospitality &amp; Tourism</option>
+              <option value="Telecommunications">Telecommunications</option>
+              <option value="NGO / Non-Profit">NGO / Non-Profit</option>
+              <option value="Government / Public Sector">Government / Public Sector</option>
+            </select>
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Seniority Level" data-ar="مستوى الخبرة">Seniority Level</label>
+            <select id="jd-level" class="jd-select">
+              <option value="">— Select Level —</option>
+              <option value="Entry-level / Junior">Entry-level / Junior</option>
+              <option value="Mid-level">Mid-level</option>
+              <option value="Senior">Senior</option>
+              <option value="Team Lead / Supervisor">Team Lead / Supervisor</option>
+              <option value="Manager">Manager</option>
+              <option value="Senior Manager / Director">Senior Manager / Director</option>
+              <option value="C-Level / VP">C-Level / VP</option>
+            </select>
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Employment Type" data-ar="نوع التوظيف">Employment Type</label>
+            <select id="jd-emptype" class="jd-select">
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Internship">Internship</option>
+              <option value="Freelance">Freelance</option>
+            </select>
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Years of Experience" data-ar="سنوات الخبرة">Years of Experience</label>
+            <input id="jd-years" class="jd-input" type="text" data-ph-en="e.g. 3–5 years" data-ph-ar="مثال: 3–5 سنوات" placeholder="e.g. 3–5 years">
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Education Level" data-ar="المستوى التعليمي">Education Level</label>
+            <select id="jd-edu" class="jd-select">
+              <option value="">— Not specified —</option>
+              <option value="High School / Secondary">High School / Secondary</option>
+              <option value="Diploma / Technical Certificate">Diploma / Technical Certificate</option>
+              <option value="Bachelor's Degree">Bachelor's Degree</option>
+              <option value="Master's Degree">Master's Degree</option>
+              <option value="PhD / Doctorate">PhD / Doctorate</option>
+            </select>
+          </div>
+          <div class="jd-field">
+            <label class="jd-label" data-en="Output Language" data-ar="لغة المستند">Output Language</label>
+            <div class="jd-lang-row">
+              <label class="jd-lang-opt"><input type="radio" name="jd-lang" value="en" checked> English</label>
+              <label class="jd-lang-opt"><input type="radio" name="jd-lang" value="ar"> عربي</label>
+              <label class="jd-lang-opt"><input type="radio" name="jd-lang" value="bi"> <span data-en="Bilingual" data-ar="ثنائي اللغة">Bilingual</span></label>
+            </div>
+          </div>
+          <div class="jd-field full">
+            <label class="jd-label" data-en="Additional Context / Notes (Optional)" data-ar="ملاحظات / سياق إضافي (اختياري)">Additional Context / Notes (Optional)</label>
+            <textarea id="jd-notes" class="jd-textarea" data-ph-en="e.g. This role focuses on local supplier relationships, requires SAP proficiency, travel to sites..." data-ph-ar="مثال: يركز على علاقات الموردين المحليين، يتطلب معرفة SAP، قد يتضمن سفراً ميدانياً..." placeholder="e.g. This role focuses on local supplier relationships, requires SAP proficiency, travel to sites..."></textarea>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+          <button class="jd-gen-btn" id="jd-gen-btn" onclick="jdGenerate()">
+            <span id="jd-gen-icon">✦</span>
+            <span id="jd-gen-label" data-en="Generate Job Description" data-ar="توليد الوصف الوظيفي">Generate Job Description</span>
+          </button>
+          <span id="jd-gen-status" style="font-size:.8rem;color:var(--muted);"></span>
+        </div>
+      </div><!-- /jd-form-phase -->
+
+      <!-- ── RESULT PHASE ── -->
+      <div id="jd-result-phase" style="display:none;">
+        <div class="pe-toolbar">
+          <div>
+            <p class="stag" style="visibility:visible" data-en="Generated Document" data-ar="الوثيقة المُولَّدة">Generated Document</p>
+            <h3 style="font-family:var(--ff-h);color:var(--cream);" data-en="Job Description Ready" data-ar="الوصف الوظيفي جاهز">Job Description Ready</h3>
+          </div>
+          <div style="display:flex;gap:.7rem;flex-wrap:wrap;">
+            <button class="jd-dl-btn" onclick="jdDownloadWord()">📄 &nbsp;<span data-en="Download Word" data-ar="تحميل Word">Download Word</span></button>
+            <button class="jd-dl-btn" onclick="jdDownloadPDF()">🖨 &nbsp;<span data-en="Download PDF" data-ar="تحميل PDF">Download PDF</span></button>
+            <button class="jd-dl-btn jd-secondary" onclick="jdReset()"><span data-en="↺ New JD" data-ar="↺ وصف جديد">↺ New JD</span></button>
+          </div>
+        </div>
+        <div class="divider" style="margin-bottom:1.5rem;"></div>
+        <div id="jd-doc-container"></div>
+        <div style="margin-top:1.5rem;display:flex;gap:.7rem;flex-wrap:wrap;">
+          <button class="jd-dl-btn" onclick="jdDownloadWord()">📄 &nbsp;<span data-en="Download Word" data-ar="تحميل Word">Download Word</span></button>
+          <button class="jd-dl-btn" onclick="jdDownloadPDF()">🖨 &nbsp;<span data-en="Download PDF" data-ar="تحميل PDF">Download PDF</span></button>
+          <button class="jd-dl-btn jd-secondary" onclick="jdReset()"><span data-en="↺ New JD" data-ar="↺ وصف جديد">↺ New JD</span></button>
+        </div>
+      </div><!-- /jd-result-phase -->
+
+    </div><!-- /jd-inner -->
+  </div><!-- /jd-section -->
 
   <!-- ══════════════ CV BUILDER SECTION ══════════════ -->
   <div id="cv-builder-section">
@@ -3135,6 +3322,554 @@ function showToast(msg) {
   t.classList.add('show');
   clearTimeout(_toastTimer);
   _toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ══════════════════════════════════════════════════════════════
+// ── JD BUILDER ──────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════
+let _jdData = null;
+
+function jdUiLang() {
+  const btn = document.querySelector('.lang-btn.active[data-lang]');
+  return btn ? btn.dataset.lang : 'en';
+}
+function jdVal(id) { return (document.getElementById(id)?.value || '').trim(); }
+function jdOutputLang() {
+  const r = document.querySelector('input[name="jd-lang"]:checked');
+  return r ? r.value : 'en';
+}
+
+function launchJobDesc() {
+  document.getElementById('jd-section').style.display = 'block';
+  _jdUpdatePlaceholders();
+  setTimeout(() => {
+    const top = document.getElementById('jd-section').getBoundingClientRect().top + window.pageYOffset - 72;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }, 50);
+  if (typeof setLang === 'function') setLang(jdUiLang());
+}
+function closeJobDesc() {
+  document.getElementById('jd-section').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function _jdUpdatePlaceholders() {
+  const lang = jdUiLang();
+  document.querySelectorAll('#jd-section [data-ph-en]').forEach(el => {
+    el.placeholder = lang === 'ar' ? el.dataset.phAr : el.dataset.phEn;
+  });
+}
+
+async function jdGenerate() {
+  const title = jdVal('jd-title');
+  if (!title) {
+    alert(jdUiLang() === 'ar' ? '⚠ يرجى إدخال المسمى الوظيفي على الأقل' : '⚠ Please enter at least the Job Title');
+    return;
+  }
+  const btn  = document.getElementById('jd-gen-btn');
+  const icon = document.getElementById('jd-gen-icon');
+  const lbl  = document.getElementById('jd-gen-label');
+  const stat = document.getElementById('jd-gen-status');
+  const ui   = jdUiLang();
+
+  btn.disabled = true;
+  icon.innerHTML = '<span class="jd-spinner"></span>';
+  lbl.textContent = ui === 'ar' ? 'يتم التوليد…' : 'Generating…';
+  stat.textContent = ui === 'ar' ? '🤖 الذكاء الاصطناعي يكتب الوصف الوظيفي…' : '🤖 AI is writing your job description…';
+
+  const fields = {
+    title:      title,
+    dept:       jdVal('jd-dept'),
+    reportsTo:  jdVal('jd-reports'),
+    location:   jdVal('jd-location'),
+    industry:   jdVal('jd-industry'),
+    level:      jdVal('jd-level'),
+    empType:    jdVal('jd-emptype'),
+    years:      jdVal('jd-years'),
+    edu:        jdVal('jd-edu'),
+    notes:      jdVal('jd-notes'),
+    outputLang: jdOutputLang(),
+  };
+
+  const _showResult = () => {
+    document.getElementById('jd-form-phase').style.display = 'none';
+    document.getElementById('jd-result-phase').style.display = 'block';
+    if (typeof setLang === 'function') setLang(jdUiLang());
+    setTimeout(() => document.getElementById('jd-result-phase').scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+  };
+
+  try {
+    if (typeof _hasAI === 'function' && _hasAI()) {
+      _jdData = await jdGenerateWithAI(fields);
+    } else {
+      stat.textContent = ui === 'ar' ? '⚙ يتم بناء الوصف الوظيفي…' : '⚙ Building job description…';
+      await new Promise(r => setTimeout(r, 400));
+      _jdData = jdTemplateFallback(fields);
+    }
+    jdRenderPreview(_jdData);
+    _showResult();
+  } catch(err) {
+    if (typeof showToast === 'function') showToast('⚠ AI error, using template instead.');
+    _jdData = jdTemplateFallback(fields);
+    jdRenderPreview(_jdData);
+    _showResult();
+  } finally {
+    btn.disabled = false;
+    icon.textContent = '✦';
+    lbl.textContent = jdUiLang() === 'ar' ? 'توليد الوصف الوظيفي' : 'Generate Job Description';
+    stat.textContent = '';
+  }
+}
+
+async function jdGenerateWithAI(f) {
+  const outLang = f.outputLang;
+  const isBi = outLang === 'bi';
+  const isAr = outLang === 'ar';
+  const langInstr = isBi
+    ? 'Generate the job description in BOTH English AND Arabic. Return JSON with top-level keys "en" and "ar", each containing the full structure below.'
+    : isAr
+      ? 'Generate the ENTIRE job description in Arabic only. All text values must be in Arabic.'
+      : 'Generate the ENTIRE job description in English only.';
+
+  const known = Object.entries({
+    'Job Title': f.title, 'Department': f.dept, 'Reports To': f.reportsTo,
+    'Location': f.location, 'Industry': f.industry, 'Seniority Level': f.level,
+    'Employment Type': f.empType, 'Years of Experience': f.years,
+    'Education Level': f.edu, 'Additional Notes': f.notes,
+  }).filter(([,v]) => v).map(([k,v]) => `- ${k}: ${v}`).join('\n');
+
+  const singleStructure = `{
+  "jobTitle": "",
+  "department": "",
+  "reportsTo": "",
+  "location": "",
+  "employmentType": "",
+  "level": "",
+  "summary": "3-4 sentences describing role purpose and scope",
+  "responsibilities": ["10-12 bullet points starting with strong action verbs"],
+  "requiredQualifications": {
+    "education": "degree and field",
+    "experience": "X years + description",
+    "skills": ["5-8 must-have skills"],
+    "technical": ["3-5 required tools/software"]
+  },
+  "preferredQualifications": ["4-6 nice-to-have items"],
+  "competencies": ["6-8 behavioral/technical competencies"],
+  "workingConditions": "brief description",
+  "whatWeOffer": ["5-6 benefits and growth opportunities"]
+}`;
+
+  const jsonSpec = isBi ? `{ "en": ${singleStructure}, "ar": { /* same structure, all text in Arabic */ } }` : singleStructure;
+
+  const prompt = `You are a senior HR professional and expert JD writer. Write a comprehensive, professional job description compliant with international HR standards (SHRM/CIPD framework).
+
+${langInstr}
+
+PROVIDED INFORMATION:
+${known || '(Only job title provided — generate realistic content for all other sections)'}
+
+REQUIREMENTS:
+- Responsibilities: start with strong action verbs (Manage, Develop, Coordinate, Ensure, Analyse, Lead…)
+- Competencies: behavioral and observable
+- Include KSAO-based qualifications
+- Avoid discriminatory language
+- ATS-optimized, professional, inclusive
+- Fill ALL empty fields with role-appropriate content based on industry standards
+
+Return ONLY valid JSON, no markdown, no explanations:
+
+${jsonSpec}`;
+
+  const raw  = await _callGemini(prompt);
+  const json = raw.match(/\{[\s\S]*\}/)?.[0];
+  if (!json) throw new Error('No valid JSON from AI');
+  const parsed = JSON.parse(json);
+  parsed._outputLang = outLang;
+  return parsed;
+}
+
+// ── Template fallback (no AI) ─────────────────────────────────
+function jdTemplateFallback(f) {
+  const outLang = f.outputLang;
+  const title   = f.title || 'Position';
+  const dept    = f.dept  || 'Department';
+  const level   = f.level || 'Mid-level';
+  const years   = f.years || '3–5 years';
+  const edu     = f.edu   || "Bachelor's Degree";
+  const ind     = f.industry || 'General / Corporate';
+  const empType = f.empType || 'Full-time';
+  const loc     = f.location || 'Head Office';
+  const rep     = f.reportsTo || 'Direct Manager';
+
+  const COMPS = {
+    en: {
+      'Entry': ['Eagerness to Learn','Attention to Detail','Teamwork & Collaboration','Time Management','Communication Skills','Adaptability'],
+      'Mid':   ['Problem-Solving','Communication Skills','Initiative & Ownership','Analytical Thinking','Planning & Organization','Teamwork'],
+      'Senior':['Strategic Thinking','Mentoring & Coaching','Decision Making','Results Orientation','Stakeholder Management','Critical Analysis'],
+      'Team':  ['People Leadership','Delegation','Conflict Resolution','Performance Monitoring','Team Development','Effective Communication'],
+      'Manager':['Business Acumen','Change Management','Budget Management','Strategic Planning','People Leadership','Stakeholder Engagement'],
+      'Senior Manager':['Visionary Leadership','Organizational Development','Executive Communication','Change Leadership','Cross-functional Collaboration','Business Strategy'],
+      'C-Level':['Executive Leadership','Corporate Governance','Enterprise Strategy','Organizational Culture','Board Communication','Transformational Leadership'],
+    },
+    ar: {
+      'Entry': ['الرغبة في التعلم','الاهتمام بالتفاصيل','العمل الجماعي','إدارة الوقت','مهارات التواصل','القدرة على التكيف'],
+      'Mid':   ['حل المشكلات','مهارات التواصل','المبادرة والمسؤولية','التفكير التحليلي','التخطيط والتنظيم','العمل الجماعي'],
+      'Senior':['التفكير الاستراتيجي','التوجيه والإرشاد','اتخاذ القرار','التوجه نحو النتائج','إدارة أصحاب المصلحة','التحليل النقدي'],
+      'Team':  ['قيادة الفريق','التفويض','حل النزاعات','متابعة الأداء','تطوير الفريق','التواصل الفعّال'],
+      'Manager':['الفطنة التجارية','إدارة التغيير','إدارة الميزانية','التخطيط الاستراتيجي','قيادة الأفراد','إشراك أصحاب المصلحة'],
+      'Senior Manager':['القيادة الرؤيوية','التطوير التنظيمي','التواصل التنفيذي','قيادة التغيير','التعاون متعدد الوظائف','الاستراتيجية التجارية'],
+      'C-Level':['القيادة التنفيذية','الحوكمة المؤسسية','الاستراتيجية المؤسسية','الثقافة التنظيمية','التواصل مع مجلس الإدارة','القيادة التحويلية'],
+    }
+  };
+
+  function _getComps(lang) {
+    const map = COMPS[lang] || COMPS.en;
+    const lv  = level.toLowerCase();
+    if (lv.includes('entry') || lv.includes('junior'))      return map['Entry'];
+    if (lv.includes('senior manager') || lv.includes('director')) return map['Senior Manager'];
+    if (lv.includes('senior'))   return map['Senior'];
+    if (lv.includes('team') || lv.includes('supervisor'))   return map['Team'];
+    if (lv.includes('manager'))  return map['Manager'];
+    if (lv.includes('c-level') || lv.includes('vp'))        return map['C-Level'];
+    return map['Mid'];
+  }
+
+  const enData = {
+    jobTitle: title,
+    department: dept,
+    reportsTo: rep,
+    location: loc,
+    employmentType: empType,
+    level: level,
+    summary: `The ${title} plays a central role within the ${dept}, responsible for executing core operations and contributing to the achievement of departmental and organizational goals. This position demands a high level of professionalism, coordination with internal and external stakeholders, and a commitment to quality and compliance.`,
+    responsibilities: [
+      `Execute the core duties of the ${title} role in alignment with departmental plans and organizational strategy`,
+      'Develop, maintain, and manage accurate records, reports, and documentation',
+      'Coordinate with relevant internal departments to ensure smooth workflows and on-time delivery',
+      'Monitor operational processes and identify opportunities for continuous improvement',
+      'Participate in planning cycles, team meetings, and goal-setting sessions',
+      'Ensure full compliance with company policies, procedures, and applicable regulations',
+      'Manage competing priorities effectively to consistently meet deadlines',
+      'Build and sustain professional relationships with internal and external stakeholders',
+      'Support cross-functional projects and organizational change initiatives as required',
+      'Prepare periodic reports, analyses, and presentations for management review',
+      'Contribute to knowledge-sharing and best-practice development within the team',
+    ],
+    requiredQualifications: {
+      education: edu + (edu.includes('Bachelor') ? ' in a relevant discipline' : ''),
+      experience: `Minimum ${years} of relevant professional experience in a similar role`,
+      skills: ['Strong organizational and planning capabilities','Excellent verbal and written communication','Analytical and problem-solving mindset','Proficiency in Microsoft Office Suite','Ability to work independently and under pressure'],
+      technical: ['MS Office (Word, Excel, PowerPoint)','ERP / Enterprise resource systems','Email and collaboration platforms'],
+    },
+    preferredQualifications: [
+      `Experience in the ${ind} sector`,
+      'Relevant professional certification',
+      'Bilingual proficiency (Arabic & English)',
+      'Familiarity with project management methodologies',
+    ],
+    competencies: _getComps('en'),
+    workingConditions: 'Standard office environment. Occasional travel or extended working hours may be required during peak periods.',
+    whatWeOffer: [
+      'Competitive salary and performance-based incentives',
+      'Comprehensive health insurance and social security',
+      'Continuous learning and professional development programs',
+      'Collaborative, inclusive, and growth-oriented work culture',
+      'Clear career advancement pathways',
+    ],
+  };
+
+  const arEmpType = { 'Full-time':'دوام كامل','Part-time':'دوام جزئي','Contract':'عقد مؤقت','Internship':'تدريب / إنترنشيب','Freelance':'عمل حر' };
+  const arData = {
+    jobTitle: title,
+    department: dept || 'القسم المعني',
+    reportsTo: rep || 'المدير المباشر',
+    location: loc || 'المقر الرئيسي',
+    employmentType: arEmpType[empType] || empType,
+    level: level,
+    summary: `يؤدّي شاغل وظيفة ${title} دوراً محورياً داخل ${dept}، مع تحمّل مسؤولية تنفيذ العمليات الأساسية والمساهمة في تحقيق أهداف القسم والمؤسسة. يتطلّب هذا المنصب مستوى رفيعاً من الاحترافية، والتنسيق الفعّال مع أصحاب المصلحة الداخليين والخارجيين، والالتزام بأعلى معايير الجودة والامتثال.`,
+    responsibilities: [
+      `تنفيذ المهام الأساسية لوظيفة ${title} وفق الخطط التشغيلية والاستراتيجية التنظيمية`,
+      'إعداد وحفظ السجلات والتقارير والوثائق بدقة واتساق',
+      'التنسيق مع الأقسام الداخلية ذات الصلة لضمان سير العمليات وتسليم المخرجات في الوقت المحدد',
+      'مراقبة العمليات التشغيلية وتحديد فرص التحسين المستمر',
+      'المشاركة في دورات التخطيط والاجتماعات الفريقية وجلسات وضع الأهداف',
+      'ضمان الامتثال الكامل لسياسات وإجراءات المؤسسة واللوائح المعمول بها',
+      'إدارة الأولويات المتنافسة بفاعلية لتحقيق المواعيد النهائية باستمرار',
+      'بناء علاقات مهنية راسخة مع أصحاب المصلحة الداخليين والخارجيين والمحافظة عليها',
+      'دعم المشاريع المشتركة بين الأقسام ومبادرات التغيير التنظيمي حسب الحاجة',
+      'إعداد التقارير والتحليلات والعروض التقديمية الدورية للعرض على الإدارة',
+      'المساهمة في تبادل المعرفة وتطوير أفضل الممارسات داخل الفريق',
+    ],
+    requiredQualifications: {
+      education: edu === "Bachelor's Degree" ? 'بكالوريوس في تخصص ذي صلة' : edu,
+      experience: `خبرة مهنية لا تقل عن ${years} في دور مماثل`,
+      skills: ['قدرات تنظيمية وتخطيطية عالية','مهارات تواصل شفهي وكتابي ممتازة','عقلية تحليلية وحل مشكلات','إتقان برنامج Microsoft Office','القدرة على العمل باستقلالية وتحت ضغط'],
+      technical: ['MS Office (Word, Excel, PowerPoint)','أنظمة ERP المؤسسية','منصات التواصل والبريد الإلكتروني'],
+    },
+    preferredQualifications: [
+      `خبرة في قطاع ${ind}`,
+      'شهادة مهنية معتمدة في المجال ذي الصلة',
+      'إتقان اللغتين العربية والإنجليزية',
+      'إلمام بمنهجيات إدارة المشاريع',
+    ],
+    competencies: _getComps('ar'),
+    workingConditions: 'بيئة عمل مكتبية معيارية. قد يُستلزم أحياناً السفر أو العمل لساعات إضافية خلال فترات الذروة.',
+    whatWeOffer: [
+      'راتب تنافسي وحوافز مرتبطة بالأداء',
+      'تأمين صحي شامل وتأمينات اجتماعية',
+      'برامج تعلّم مستمر وتطوير مهني متخصص',
+      'بيئة عمل تعاونية وشاملة وداعمة للنمو',
+      'مسارات واضحة للتقدم الوظيفي',
+    ],
+  };
+
+  if (outLang === 'bi') return { _outputLang: 'bi', en: enData, ar: arData };
+  if (outLang === 'ar') return { _outputLang: 'ar', ...arData };
+  return { _outputLang: 'en', ...enData };
+}
+
+// ── Render Preview ────────────────────────────────────────────
+function jdRenderPreview(data) {
+  const container = document.getElementById('jd-doc-container');
+  const lang = data._outputLang || 'en';
+  if (lang === 'bi') {
+    container.innerHTML = jdBuildDocHTML(data.en, 'en') + '<hr class="jd-doc-divider">' + jdBuildDocHTML(data.ar, 'ar');
+  } else {
+    container.innerHTML = jdBuildDocHTML(data, lang);
+  }
+}
+
+function jdBuildDocHTML(d, lang) {
+  if (!d) return '';
+  const isAr = lang === 'ar';
+  const dir  = isAr ? 'rtl' : 'ltr';
+  const esc  = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const ul   = arr => `<ul>${(arr||[]).map(i=>`<li>${esc(i)}</li>`).join('')}</ul>`;
+  const sec  = t  => `<div class="jd-doc-sec-title">${esc(t)}</div>`;
+  const comp = arr => `<div class="jd-doc-comp-grid">${(arr||[]).map(c=>`<div class="jd-doc-comp-item">${esc(c)}</div>`).join('')}</div>`;
+  const q    = d.requiredQualifications || {};
+
+  const metaItems = [
+    d.department    && `🏢 ${esc(d.department)}`,
+    d.reportsTo     && `👤 ${isAr ? 'يُرفع إلى:' : 'Reports to:'} ${esc(d.reportsTo)}`,
+    d.location      && `📍 ${esc(d.location)}`,
+    d.employmentType && `🕐 ${esc(d.employmentType)}`,
+    d.level         && `📊 ${esc(d.level)}`,
+  ].filter(Boolean).join(' &nbsp;&nbsp;');
+
+  let h = `<div class="jd-doc-wrap" dir="${dir}" lang="${isAr?'ar':'en'}">`;
+  h += `<div class="jd-doc-badge">${isAr ? 'وصف وظيفي' : 'JOB DESCRIPTION'}</div>`;
+  h += `<div class="jd-doc-title-main">${esc(d.jobTitle)}</div>`;
+  if (metaItems) h += `<div class="jd-doc-meta-row">${metaItems}</div>`;
+
+  if (d.summary) {
+    h += sec(isAr ? 'الغرض من الوظيفة' : 'Job Purpose');
+    h += `<div class="jd-doc-sec-body">${esc(d.summary)}</div>`;
+  }
+  if (d.responsibilities?.length) {
+    h += sec(isAr ? 'المهام والمسؤوليات الرئيسية' : 'Key Responsibilities & Duties');
+    h += `<div class="jd-doc-sec-body">${ul(d.responsibilities)}</div>`;
+  }
+  h += sec(isAr ? 'المتطلبات والمؤهلات' : 'Required Qualifications');
+  h += `<div class="jd-doc-sec-body">`;
+  if (q.education)  h += `<p><strong>${isAr?'المؤهل العلمي:':'Education:'}</strong> ${esc(q.education)}</p>`;
+  if (q.experience) h += `<p><strong>${isAr?'الخبرة العملية:':'Experience:'}</strong> ${esc(q.experience)}</p>`;
+  if (q.skills?.length)    { h += `<p><strong>${isAr?'المهارات المطلوبة:':'Required Skills:'}</strong></p>${ul(q.skills)}`; }
+  if (q.technical?.length) { h += `<p><strong>${isAr?'المهارات التقنية:':'Technical Skills:'}</strong></p>${ul(q.technical)}`; }
+  h += `</div>`;
+
+  if (d.preferredQualifications?.length) {
+    h += sec(isAr ? 'المؤهلات المفضّلة' : 'Preferred Qualifications');
+    h += `<div class="jd-doc-sec-body">${ul(d.preferredQualifications)}</div>`;
+  }
+  if (d.competencies?.length) {
+    h += sec(isAr ? 'الكفاءات الجوهرية' : 'Core Competencies');
+    h += `<div class="jd-doc-sec-body">${comp(d.competencies)}</div>`;
+  }
+  if (d.workingConditions) {
+    h += sec(isAr ? 'ظروف العمل' : 'Working Conditions');
+    h += `<div class="jd-doc-sec-body">${esc(d.workingConditions)}</div>`;
+  }
+  if (d.whatWeOffer?.length) {
+    h += sec(isAr ? 'ماذا نقدّم لك' : 'What We Offer');
+    h += `<div class="jd-doc-sec-body">${ul(d.whatWeOffer)}</div>`;
+  }
+  h += `<div class="jd-doc-footer-line">Created with mahmoudeldeberky.com · JD Builder · ${new Date().getFullYear()}</div>`;
+  h += `</div>`;
+  return h;
+}
+
+function jdReset() {
+  _jdData = null;
+  document.getElementById('jd-result-phase').style.display = 'none';
+  document.getElementById('jd-form-phase').style.display = 'block';
+  document.getElementById('jd-doc-container').innerHTML = '';
+  document.getElementById('jd-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (typeof setLang === 'function') setLang(jdUiLang());
+}
+
+// ── Download PDF (print window) ───────────────────────────────
+function jdDownloadPDF() {
+  if (!_jdData) return;
+  const lang = _jdData._outputLang || 'en';
+  const isBi = lang === 'bi';
+  const isAr = lang === 'ar';
+
+  let inlineStyles = '';
+  for (const ss of document.styleSheets) {
+    try { inlineStyles += Array.from(ss.cssRules).map(r => r.cssText).join('\n'); } catch(e) {}
+  }
+
+  const bodyContent = isBi
+    ? jdBuildDocHTML(_jdData.en, 'en') + '<div style="height:1.5rem"></div>' + jdBuildDocHTML(_jdData.ar, 'ar')
+    : jdBuildDocHTML(_jdData, lang);
+
+  const jobTitle  = (_jdData.jobTitle || _jdData.en?.jobTitle || 'Job Description').replace(/</g,'&lt;');
+  const htmlDir   = isAr ? 'rtl' : 'ltr';
+  const htmlLang  = isAr ? 'ar' : 'en';
+
+  const printDoc = `<!DOCTYPE html>
+<html lang="${htmlLang}" dir="${htmlDir}">
+<head><meta charset="UTF-8">
+<title>${jobTitle} — Job Description</title>
+<style>
+:root{--gold:#C4A35A;--gold2:#e8c97a;--cream:#E8E2D4;--bg:#080809;--bg2:#0E0E10;--bg3:#131316;--border:rgba(196,163,90,.12);--muted:rgba(232,226,212,.45);--ff-h:'Georgia',serif;}
+${inlineStyles}
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:#fff;}
+body{display:flex;flex-direction:column;align-items:center;padding:2rem 1rem;background:#f0f0f0;}
+.jd-doc-wrap{max-width:780px;width:100%;}
+.print-tip{position:fixed;top:1rem;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:.7rem 1.6rem;font-size:.82rem;font-family:sans-serif;border-radius:4px;box-shadow:0 2px 12px rgba(0,0,0,.4);z-index:999;}
+@page{size:A4 portrait;margin:2cm 2.2cm;}
+@media print{
+  *,*::before,*::after{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}
+  html,body{background:white!important;padding:0!important;}
+  .print-tip{display:none!important;}
+  .jd-doc-wrap{max-width:100%;box-shadow:none!important;margin:0!important;}
+}
+</style>
+</head>
+<body>
+<div class="print-tip">📄 Press <strong>Ctrl+P</strong> → Save as PDF</div>
+${bodyContent}
+<script>window.onload=function(){setTimeout(()=>window.print(),500);};<\/script>
+</body></html>`;
+
+  const w = window.open('', '_blank', 'width=900,height=1100');
+  if (w) { w.document.write(printDoc); w.document.close(); }
+  else alert(jdUiLang() === 'ar' ? 'يرجى السماح بالنوافذ المنبثقة لتحميل PDF' : 'Please allow pop-ups to download PDF');
+}
+
+// ── Download Word (.doc) ──────────────────────────────────────
+function jdDownloadWord() {
+  if (!_jdData) return;
+  const lang = _jdData._outputLang || 'en';
+  const isBi = lang === 'bi';
+  const isAr = lang === 'ar';
+  const acc  = '#C4A35A';
+  const esc  = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  function buildSection(d, lc) {
+    if (!d) return '';
+    const ar = lc === 'ar';
+    const dir   = ar ? 'rtl' : 'ltr';
+    const align = ar ? 'right' : 'left';
+    const ff    = ar ? "Calibri,'Traditional Arabic','Simplified Arabic',Arial,sans-serif" : "Calibri,Arial,sans-serif";
+    const st    = `font-size:9pt;font-weight:bold;text-transform:uppercase;letter-spacing:.8pt;color:#1a1a1a;border-bottom:1.5pt solid ${acc};padding:12pt 0 3pt;margin-top:12pt;`;
+    const bt    = `font-size:10pt;color:#333;line-height:1.75;`;
+    const q     = d.requiredQualifications || {};
+
+    let h = `<div style="font-family:${ff};direction:${dir};text-align:${align};">`;
+    h += `<div style="font-size:7pt;letter-spacing:2pt;text-transform:uppercase;color:#888;margin-bottom:4pt;">${ar?'وصف وظيفي':'JOB DESCRIPTION'}</div>`;
+    h += `<div style="font-size:22pt;font-weight:bold;color:#1a1a1a;line-height:1.2;margin-bottom:5pt;">${esc(d.jobTitle)}</div>`;
+
+    const meta = [
+      d.department     && `🏢 ${esc(d.department)}`,
+      d.reportsTo      && `👤 ${ar?'يُرفع إلى:':'Reports to:'} ${esc(d.reportsTo)}`,
+      d.location       && `📍 ${esc(d.location)}`,
+      d.employmentType && `🕐 ${esc(d.employmentType)}`,
+      d.level          && `📊 ${esc(d.level)}`,
+    ].filter(Boolean).join('  |  ');
+    if (meta) h += `<div style="font-size:9pt;color:#555;padding-bottom:8pt;border-bottom:2pt solid ${acc};margin-bottom:12pt;">${meta}</div>`;
+
+    if (d.summary) {
+      h += `<div style="${st}">${ar?'الغرض من الوظيفة':'JOB PURPOSE'}</div>`;
+      h += `<div style="${bt};margin-top:4pt;">${esc(d.summary)}</div>`;
+    }
+    if (d.responsibilities?.length) {
+      h += `<div style="${st}">${ar?'المهام والمسؤوليات الرئيسية':'KEY RESPONSIBILITIES & DUTIES'}</div>`;
+      h += d.responsibilities.map(r => `<div style="${bt};margin-bottom:3pt;">• &nbsp;${esc(r)}</div>`).join('');
+    }
+    h += `<div style="${st}">${ar?'المتطلبات والمؤهلات':'REQUIRED QUALIFICATIONS'}</div>`;
+    if (q.education)  h += `<div style="${bt};margin-top:4pt;"><strong>${ar?'المؤهل العلمي:':'Education:'}</strong> ${esc(q.education)}</div>`;
+    if (q.experience) h += `<div style="${bt};"><strong>${ar?'الخبرة العملية:':'Experience:'}</strong> ${esc(q.experience)}</div>`;
+    if (q.skills?.length) {
+      h += `<div style="${bt};margin-top:4pt;"><strong>${ar?'المهارات المطلوبة:':'Required Skills:'}</strong></div>`;
+      h += q.skills.map(s => `<div style="${bt};margin-bottom:2pt;margin-${ar?'right':'left'}:12pt;">• &nbsp;${esc(s)}</div>`).join('');
+    }
+    if (q.technical?.length) {
+      h += `<div style="${bt};margin-top:4pt;"><strong>${ar?'المهارات التقنية:':'Technical Skills:'}</strong></div>`;
+      h += q.technical.map(s => `<div style="${bt};margin-bottom:2pt;margin-${ar?'right':'left'}:12pt;">• &nbsp;${esc(s)}</div>`).join('');
+    }
+    if (d.preferredQualifications?.length) {
+      h += `<div style="${st}">${ar?'المؤهلات المفضّلة':'PREFERRED QUALIFICATIONS'}</div>`;
+      h += d.preferredQualifications.map(p => `<div style="${bt};margin-bottom:3pt;">• &nbsp;${esc(p)}</div>`).join('');
+    }
+    if (d.competencies?.length) {
+      h += `<div style="${st}">${ar?'الكفاءات الجوهرية':'CORE COMPETENCIES'}</div>`;
+      const half = Math.ceil(d.competencies.length / 2);
+      h += `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:4pt;">`;
+      for (let i = 0; i < half; i++) {
+        h += `<tr><td style="width:50%;${bt}padding:2pt 0;">◆ &nbsp;${esc(d.competencies[i])}</td>`;
+        h += d.competencies[i+half] ? `<td style="width:50%;${bt}padding:2pt 0;">◆ &nbsp;${esc(d.competencies[i+half])}</td>` : `<td></td>`;
+        h += `</tr>`;
+      }
+      h += `</table>`;
+    }
+    if (d.workingConditions) {
+      h += `<div style="${st}">${ar?'ظروف العمل':'WORKING CONDITIONS'}</div>`;
+      h += `<div style="${bt};margin-top:4pt;">${esc(d.workingConditions)}</div>`;
+    }
+    if (d.whatWeOffer?.length) {
+      h += `<div style="${st}">${ar?'ماذا نقدّم لك':'WHAT WE OFFER'}</div>`;
+      h += d.whatWeOffer.map(o => `<div style="${bt};margin-bottom:3pt;">✓ &nbsp;${esc(o)}</div>`).join('');
+    }
+    h += `<div style="margin-top:18pt;padding-top:6pt;border-top:1pt solid #eee;font-size:7.5pt;color:#bbb;text-align:center;">Created with mahmoudeldeberky.com · JD Builder · ${new Date().getFullYear()}</div>`;
+    h += `</div>`;
+    return h;
+  }
+
+  const mainData = isBi ? _jdData.en : _jdData;
+  let bodyContent = buildSection(mainData, isBi ? 'en' : lang);
+  if (isBi && _jdData.ar) {
+    bodyContent += `<div style="margin:18pt 0;border-top:2pt solid ${acc};"></div>`;
+    bodyContent += buildSection(_jdData.ar, 'ar');
+  }
+
+  const mainFF  = isAr ? "Calibri,'Traditional Arabic',Arial,sans-serif" : "Calibri,Arial,sans-serif";
+  const mainDir = isAr ? 'rtl' : 'ltr';
+
+  const doc = `<html xmlns:o='urn:schemas-microsoft-com:office:office'
+    xmlns:w='urn:schemas-microsoft-com:office:word'
+    xmlns='http://www.w3.org/TR/REC-html40'>
+<head><meta charset='utf-8'>
+<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom><w:DoNotOptimizeForBrowser/></w:WordDocument></xml><![endif]-->
+<style>
+  @page WordSection1{size:21cm 29.7cm;margin:2cm 2.5cm 2cm 2.5cm;mso-page-orientation:portrait;}
+  div.WordSection1{page:WordSection1;}
+  body{font-family:${mainFF};font-size:10pt;color:#222;direction:${mainDir};}
+  table{border-collapse:collapse;width:100%;}
+  td{vertical-align:top;}
+</style>
+</head>
+<body><div class="WordSection1">${bodyContent}</div></body>
+</html>`;
+
+  const jobTitle = (mainData.jobTitle || 'Job_Description').replace(/\s+/g,'_');
+  const blob = new Blob(['﻿', doc], { type: 'application/msword' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = jobTitle + '_JD.doc'; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
 
 // ── INIT ─────────────────────────────────────────────────────
