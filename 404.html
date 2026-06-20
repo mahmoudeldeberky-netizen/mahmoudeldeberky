@@ -4,11 +4,12 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-P151CW2B60"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-P151CW2B60');</script>
-<title>Page Not Found — Mahmoud El-Deberky</title>
+<title>Loading… — Mahmoud El-Deberky</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'%3E%3Cpath d='M100 16 L184 100 L100 184 L16 100 Z' stroke='%23C4A35A' stroke-width='1.5' fill='none'/%3E%3Cpath d='M56 132 V68 L100 110 L144 68 V132' stroke='%23C4A35A' stroke-width='4.2' stroke-linejoin='miter' stroke-linecap='square' fill='none'/%3E%3Ccircle cx='100' cy='100' r='2.5' fill='%23C4A35A'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 <style>
+  /* ── 404 view ── */
   .not-found-wrap {
     min-height: 100vh;
     display: flex;
@@ -67,6 +68,39 @@
     justify-content: center;
     flex-wrap: wrap;
   }
+
+  /* ── CMS Block Styles (mirrors page.html) ── */
+  .cms-page-hero { padding: 4rem 5vw 2rem; max-width: 1100px; margin: 0 auto; }
+  .cms-body      { max-width: 1100px; margin: 0 auto; padding: 0 5vw 5rem; }
+  .cms-block      { margin-bottom: 2.5rem; }
+  .cms-block h2   { font-family: var(--ff-h); font-size: clamp(1.4rem,3vw,2rem); color: var(--cream); margin-bottom: .8rem; }
+  .cms-block h3   { font-family: var(--ff-h); font-size: 1.15rem; color: var(--gold); margin-bottom: .5rem; }
+  .cms-block p    { color: rgba(232,226,212,.75); line-height: 1.9; margin-bottom: 1rem; font-size: .95rem; }
+  .cms-block ul,
+  .cms-block ol   { color: rgba(232,226,212,.75); padding-right: 1.4rem; padding-left: 1.4rem; line-height: 2; font-size: .95rem; }
+  .cms-block a    { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+  .cms-block img  { max-width: 100%; border: 1px solid var(--border); margin: 1rem 0; }
+  .cms-cards      { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 1.2rem; }
+  .cms-card       { background: var(--bg2); border: 1px solid var(--border); padding: 1.5rem; transition: border-color .3s, transform .2s; }
+  .cms-card:hover { border-color: rgba(196,163,90,.5); transform: translateY(-2px); }
+  .cms-card-icon  { font-size: 1.8rem; margin-bottom: .8rem; }
+  .cms-card-title { font-family: var(--ff-h); font-size: 1rem; color: var(--cream); margin-bottom: .4rem; }
+  .cms-card-desc  { font-size: .85rem; color: var(--muted); line-height: 1.7; }
+  .cms-card-link  { display: inline-flex; align-items: center; gap: 5px; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 1px solid rgba(196,163,90,.3); padding: 4px 12px; margin-top: .8rem; transition: all .2s; }
+  .cms-card-link:hover { background: rgba(196,163,90,.1); }
+  .cms-file       { background: var(--bg2); border: 1px solid var(--border); padding: 1.2rem 1.4rem; display: flex; align-items: center; gap: 1rem; margin-bottom: .6rem; transition: border-color .3s; }
+  .cms-file:hover { border-color: rgba(196,163,90,.4); }
+  .cms-file-icon  { font-size: 1.5rem; flex-shrink: 0; }
+  .cms-file-name  { flex: 1; font-size: .9rem; color: var(--cream); }
+  .cms-file-btn   { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); text-decoration: none; border: 1px solid rgba(196,163,90,.3); padding: 5px 14px; white-space: nowrap; transition: all .2s; }
+  .cms-file-btn:hover { background: rgba(196,163,90,.1); }
+  .cms-divider    { height: 1px; background: var(--border); margin: 2.5rem 0; }
+  .cms-loading    { color: var(--muted); font-size: .9rem; padding: 3rem 0; text-align: center; }
+  .cms-empty      { text-align: center; padding: 4rem 0; }
+  .cms-empty p    { color: var(--muted); font-size: .9rem; }
+
+  /* ── Route loading splash ── */
+  .route-loading { min-height: 60vh; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: .9rem; }
 </style>
 </head>
 <body>
@@ -84,7 +118,22 @@
 </nav>
 <div class="mobile-menu" id="mobile-menu"><div id="mobile-nav-links" style="display:contents;"></div></div>
 
-<div class="not-found-wrap">
+<!-- While resolving the route we show a neutral loading splash -->
+<div class="route-loading" id="route-loading">⏳ <span data-en="Loading…" data-ar="جار التحميل…">Loading…</span></div>
+
+<!-- CMS VIEW (shown when the slug resolves to dynamic content) -->
+<div class="page-wrap" id="cms-view" style="display:none;">
+  <div class="cms-page-hero">
+    <p class="stag" id="page-stag" style="visibility:hidden">Page</p>
+    <h1 id="page-title" style="font-family:var(--ff-h);font-size:clamp(2rem,5vw,3.5rem);color:var(--cream);"></h1>
+    <div class="divider" style="margin-top:1rem;"></div>
+    <p id="page-desc" style="color:var(--muted);font-size:.95rem;max-width:700px;margin-top:.8rem;min-height:1.4em;"></p>
+  </div>
+  <div class="cms-body" id="cms-body"></div>
+</div>
+
+<!-- 404 VIEW (shown when the slug truly does not exist) -->
+<div class="not-found-wrap" id="nf-view" style="display:none;">
   <div class="nf-inner">
     <div class="nf-code anim-1">404</div>
     <div class="nf-divider"></div>
@@ -101,11 +150,206 @@
   </div>
 </div>
 
+<noscript>
+  <div class="not-found-wrap" style="display:flex;">
+    <div class="nf-inner">
+      <div class="nf-code">404</div>
+      <div class="nf-divider"></div>
+      <h1 class="nf-title">Page Not Found</h1>
+      <p class="nf-desc">The page you're looking for doesn't exist or may have been moved.</p>
+      <div class="nf-actions"><a href="/" class="btn btn-gold">← Back to Home</a></div>
+    </div>
+  </div>
+</noscript>
+
 <footer>
   <p>© 2026 Mahmoud El-Deberky</p>
   <p data-en="Crafted by Mahmoud El-Deberky" data-ar="صُنع بواسطة محمود الديبركي">Crafted by Mahmoud El-Deberky</p>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="shared.js"></script>
+<script src="/shared.js"></script>
+<script>
+// ════════════════════════════════════════════════════════════
+// GitHub Pages CMS router.
+// GitHub Pages ignores Netlify's _redirects, so every unknown path
+// lands on this 404.html. We treat the path as a CMS slug, try to
+// load its content from Supabase, and render it like page.html.
+// If no content exists, we fall back to the real 404 message.
+// ════════════════════════════════════════════════════════════
+const _slug = (() => {
+  const p = decodeURIComponent(
+    location.pathname.replace(/^\/|\/$/g, '').replace(/\.html$/, '')
+  );
+  return p || '/';
+})();
+
+let _loadedBlocks = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  waitForDB().then(resolveRoute);
+});
+
+function waitForDB(timeout = 8000) {
+  return new Promise(resolve => {
+    if (window._db) { resolve(); return; }
+    const start = Date.now();
+    const t = setInterval(() => {
+      if (window._db) { clearInterval(t); resolve(); return; }
+      if (Date.now() - start > timeout) { clearInterval(t); resolve(); }
+    }, 100);
+  });
+}
+
+async function resolveRoute() {
+  const db = window._db;
+  // /404 visited directly, or no DB connection → show the real 404.
+  if (!db || _slug === '404' || _slug === '/') { showNotFound(); return; }
+
+  let navRow = null, blocks = null;
+  try {
+    const [navRes, contentRes] = await Promise.all([
+      db.from('nav_pages')
+        .select('label_en,label_ar,desc_en,desc_ar')
+        .eq('href', _slug).maybeSingle(),
+      db.from('site_content')
+        .select('*').eq('section', _slug).order('key', { ascending: true })
+    ]);
+    navRow = navRes.data;
+    blocks = contentRes.data;
+  } catch (e) { /* fall through to 404 */ }
+
+  // A page is "real" if it has content blocks OR a nav entry.
+  if ((blocks && blocks.length) || navRow) {
+    showCMS(navRow, blocks || []);
+  } else {
+    showNotFound();
+  }
+}
+
+function showNotFound() {
+  document.getElementById('route-loading').style.display = 'none';
+  document.getElementById('nf-view').style.display = 'flex';
+  document.title = "Page Not Found — Mahmoud El-Deberky";
+  setLang(window.currentLang || localStorage.getItem('lang') || 'en');
+}
+
+function showCMS(navRow, blocks) {
+  const lang = window.currentLang || 'en';
+  document.getElementById('route-loading').style.display = 'none';
+  document.getElementById('cms-view').style.display = 'block';
+
+  const pageLabel = navRow
+    ? (lang === 'ar' ? (navRow.label_ar || navRow.label_en) : navRow.label_en)
+    : _slug;
+  const pageDesc = navRow
+    ? (lang === 'ar' ? (navRow.desc_ar || navRow.desc_en || '') : (navRow.desc_en || ''))
+    : '';
+
+  document.title = `${pageLabel} — Mahmoud El-Deberky`;
+  const titleEl = document.getElementById('page-title');
+  titleEl.textContent = pageLabel;
+  titleEl.dataset.en = navRow ? navRow.label_en : _slug;
+  if (navRow && navRow.label_ar) titleEl.dataset.ar = navRow.label_ar;
+
+  const stagEl = document.getElementById('page-stag');
+  stagEl.style.visibility = 'visible';
+  stagEl.textContent = _slug.includes('/') ? _slug.split('/')[0].toUpperCase() : 'PAGE';
+
+  document.getElementById('page-desc').textContent = pageDesc;
+
+  if (!blocks.length) { renderEmpty(); return; }
+
+  _loadedBlocks = blocks;
+  renderBlocks(blocks, lang);
+
+  // Re-render content when the language is switched
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (_loadedBlocks) setTimeout(() => renderBlocks(_loadedBlocks, window.currentLang || 'en'), 50);
+    });
+  });
+}
+
+// ── Render content blocks (mirrors page.html) ─────────────────
+function renderBlocks(blocks, lang) {
+  let html = '';
+  for (const b of blocks) {
+    const val = lang === 'ar' ? (b.value_ar || b.value_en || '') : (b.value_en || '');
+    const type = b.key || 'text';
+
+    if (type.startsWith('heading')) {
+      const level = type.replace('heading', '') || '2';
+      html += `<div class="cms-block"><h${level}>${esc(val)}</h${level}></div>`;
+
+    } else if (type === 'text' || type === 'paragraph') {
+      const paras = val.split('\n').filter(l => l.trim());
+      html += `<div class="cms-block">${paras.map(p => `<p>${esc(p)}</p>`).join('')}</div>`;
+
+    } else if (type === 'html') {
+      html += `<div class="cms-block">${val}</div>`;
+
+    } else if (type === 'divider') {
+      html += `<div class="cms-divider"></div>`;
+
+    } else if (type === 'card') {
+      try {
+        const cards = JSON.parse(val);
+        const arr = Array.isArray(cards) ? cards : [cards];
+        html += `<div class="cms-cards">` + arr.map(c => {
+          const t = lang === 'ar' ? (c.title_ar || c.title_en) : c.title_en;
+          const d = lang === 'ar' ? (c.desc_ar  || c.desc_en)  : (c.desc_en || '');
+          const linkBtn = c.link_url
+            ? `<a href="${esc(c.link_url)}" class="cms-card-link" target="_blank">${esc(c.link_label || '↗ Open')}</a>`
+            : '';
+          return `<div class="cms-card">
+            ${c.icon ? `<div class="cms-card-icon">${c.icon}</div>` : ''}
+            <div class="cms-card-title">${esc(t)}</div>
+            ${d ? `<div class="cms-card-desc">${esc(d)}</div>` : ''}
+            ${linkBtn}
+          </div>`;
+        }).join('') + `</div>`;
+      } catch(e) {
+        html += `<div class="cms-block"><p>${esc(val)}</p></div>`;
+      }
+
+    } else if (type === 'file') {
+      try {
+        const files = JSON.parse(val);
+        const arr = Array.isArray(files) ? files : [files];
+        html += arr.map(f => {
+          const name = lang === 'ar' ? (f.name_ar || f.name_en) : f.name_en;
+          const icon = f.icon || '📄';
+          return `<div class="cms-file">
+            <div class="cms-file-icon">${icon}</div>
+            <div class="cms-file-name">${esc(name)}</div>
+            ${f.url ? `<a href="${esc(f.url)}" class="cms-file-btn" target="_blank" download>⬇ Download</a>` : ''}
+          </div>`;
+        }).join('');
+      } catch(e) {
+        html += `<div class="cms-block"><p>${esc(val)}</p></div>`;
+      }
+
+    } else {
+      html += `<div class="cms-block"><p>${esc(val)}</p></div>`;
+    }
+  }
+  document.getElementById('cms-body').innerHTML = html;
+}
+
+function renderEmpty(msg) {
+  document.getElementById('cms-body').innerHTML = `
+    <div class="cms-empty">
+      <p>${msg || (window.currentLang === 'ar'
+        ? 'لا يوجد محتوى لهذه الصفحة بعد. يمكنك إضافته من لوحة الإدارة.'
+        : 'No content yet for this page. Add it from the Admin panel.')}</p>
+      <a href="/" style="color:var(--gold);font-size:.85rem;">← Back to Home</a>
+    </div>`;
+}
+
+function esc(s) {
+  return String(s || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
 </body>
 </html>
