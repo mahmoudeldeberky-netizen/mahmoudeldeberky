@@ -301,6 +301,21 @@ async function applySettings() {
 // ── LOGO ─────────────────────────────────────────────────────
 const LOGO_SVG = `<img src="apple-touch-icon.png" alt="Mahmoud El-Deberky" style="height:44px;width:44px;display:block;border-radius:4px;">`;
 
+// ── SITE VERSION ─────────────────────────────────────────────
+const SITE_VERSION = '1.0.0';
+function injectFooterVersion() {
+  document.querySelectorAll('footer').forEach(f => {
+    if (f.querySelector('.site-version')) return; // avoid duplicates
+    const p = document.createElement('p');
+    p.className = 'site-version';
+    p.style.cssText = 'opacity:.45;font-size:.68rem;letter-spacing:.04em;margin-top:.35rem;';
+    p.dataset.en = `Version ${SITE_VERSION}`;
+    p.dataset.ar = `الإصدار ${SITE_VERSION}`;
+    p.textContent = currentLang === 'ar' ? p.dataset.ar : p.dataset.en;
+    f.appendChild(p);
+  });
+}
+
 // ── REVEAL & SKILLS ──────────────────────────────────────────
 function initReveal() {
   const obs=new IntersectionObserver(entries=>{
@@ -335,6 +350,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   await loadNavPages(); // fetch nav from Supabase before building nav bar
+  injectFooterVersion(); // add version line to footers before setLang populates text
   const savedLang=localStorage.getItem('lang')||'en';
   setLang(savedLang);
   initReveal();
