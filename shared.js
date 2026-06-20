@@ -27,6 +27,7 @@ const PAGES_AR = [
 let _db = null;
 window._db = null; // expose globally for page.html and other inline scripts
 let currentLang = localStorage.getItem('lang') || 'en';
+window.currentLang = currentLang; // expose globally for inline page scripts (page.html, hr-program.html, performance-eval.html)
 window._currentUser = null;
 let _navPages = null; // populated from Supabase nav_pages table
 
@@ -118,6 +119,7 @@ function initHamburger() {
 // ── LANGUAGE ─────────────────────────────────────────────────
 function setLang(lang) {
   currentLang = lang;
+  window.currentLang = lang; // keep global in sync for inline page scripts
   localStorage.setItem('lang', lang);
   const html = document.documentElement;
   html.setAttribute('lang', lang);
